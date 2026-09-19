@@ -87,7 +87,8 @@ p{margin:0}
   cursor:pointer; border-bottom:1px dotted var(--ai); border-radius:3px;
   transition:background-color .2s; -webkit-tap-highlight-color:transparent;
 }
-.jp.speaking{background:var(--ai-tint)}
+.jp.abierto{background:var(--ai-tint)}
+.romaji{color:var(--muted); font-size:.86em; font-style:italic; margin-left:.35em}
 /* Filas alineadas (vocales largas, こそあど, interrogativos, negación) */
 .rows{display:grid; grid-template-columns:max-content 1fr; column-gap:14px; row-gap:3px; padding:4px 0 2px}
 .rows .k{white-space:nowrap}
@@ -131,20 +132,13 @@ details.more .body p + p{margin-top:6px}
 .dist{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; text-align:center; margin:6px 0 4px}
 .dist div{background:var(--surface); border:1px solid var(--rule); border-radius:8px; padding:8px 4px; font-size:.86rem}
 .dist b{display:block; font-size:1.25rem; color:var(--ai)}
-/* Aviso de audio */
-#toast{
-  position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
-  background:var(--ink); color:var(--bg); font-size:.85rem; padding:8px 14px;
-  border-radius:8px; opacity:0; pointer-events:none; transition:opacity .25s; max-width:90vw; text-align:center;
-}
-#toast.show{opacity:1}
 </style>
 </head>
 <body>
 
 <header>
   <h1>Guía rápida de japonés</h1>
-  <p class="hint">Genki, lecciones 1–2. Toca cualquier palabra japonesa subrayada para oírla.</p>
+  <p class="hint">Genki, lecciones 1–2. Toca cualquier palabra japonesa subrayada para ver su romaji.</p>
 </header>
 
 <div class="topbar">
@@ -183,14 +177,14 @@ details.more .body p + p{margin-top:6px}
       </div></details>
     </div>
     <div class="item">
-      <p>ん + fila な = nn: <span class="jp">おんな</span>、<span class="jp">こんにちは</span></p>
+      <p>ん + fila な = nn: <span class="jp">おんな</span>、<span class="jp" data-romaji="konnichiwa">こんにちは</span></p>
       <details class="more"><summary></summary><div class="body">
         <p>ん es una sílaba completa. Ante vocal o や・ゆ・よ se separa del sonido siguiente:</p>
         <p><span class="jp">きんえん</span> (kin-en) ≠ <span class="jp">きねん</span> (ki-nen)</p>
       </div></details>
     </div>
     <div class="item">
-      <p>ん suena "m" ante b/p/m (<span class="jp">せんぱい</span>、<span class="jp">こんばんは</span>)</p>
+      <p>ん suena "m" ante b/p/m (<span class="jp">せんぱい</span>、<span class="jp" data-romaji="konbanwa">こんばんは</span>)</p>
       <p class="sub">y nasal velar ante k/g (<span class="jp">にほんご</span>)</p>
     </div>
     <div class="item">
@@ -250,10 +244,10 @@ details.more .body p + p{margin-top:6px}
     </div>
     <div class="item">
       <p>も — también / tampoco</p>
-      <p class="sub">SUSTITUYE a は・が・を → <span class="ng">✗</span> わたしはも <span class="ok">○</span> <span class="jp">わたしも</span></p>
+      <p class="sub">SUSTITUYE a は・が・を → <span class="ng">✗</span> わたしはも <span class="ok">○</span> <span class="jp" data-romaji="watashi mo">わたしも</span></p>
       <p class="sub">Con に・で・から sí se combina: にも、でも、からも</p>
       <details class="more"><summary></summary><div class="body">
-        <p>Con verbo negativo significa "tampoco": <span class="jp">わたしも がくせいじゃないです</span> → yo tampoco soy estudiante.</p>
+        <p>Con verbo negativo significa "tampoco": <span class="jp" data-romaji="watashi mo gakusei ja nai desu">わたしも がくせいじゃないです</span> → yo tampoco soy estudiante.</p>
       </div></details>
     </div>
     <div class="item">
@@ -553,41 +547,108 @@ details.more .body p + p{margin-top:6px}
 
 </main>
 
-<div id="toast" role="status" aria-live="polite"></div>
-
 <script>
 (function(){
-  var synth = window.speechSynthesis;
-  var voice = null, warned = false;
-  var toast = document.getElementById('toast'), tTimer;
+  /* ── Kana → romaji ────────────────────────────────────────────
+     Hepburn, transcrito tal cual se escribe (せんせい → sensei,
+     がっこう → gakkou), que es lo que ayuda a leer el kana. */
+  var KANA = {
+    'あ':'a','い':'i','う':'u','え':'e','お':'o',
+    'か':'ka','き':'ki','く':'ku','け':'ke','こ':'ko',
+    'が':'ga','ぎ':'gi','ぐ':'gu','げ':'ge','ご':'go',
+    'さ':'sa','し':'shi','す':'su','せ':'se','そ':'so',
+    'ざ':'za','じ':'ji','ず':'zu','ぜ':'ze','ぞ':'zo',
+    'た':'ta','ち':'chi','つ':'tsu','て':'te','と':'to',
+    'だ':'da','ぢ':'ji','づ':'zu','で':'de','ど':'do',
+    'な':'na','に':'ni','ぬ':'nu','ね':'ne','の':'no',
+    'は':'ha','ひ':'hi','ふ':'fu','へ':'he','ほ':'ho',
+    'ば':'ba','び':'bi','ぶ':'bu','べ':'be','ぼ':'bo',
+    'ぱ':'pa','ぴ':'pi','ぷ':'pu','ぺ':'pe','ぽ':'po',
+    'ま':'ma','み':'mi','む':'mu','め':'me','も':'mo',
+    'や':'ya','ゆ':'yu','よ':'yo',
+    'ら':'ra','り':'ri','る':'ru','れ':'re','ろ':'ro',
+    'わ':'wa','ゐ':'wi','ゑ':'we','を':'o','ん':'n','ゔ':'vu',
+    'ぁ':'a','ぃ':'i','ぅ':'u','ぇ':'e','ぉ':'o',
+    'きゃ':'kya','きゅ':'kyu','きょ':'kyo','ぎゃ':'gya','ぎゅ':'gyu','ぎょ':'gyo',
+    'しゃ':'sha','しゅ':'shu','しょ':'sho','じゃ':'ja','じゅ':'ju','じょ':'jo',
+    'ちゃ':'cha','ちゅ':'chu','ちょ':'cho','ぢゃ':'ja','ぢゅ':'ju','ぢょ':'jo',
+    'にゃ':'nya','にゅ':'nyu','にょ':'nyo','ひゃ':'hya','ひゅ':'hyu','ひょ':'hyo',
+    'びゃ':'bya','びゅ':'byu','びょ':'byo','ぴゃ':'pya','ぴゅ':'pyu','ぴょ':'pyo',
+    'みゃ':'mya','みゅ':'myu','みょ':'myo','りゃ':'rya','りゅ':'ryu','りょ':'ryo',
+    'ふぁ':'fa','ふぃ':'fi','ふぇ':'fe','ふぉ':'fo','てぃ':'ti','でぃ':'di',
+    'ちぇ':'che','しぇ':'she','じぇ':'je','うぃ':'wi','うぇ':'we','ゔぁ':'va'
+  };
 
-  function showToast(msg){
-    toast.textContent = msg; toast.classList.add('show');
-    clearTimeout(tTimer); tTimer = setTimeout(function(){ toast.classList.remove('show'); }, 2600);
-  }
-  function pickVoice(){
-    if(!synth) return;
-    var vs = synth.getVoices() || [];
-    voice = vs.find(function(v){ return /^ja(-|_|$)/i.test(v.lang); }) || null;
-  }
-  if(synth){
-    pickVoice();
-    if(typeof synth.onvoiceschanged !== 'undefined') synth.onvoiceschanged = pickVoice;
+  function aHiragana(t){
+    return t.replace(/[ァ-ヶ]/g, function(c){
+      return String.fromCharCode(c.charCodeAt(0) - 0x60);
+    });
   }
 
-  function speak(el){
-    if(!synth){ showToast('Este navegador no puede leer en voz alta.'); return; }
-    if(!voice) pickVoice();
-    var text = el.getAttribute('data-say') || el.textContent;
-    synth.cancel();
-    var u = new SpeechSynthesisUtterance(text);
-    u.lang = 'ja-JP'; u.rate = 0.85;
-    if(voice) u.voice = voice;
-    else if(!warned){ warned = true; showToast('No hay voz japonesa instalada; puede sonar mal.'); }
-    document.querySelectorAll('.jp.speaking').forEach(function(x){ x.classList.remove('speaking'); });
-    el.classList.add('speaking');
-    u.onend = u.onerror = function(){ el.classList.remove('speaking'); };
-    synth.speak(u);
+  function romaji(texto){
+    var s = aHiragana(texto), out = '', i = 0;
+    while(i < s.length){
+      var c = s[i], sig = s[i + 1];
+      // ー alarga la vocal anterior
+      if(c === 'ー'){ out += (out.match(/[aeiou]$/) || [''])[0]; i++; continue; }
+      // っ duplica la consonante de la sílaba siguiente (っ+ch → tch)
+      if(c === 'っ'){
+        var resto = romaji(s.slice(i + 1));
+        out += /^ch/.test(resto) ? 't' : (resto.charAt(0) || '');
+        i++; continue;
+      }
+      if(sig && KANA[c + sig]){ out += KANA[c + sig]; i += 2; continue; }
+      if(c === 'ん'){
+        // n' para que きんえん no se lea "kinen"
+        out += /^[あいうえおやゆよ]/.test(sig || '') ? "n'" : 'n';
+        i++; continue;
+      }
+      if(KANA[c]){
+        // Partículas: は y へ sueltas se leen wa y e, y を siempre es o.
+        // Además se separan de la palabra anterior, que es justo lo que enseñan.
+        var fin = (sig === undefined || sig === ' ' || sig === '　');
+        var esWa = c === 'は' && i > 0 && (fin || (s[i - 1] === 'で' && (sig === 'な' || sig === 'あ')));
+        var esE = c === 'へ' && i > 0 && fin;
+        if(esWa || esE || (c === 'を' && i > 0)){
+          if(!/[ 　]$/.test(out)) out += ' ';
+          out += esWa ? 'wa' : (esE ? 'e' : 'o');
+          if(sig !== undefined && sig !== ' ' && sig !== '　') out += ' ';
+        } else {
+          out += KANA[c];
+        }
+        i++; continue;
+      }
+      if(c === '、'){ out += ', '; i++; continue; }
+      out += c; i++;   // espacios, signos, kanji: tal cual
+    }
+    return out;
+  }
+
+  // です, ください y compañía son palabras aparte aunque el kana no lo marque.
+  function separar(t){
+    t = t.replace(/(^|[^ ])(janai|jaarimasen)/g, function(m, antes, pal){
+      var roto = pal === 'janai' ? 'ja nai' : 'ja arimasen';
+      return antes ? antes + ' ' + roto : roto;
+    });
+    t = t.replace(/([^ ])(desu|deshita|kudasai|arimasen)/g, '$1 $2');
+    return t.replace(/(desu|deshita|masu|masen|mashita)ka(?=$|[ ,])/g, '$1 ka');
+  }
+
+  // Muestra u oculta el romaji junto a la palabra tocada.
+  function alternar(el){
+    var sig = el.nextElementSibling;
+    if(sig && sig.className === 'romaji'){
+      sig.parentNode.removeChild(sig);
+      el.classList.remove('abierto');
+      el.setAttribute('aria-expanded', 'false');
+      return;
+    }
+    var caja = document.createElement('span');
+    caja.className = 'romaji';
+    caja.textContent = el.getAttribute('data-romaji') || separar(romaji(el.textContent));
+    el.parentNode.insertBefore(caja, el.nextSibling);
+    el.classList.add('abierto');
+    el.setAttribute('aria-expanded', 'true');
   }
 
   // Accesibilidad de las palabras tocables; se repite sobre lo que se genera al vuelo.
@@ -595,7 +656,8 @@ details.more .body p + p{margin-top:6px}
     raiz.querySelectorAll('.jp').forEach(function(el){
       el.setAttribute('tabindex','0');
       el.setAttribute('role','button');
-      el.setAttribute('aria-label','Escuchar ' + el.textContent);
+      el.setAttribute('aria-expanded','false');
+      el.setAttribute('aria-label','Romaji de ' + el.textContent);
     });
   }
   preparar(document);
@@ -603,12 +665,12 @@ details.more .body p + p{margin-top:6px}
   // Por delegación, así vale también para lo que pinta el selector de contadores.
   document.addEventListener('click', function(e){
     var el = e.target.closest ? e.target.closest('.jp') : null;
-    if(el){ e.preventDefault(); speak(el); }
+    if(el){ e.preventDefault(); alternar(el); }
   });
   document.addEventListener('keydown', function(e){
     if(e.key !== 'Enter' && e.key !== ' ') return;
     var el = e.target.closest ? e.target.closest('.jp') : null;
-    if(el){ e.preventDefault(); speak(el); }
+    if(el){ e.preventDefault(); alternar(el); }
   });
 
   /* ── Pestañas ─────────────────────────────────────────────── */

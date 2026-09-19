@@ -1,6 +1,6 @@
 /* Service worker: la guía funciona sin conexión una vez abierta. */
 
-var VERSION = 'v3';
+var VERSION = 'v4';
 var CACHE = 'guia-japones-' + VERSION;
 
 /* Lo imprescindible, guardado al instalar. */

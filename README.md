@@ -1,8 +1,10 @@
 # Guía rápida de japonés
 
 Chuleta de japonés en una sola página HTML, pensada para leer en el móvil.
-Cada palabra japonesa subrayada se puede tocar para oírla (voz del propio
-navegador, `SpeechSynthesis`; en `ja-JP` si el sistema tiene voz japonesa).
+Cada palabra japonesa subrayada se puede tocar para ver su romaji; se vuelve
+a tocar y se esconde. La transliteración se calcula en el momento (Hepburn,
+literal: せんせい → *sensei*, がっこう → *gakkou*), con っ, ん + apóstrofo,
+la ー del katakana y las partículas は・へ・を separadas y leídas wa, e, o.
 
 **Publicada en:** https://carcaret.github.io/japanese-quick-guide/
 
@@ -58,8 +60,10 @@ para que se descarte la caché vieja.
   `.item`); `.sub` para las líneas secundarias.
 - Lo ampliable va en `<details class="more"><summary></summary><div class="body">…`
   (el botón "＋ más" lo pone el CSS; el `<summary>` va vacío a propósito).
-- Texto japonés que se debe poder oír: `<span class="jp">…</span>`. Si lo escrito
-  no coincide con lo que debe pronunciarse, se añade `data-say="…"`.
+- Texto japonés: `<span class="jp">…</span>`. Si el romaji automático no sale
+  bien (partícula も, saludos de una pieza), se fuerza con `data-romaji="…"`.
+- El lector en voz alta se quitó a favor del romaji; está en el historial
+  (`git log -S SpeechSynthesis`) por si vuelve.
 - Tablas de dos columnas: `.rows` con pares `.k` / `.v`. Nada de tablas anchas:
   el uso es en móvil y el scroll lateral molesta.
 - Los contadores **no se escriben a mano**: se calculan en el JS con las mismas
