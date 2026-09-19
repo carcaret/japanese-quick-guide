@@ -6,8 +6,8 @@ navegador, `SpeechSynthesis`; en `ja-JP` si el sistema tiene voz japonesa).
 
 **Publicada en:** https://carcaret.github.io/japanese-quick-guide/
 
-Contenido actual: lecciones 1–2 (sonidos, partículas, serie こそあど,
-interrogativos, negación de です y expresiones).
+Contenido actual (Genki L1–2): pestaña *Guía* (sonidos, partículas, こそあど,
+interrogativos, negación de です, expresiones), *Números* y *Contadores*.
 
 ## Cómo está montado
 
@@ -48,6 +48,11 @@ para que se descarte la caché vieja.
 
 ### Convenciones del HTML
 
+- La página tiene **pestañas**: cada una es un `<div class="panel" id="...">`
+  dentro de `<main>`, con su `<button data-panel="...">` en `.tabs`. Se navega
+  por `#hash` (vale tanto `#numeros` como `#kosoado`, que abre su pestaña y
+  baja a la sección), así que el botón atrás funciona.
+- El `<nav>` de secciones es solo de la pestaña *Guía*; se oculta en las demás.
 - Cada sección es un `<section id="...">` con su enlace en el `<nav>`.
 - Una sección se compone de `.card` con `.item` dentro (un concepto por
   `.item`); `.sub` para las líneas secundarias.
@@ -55,6 +60,10 @@ para que se descarte la caché vieja.
   (el botón "＋ más" lo pone el CSS; el `<summary>` va vacío a propósito).
 - Texto japonés que se debe poder oír: `<span class="jp">…</span>`. Si lo escrito
   no coincide con lo que debe pronunciarse, se añade `data-say="…"`.
-- Tablas de dos columnas: `.rows` con pares `.k` / `.v`.
+- Tablas de dos columnas: `.rows` con pares `.k` / `.v`. Tablas grandes
+  (contadores): `<table>` dentro de `.table`, con `<th scope="row">` —queda
+  fija al desplazar de lado— y `.irr` en las casillas irregulares.
+- Criterio de qué entra: **lo que se olvida o confunde**, no todo lo que dice
+  Genki. Nada de listas de lo que ya se sabe (いち・に・さん…).
 - Colores siempre por variable CSS (`--ai`, `--ok`, `--ng`, …): así el modo
   oscuro sale solo.

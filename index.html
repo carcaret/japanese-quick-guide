@@ -37,7 +37,7 @@
   color-scheme: dark;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth; scroll-padding-top:64px}
+html{scroll-behavior:smooth; scroll-padding-top:calc(var(--topbar, 64px) + 10px)}
 @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
 body{
   margin:0; background:var(--bg); color:var(--ink);
@@ -47,10 +47,16 @@ body{
 header{max-width:680px; margin:0 auto; padding:28px 18px 8px}
 h1{font-size:1.45rem; line-height:1.25; margin:0; font-weight:700; letter-spacing:.01em}
 .hint{color:var(--muted); font-size:.88rem; margin:6px 0 0}
-nav{
-  position:sticky; top:0; z-index:5; background:var(--bg);
-  border-bottom:1px solid var(--rule);
+/* Barra superior: pestañas + índice de la pestaña activa */
+.topbar{position:sticky; top:0; z-index:5; background:var(--bg); border-bottom:1px solid var(--rule)}
+.tabs{max-width:680px; margin:0 auto; padding:6px 12px 0; display:flex; gap:4px}
+.tabs button{
+  flex:1; font:inherit; font-size:.9rem; font-weight:500; cursor:pointer; color:var(--muted);
+  background:none; border:0; border-bottom:2px solid transparent; padding:6px 4px 7px; border-radius:6px 6px 0 0;
 }
+.tabs button[aria-selected="true"]{color:var(--ai); border-bottom-color:var(--ai); font-weight:700}
+.tabs button:focus-visible{outline:2px solid var(--ai); outline-offset:-2px}
+.panel[hidden]{display:none}
 nav .in{max-width:680px; margin:0 auto; padding:8px 12px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none}
 nav .in::-webkit-scrollbar{display:none}
 nav a{
@@ -87,6 +93,20 @@ p{margin:0}
 .rows .k{white-space:nowrap}
 .rows .v{color:var(--muted)}
 .table{overflow-x:auto}
+/* Tablas de contadores: cabecera tenue y primera columna fija al desplazar */
+table{border-collapse:collapse; min-width:max-content; font-size:.9rem}
+th, td{padding:6px 9px; border-bottom:1px solid var(--rule); text-align:left; white-space:nowrap}
+tbody tr:last-child th, tbody tr:last-child td{border-bottom:0}
+thead th{color:var(--muted); font-weight:500; font-size:.8rem}
+th[scope="row"]{position:sticky; left:0; background:var(--surface); font-weight:700}
+.irr{color:var(--ai); font-weight:700}
+/* Cuadrícula de kanji */
+.kanji{display:grid; grid-template-columns:repeat(auto-fill, minmax(76px, 1fr)); gap:6px; padding:6px 0 2px}
+.kanji div{
+  background:var(--surface); border:1px solid var(--rule); border-radius:8px;
+  padding:6px 4px; text-align:center; font-size:.78rem; color:var(--muted);
+}
+.kanji b{display:block; font-size:1.35rem; color:var(--ink); font-weight:500; line-height:1.3}
 .kso{display:grid; grid-template-columns:auto repeat(4, max-content); column-gap:12px; row-gap:4px; align-items:baseline; padding:6px 0; min-width:max-content}
 .kso .lab{color:var(--muted); font-size:.9rem; padding-right:6px}
 /* Desplegables */
@@ -120,22 +140,31 @@ details.more .body p + p{margin-top:6px}
 <body>
 
 <header>
-  <h1>Guía rápida de japonés — Lecciones 1–2</h1>
-  <p class="hint">Toca cualquier palabra japonesa subrayada para oírla.</p>
+  <h1>Guía rápida de japonés</h1>
+  <p class="hint">Genki, lecciones 1–2. Toca cualquier palabra japonesa subrayada para oírla.</p>
 </header>
 
-<nav aria-label="Secciones">
-  <div class="in">
-    <a href="#sonidos">Sonidos</a>
-    <a href="#particulas">Partículas</a>
-    <a href="#kosoado">こそあど</a>
-    <a href="#interrogativos">Interrogativos</a>
-    <a href="#negacion">Negación de です</a>
-    <a href="#expresiones">Expresiones</a>
+<div class="topbar">
+  <div class="tabs" role="tablist" aria-label="Apartados">
+    <button type="button" role="tab" data-panel="guia" aria-selected="true" aria-controls="guia">Guía</button>
+    <button type="button" role="tab" data-panel="numeros" aria-selected="false" aria-controls="numeros">Números</button>
+    <button type="button" role="tab" data-panel="contadores" aria-selected="false" aria-controls="contadores">Contadores</button>
   </div>
-</nav>
+  <nav aria-label="Secciones">
+    <div class="in">
+      <a href="#sonidos">Sonidos</a>
+      <a href="#particulas">Partículas</a>
+      <a href="#kosoado">こそあど</a>
+      <a href="#interrogativos">Interrogativos</a>
+      <a href="#negacion">Negación de です</a>
+      <a href="#expresiones">Expresiones</a>
+    </div>
+  </nav>
+</div>
 
 <main>
+
+<div class="panel" id="guia" role="tabpanel">
 
 <!-- ━━━ SONIDOS ━━━ -->
 <section id="sonidos">
@@ -362,6 +391,174 @@ details.more .body p + p{margin-top:6px}
   </div>
 </section>
 
+</div><!-- /guia -->
+
+<!-- ━━━━━━━━━━━━ NÚMEROS ━━━━━━━━━━━━ -->
+<div class="panel" id="numeros" role="tabpanel" hidden>
+
+<section>
+  <h2>LECTURAS DOBLES</h2>
+  <div class="card">
+    <div class="item">
+      <p>Tres cifras tienen dos lecturas, y cuál toca lo decide el contador:</p>
+      <div class="table"><div class="rows">
+        <span class="k">4 = よん / し / よ</span><span class="v"><span class="jp">よじ</span> (4:00) · <span class="jp">よにん</span> (4 personas) · <span class="jp">よんぷん</span> (4 min) — nunca しじ</span>
+        <span class="k">7 = なな / しち</span><span class="v"><span class="jp">しちじ</span> (7:00) pero <span class="jp">ななふん</span> (7 min)</span>
+        <span class="k">9 = きゅう / く</span><span class="v"><span class="jp">くじ</span> (9:00) pero <span class="jp">きゅうふん</span> (9 min)</span>
+        <span class="k">0 = ゼロ / れい</span><span class="v">ゼロ al hablar; れい en cifras y marcadores</span>
+      </div></div>
+      <details class="more"><summary></summary><div class="body">
+        <p>し y く se evitan por superstición: suenan igual que "muerte" (死) y "sufrimiento" (苦). Por eso la lectura normal suele ser よん y きゅう… salvo en las horas, que van por libre.</p>
+      </div></details>
+    </div>
+    <div class="item">
+      <p>Al pegarse al contador cambian de sonido, y siempre igual:</p>
+      <p class="sub">Tras っ (1・6・8・10): ふ→ぷ, ひ→ぴ → <span class="jp">いっぷん</span>、<span class="jp">ろっぴゃく</span>、<span class="jp">はっさい</span></p>
+      <p class="sub">Tras ん (3・4): ふ→ぷ, ひ→び, せ→ぜ → <span class="jp">さんぷん</span>、<span class="jp">さんびゃく</span>、<span class="jp">さんぜん</span></p>
+    </div>
+  </div>
+
+  <h3>CIENTOS Y MILES</h3>
+  <div class="card">
+    <div class="item">
+      <div class="table"><div class="rows">
+        <span class="k">300</span><span class="v"><span class="jp">さんびゃく</span> — no さんひゃく</span>
+        <span class="k">600</span><span class="v"><span class="jp">ろっぴゃく</span></span>
+        <span class="k">800</span><span class="v"><span class="jp">はっぴゃく</span></span>
+        <span class="k">3.000</span><span class="v"><span class="jp">さんぜん</span></span>
+        <span class="k">8.000</span><span class="v"><span class="jp">はっせん</span></span>
+      </div></div>
+      <p class="muted">El resto son regulares: <span class="jp">にひゃく</span>、<span class="jp">よんひゃく</span>、<span class="jp">ごせん</span>…</p>
+    </div>
+  </div>
+
+  <h3>DE 万 EN 万</h3>
+  <div class="card">
+    <div class="item">
+      <p>10.000 no es "diez miles", es una unidad nueva: <span class="jp">いちまん</span> (一万).</p>
+      <p>Donde el español agrupa de tres en tres cifras, el japonés lo hace <b>de cuatro en cuatro</b>. Ahí es donde se atasca uno leyendo precios:</p>
+      <div class="table"><div class="rows">
+        <span class="k">2.300</span><span class="v"><span class="jp">にせんさんびゃく</span></span>
+        <span class="k">25.000 → 2|5000</span><span class="v"><span class="jp">にまんごせん</span></span>
+        <span class="k">250.000 → 25|0000</span><span class="v"><span class="jp">にじゅうごまん</span></span>
+        <span class="k">1.000.000 → 100|0000</span><span class="v"><span class="jp">ひゃくまん</span></span>
+      </div></div>
+      <details class="more"><summary></summary><div class="body">
+        <p>Truco para leer una cifra escrita: cuenta cuatro cifras desde la derecha y pon ahí un corte mental. Lo que queda a la izquierda son los 万.</p>
+      </div></details>
+    </div>
+  </div>
+
+  <h3>EN KANJI</h3>
+  <div class="card">
+    <div class="item">
+      <div class="kanji">
+        <div><b>一</b><span class="jp">いち</span></div>
+        <div><b>二</b><span class="jp">に</span></div>
+        <div><b>三</b><span class="jp">さん</span></div>
+        <div><b>四</b><span class="jp">よん</span>/し</div>
+        <div><b>五</b><span class="jp">ご</span></div>
+        <div><b>六</b><span class="jp">ろく</span></div>
+        <div><b>七</b><span class="jp">なな</span>/しち</div>
+        <div><b>八</b><span class="jp">はち</span></div>
+        <div><b>九</b><span class="jp">きゅう</span>/く</div>
+        <div><b>十</b><span class="jp">じゅう</span></div>
+        <div><b>百</b><span class="jp">ひゃく</span></div>
+        <div><b>千</b><span class="jp">せん</span></div>
+        <div><b>万</b><span class="jp">まん</span></div>
+        <div><b>円</b><span class="jp">えん</span></div>
+      </div>
+      <p class="muted">Se combinan tal cual: 三百 = 300, 二千 = 2.000, 五万円 = 50.000 yenes.</p>
+    </div>
+  </div>
+
+  <h3>PRECIOS Y HORAS</h3>
+  <div class="card">
+    <div class="item">
+      <p><span class="jp">いくらですか</span> → ¿cuánto cuesta?</p>
+      <p class="sub">Se responde con el número + えん: <span class="jp">にせんさんびゃくえんです</span> (2.300 ¥)</p>
+    </div>
+    <div class="item">
+      <p><span class="jp">なんじですか</span> → ¿qué hora es?</p>
+      <p class="sub">はん = y media: <span class="jp">にじはん</span> (2:30)</p>
+      <p class="sub">ごぜん = de la mañana · ごご = de la tarde, y van <b>delante</b>: <span class="jp">ごご さんじ</span> (las 3 de la tarde)</p>
+    </div>
+  </div>
+</section>
+
+</div><!-- /numeros -->
+
+<!-- ━━━━━━━━━━━━ CONTADORES ━━━━━━━━━━━━ -->
+<div class="panel" id="contadores" role="tabpanel" hidden>
+
+<section>
+  <h2>CÓMO SE CUENTA</h2>
+  <div class="card">
+    <div class="item">
+      <p>El número no va solo: se le pega un contador según lo que cuentes.</p>
+      <p class="sub">Si no sabes cuál toca, <b>〜つ</b> sirve para casi cualquier cosa… hasta 10.</p>
+    </div>
+    <div class="item">
+      <p>Van detrás del sustantivo, no delante: <span class="jp">りんごを みっつ ください</span></p>
+      <p class="sub">→ deme tres manzanas</p>
+    </div>
+  </div>
+
+  <h3>TABLA</h3>
+  <div class="card">
+    <div class="item">
+      <div class="table">
+        <table>
+          <thead>
+            <tr><th scope="col"></th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th><th scope="col">5</th><th scope="col">6</th><th scope="col">7</th><th scope="col">8</th><th scope="col">9</th><th scope="col">10</th><th scope="col">¿cuántos?</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">〜つ<br><span class="muted">cosas</span></th>
+              <td><span class="jp irr">ひとつ</span></td><td><span class="jp irr">ふたつ</span></td><td><span class="jp irr">みっつ</span></td><td><span class="jp irr">よっつ</span></td><td><span class="jp irr">いつつ</span></td><td><span class="jp irr">むっつ</span></td><td><span class="jp irr">ななつ</span></td><td><span class="jp irr">やっつ</span></td><td><span class="jp irr">ここのつ</span></td><td><span class="jp irr">とお</span></td><td><span class="jp">いくつ</span></td>
+            </tr>
+            <tr>
+              <th scope="row">〜人<br><span class="muted">personas</span></th>
+              <td><span class="jp irr">ひとり</span></td><td><span class="jp irr">ふたり</span></td><td><span class="jp">さんにん</span></td><td><span class="jp irr">よにん</span></td><td><span class="jp">ごにん</span></td><td><span class="jp">ろくにん</span></td><td><span class="jp">ななにん</span></td><td><span class="jp">はちにん</span></td><td><span class="jp">きゅうにん</span></td><td><span class="jp">じゅうにん</span></td><td><span class="jp">なんにん</span></td>
+            </tr>
+            <tr>
+              <th scope="row">〜時<br><span class="muted">horas</span></th>
+              <td><span class="jp">いちじ</span></td><td><span class="jp">にじ</span></td><td><span class="jp">さんじ</span></td><td><span class="jp irr">よじ</span></td><td><span class="jp">ごじ</span></td><td><span class="jp">ろくじ</span></td><td><span class="jp irr">しちじ</span></td><td><span class="jp">はちじ</span></td><td><span class="jp irr">くじ</span></td><td><span class="jp">じゅうじ</span></td><td><span class="jp">なんじ</span></td>
+            </tr>
+            <tr>
+              <th scope="row">〜分<br><span class="muted">minutos</span></th>
+              <td><span class="jp irr">いっぷん</span></td><td><span class="jp">にふん</span></td><td><span class="jp irr">さんぷん</span></td><td><span class="jp irr">よんぷん</span></td><td><span class="jp">ごふん</span></td><td><span class="jp irr">ろっぷん</span></td><td><span class="jp">ななふん</span></td><td><span class="jp irr">はっぷん</span></td><td><span class="jp">きゅうふん</span></td><td><span class="jp irr">じゅっぷん</span></td><td><span class="jp irr">なんぷん</span></td>
+            </tr>
+            <tr>
+              <th scope="row">〜歳<br><span class="muted">años</span></th>
+              <td><span class="jp irr">いっさい</span></td><td><span class="jp">にさい</span></td><td><span class="jp">さんさい</span></td><td><span class="jp">よんさい</span></td><td><span class="jp">ごさい</span></td><td><span class="jp">ろくさい</span></td><td><span class="jp">ななさい</span></td><td><span class="jp irr">はっさい</span></td><td><span class="jp">きゅうさい</span></td><td><span class="jp irr">じゅっさい</span></td><td><span class="jp">なんさい</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">En azul, las casillas que no siguen el patrón. Desliza la tabla de lado.</p>
+    </div>
+  </div>
+
+  <h3>DETALLES QUE PILLAN</h3>
+  <div class="card">
+    <div class="item">
+      <p>〜つ se acaba en <span class="jp">とお</span> (10): del 11 en adelante se usa el número a secas, <span class="jp">じゅういち</span>.</p>
+    </div>
+    <div class="item">
+      <p>20 años es <span class="jp">はたち</span>, no にじゅっさい.</p>
+    </div>
+    <div class="item">
+      <p><span class="jp">ひとり</span> y <span class="jp">ふたり</span> son las dos únicas raras de 〜人: de 3 en adelante, número + にん.</p>
+      <details class="more"><summary></summary><div class="body">
+        <p><span class="jp">ひとりで</span> = solo, por mi cuenta. Muy frecuente.</p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+</div><!-- /contadores -->
+
 </main>
 
 <div id="toast" role="status" aria-live="polite"></div>
@@ -410,6 +607,53 @@ details.more .body p + p{margin-top:6px}
       if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); speak(el); }
     });
   });
+
+  /* ── Pestañas ─────────────────────────────────────────────── */
+  var topbar = document.querySelector('.topbar');
+  var botones = Array.prototype.slice.call(document.querySelectorAll('.tabs button'));
+  var paneles = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+  var indice = document.querySelector('.topbar nav');
+
+  function medirTopbar(){
+    document.documentElement.style.setProperty('--topbar', topbar.offsetHeight + 'px');
+  }
+
+  function abrir(id){
+    if(!document.getElementById(id)) id = 'guia';
+    paneles.forEach(function(p){ p.hidden = (p.id !== id); });
+    botones.forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.panel === id)); });
+    // El índice de secciones solo tiene sentido en la guía.
+    indice.hidden = (id !== 'guia');
+    medirTopbar();
+    return id;
+  }
+
+  // El hash puede ser una pestaña (#numeros) o una sección de dentro (#kosoado).
+  function panelDe(hash){
+    var el = hash ? document.getElementById(hash.slice(1)) : null;
+    if(!el) return 'guia';
+    var p = el.closest('.panel');
+    return p ? p.id : 'guia';
+  }
+
+  function sincronizar(){
+    var hash = location.hash;
+    abrir(panelDe(hash));
+    var destino = hash ? document.getElementById(hash.slice(1)) : null;
+    if(destino && !destino.classList.contains('panel')) destino.scrollIntoView();
+    else window.scrollTo(0, 0);
+  }
+
+  botones.forEach(function(b){
+    b.addEventListener('click', function(){
+      // Cambiar el hash deja rastro en el historial: el botón atrás vuelve a la pestaña anterior.
+      if(location.hash.slice(1) === b.dataset.panel) sincronizar();
+      else location.hash = b.dataset.panel;
+    });
+  });
+  window.addEventListener('hashchange', sincronizar);
+  window.addEventListener('resize', medirTopbar);
+  sincronizar();
 
   // Service worker: guarda la guía para poder abrirla sin conexión.
   // Falla en silencio al abrir el fichero desde el disco (file://), donde no existe.
