@@ -1,12 +1,14 @@
 # Guía rápida de japonés
 
-Chuleta de japonés en una sola página HTML, pensada para leer en el móvil.
-Cada palabra japonesa subrayada se puede tocar para ver su romaji; se vuelve
-a tocar y se esconde. La transliteración se calcula en el momento (Hepburn,
-literal: せんせい → *sensei*, がっこう → *gakkou*), con っ, ん + apóstrofo,
-la ー del katakana y las partículas は・へ・を separadas y leídas wa, e, o.
+Chuleta de japonés en una sola página HTML, pensada para el móvil. Acompaña al
+curso de **Genki**: no lo resume, recoge lo que se olvida.
 
 **Publicada en:** https://carcaret.github.io/japanese-quick-guide/
+
+Cada palabra japonesa subrayada se toca y muestra su romaji; se vuelve a tocar
+y se esconde. La transliteración se calcula en el momento (Hepburn literal:
+せんせい → *sensei*, がっこう → *gakkou*), con っ, ん + apóstrofo, la ー del
+katakana y las partículas は・へ・を separadas y leídas *wa*, *e*, *o*.
 
 Contenido actual (Genki L1–2): pestaña *Guía* (sonidos, partículas, こそあど,
 interrogativos, negación de です, expresiones), *Números* y *Contadores*.
@@ -34,6 +36,39 @@ ocultar esa página (mantener pulsado el fondo → los puntitos → desmarcarla)
 Sigue saliendo al buscar "Japonés" en Spotlight. Un icono de web no aparece
 en la Biblioteca de Apps, así que **borrarlo del escritorio es desinstalarlo**.
 
+## Criterios (lo decidido, para no volver a discutirlo)
+
+**Qué entra.** Lo que se olvida o se confunde, no todo lo que dice Genki. Si
+ya te lo sabes, fuera: por eso no hay いち・に・さん, y de los números solo
+está lo irregular. Lo básico de la lección 1 (X は Y です, か, saludos) se
+descartó a propósito; si alguna vez se escapa, entonces se añade. は sigue en
+*Partículas* pero es candidata a salir.
+
+**Cómo se ordena.** Por temas, no por lecciones: Genki ya va por lecciones, y
+la gracia de esta página es ver todas las partículas juntas aunque vengan de
+cuatro sitios. Sí conviene poder rastrear de dónde sale cada cosa.
+
+**Móvil primero.** Nada de tablas anchas ni scroll lateral: para datos de
+consulta, un `<select>` y la respuesta en vertical (así está *Contadores*).
+Todo lo largo, dentro de `<details class="more">`.
+
+**Pestañas: leer frente a consultar.** *Guía* se lee de corrido; *Números* y
+*Contadores* se consultan. Por eso están separadas. Las siguientes naturales,
+según avance el curso, son *Verbos* (L3, ます/ません) y *Adjetivos* (L5).
+
+**Un solo fichero.** Aunque llegue a las 23 lecciones son ~150 KB: sigue
+funcionando sin conexión, se despliega de una pieza y buscar dentro de una
+página gana a navegar entre varias.
+
+**Kana o kanji.** Los ejemplos van en kana; el kanji solo aparece cuando el
+tema *es* el kanji (何, la cuadrícula de números). Si algún día entra kanji con
+furigana (`<ruby>`), el romaji automático leería el carácter y su lectura
+seguidos: hay que ponerle `data-romaji`.
+
+**Los datos se calculan, no se copian.** Las lecturas de los contadores y el
+romaji salen de reglas, no de listas escritas a mano. Añadir algo es una línea
+y no puede quedar incoherente con el resto.
+
 ## Actualizar la guía
 
 Editar `index.html`, comprobarlo en el navegador y:
@@ -60,18 +95,69 @@ para que se descarte la caché vieja.
   `.item`); `.sub` para las líneas secundarias.
 - Lo ampliable va en `<details class="more"><summary></summary><div class="body">…`
   (el botón "＋ más" lo pone el CSS; el `<summary>` va vacío a propósito).
-- Texto japonés: `<span class="jp">…</span>`. Si el romaji automático no sale
-  bien (partícula も, saludos de una pieza), se fuerza con `data-romaji="…"`.
-- El lector en voz alta se quitó a favor del romaji; está en el historial
-  (`git log -S SpeechSynthesis`) por si vuelve.
-- Tablas de dos columnas: `.rows` con pares `.k` / `.v`. Nada de tablas anchas:
-  el uso es en móvil y el scroll lateral molesta.
-- Los contadores **no se escriben a mano**: se calculan en el JS con las mismas
-  reglas del apéndice de Genki (`CLASES` + `CONTADORES`). Añadir uno es una
-  línea en `CONTADORES`: su kana, su clase de cambio (`hp`, `hpb`, `k`, `kg`,
-  `s`, `sz`, `t`, `p`, o `-`) y, si las tiene, lecturas sueltas en `over` o una
-  lista completa en `esp`. `.irr` marca lo que se desvía del patrón.
-- Criterio de qué entra: **lo que se olvida o confunde**, no todo lo que dice
-  Genki. Nada de listas de lo que ya se sabe (いち・に・さん…).
+- Tablas de dos columnas: `.rows` con pares `.k` / `.v`.
 - Colores siempre por variable CSS (`--ai`, `--ok`, `--ng`, …): así el modo
   oscuro sale solo.
+- Nada de `id` repetidos entre pestañas: el `#hash` los usa para saber qué
+  pestaña abrir.
+
+### Romaji
+
+- Texto japonés: `<span class="jp">…</span>`, y nada más; el romaji lo pone el
+  JS al tocarlo, también en lo que se genera al vuelo (por eso los eventos van
+  por delegación en `document`, no elemento a elemento).
+- Cuando la regla no puede acertar, se fuerza con `data-romaji="…"`. Hoy hay
+  cuatro casos: わたしも (separar も por regla rompería palabras como *kodomo*)
+  y los saludos こんにちは / こんばんは, que se escriben de una pieza.
+- El lector en voz alta se quitó a favor del romaji; está en el historial
+  (`git log -S SpeechSynthesis`) por si vuelve.
+
+### Contadores
+
+No se escriben a mano: se calculan con las mismas clases del apéndice de Genki
+(pp. 380-381). Añadir uno es una línea en `CONTADORES`:
+
+```js
+{g:'Cosas', lab:'〜杯', es:'tazas y vasos', kana:'はい', clase:'hpb'}
+```
+
+- `clase`: `hp`, `hpb`, `k`, `kg`, `s`, `sz`, `t`, `p` o `-` (sin cambio).
+- `over`: lecturas sueltas que se salen de su clase (`{4:'よじ'}`).
+- `esp`: lista completa de las 11 lecturas, para los que no siguen regla
+  ninguna (〜つ, 〜日).
+- `.irr` (azul) lo pinta solo lo que se desvía del patrón; no se marca a mano.
+
+### Cómo comprobar antes de subir
+
+En este NAS no hay Node, así que la lógica se verifica en un contenedor
+efímero: se extrae el bloque de JS a un fichero bajo `/home/carcaret`
+(visible desde el host) y se ejecuta contra todos los casos de la página.
+
+```sh
+docker run --rm -v /home/carcaret:/t:ro node:22-alpine node /t/check.js
+```
+
+Así se comprobaron las 253 lecturas de los 23 contadores contra la tabla del
+libro, y el romaji de las 202 palabras de la página.
+
+### Trampas del despliegue
+
+- La rama es **`master`**, no `main`.
+- El entorno `github-pages` solo permite desplegar desde la rama que fuera la
+  principal al activar Pages. Si se renombra la rama, además del
+  `default_branch` hay que tocar
+  `/repos/{owner}/{repo}/environments/github-pages/deployment-branch-policies`,
+  o el job falla **sin pasos ni logs**.
+- Activar Pages la primera vez es manual (Settings → Pages → Source: GitHub
+  Actions): no lo puede hacer ni un token ni el `GITHUB_TOKEN` del workflow.
+- Para relanzar un despliegue sin cambios, commit vacío: no hay permiso de
+  `workflow_dispatch`.
+
+## Ideas pendientes
+
+- **Buscador** que filtre al escribir, a través de todas las pestañas. Es lo
+  que más va a hacer falta cuando haya varias lecciones más.
+- **Etiqueta de lección** (L1, L2…) en cada ítem, con filtro "hasta la N", para
+  repasar sin adelantarse y saber de dónde salió cada cosa.
+- Pestañas de **Verbos** y **Adjetivos** cuando lleguen L3 y L5.
+- Audio otra vez, como opción, si el romaji deja de bastar.
