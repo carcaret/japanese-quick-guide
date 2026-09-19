@@ -60,9 +60,13 @@ para que se descarte la caché vieja.
   (el botón "＋ más" lo pone el CSS; el `<summary>` va vacío a propósito).
 - Texto japonés que se debe poder oír: `<span class="jp">…</span>`. Si lo escrito
   no coincide con lo que debe pronunciarse, se añade `data-say="…"`.
-- Tablas de dos columnas: `.rows` con pares `.k` / `.v`. Tablas grandes
-  (contadores): `<table>` dentro de `.table`, con `<th scope="row">` —queda
-  fija al desplazar de lado— y `.irr` en las casillas irregulares.
+- Tablas de dos columnas: `.rows` con pares `.k` / `.v`. Nada de tablas anchas:
+  el uso es en móvil y el scroll lateral molesta.
+- Los contadores **no se escriben a mano**: se calculan en el JS con las mismas
+  reglas del apéndice de Genki (`CLASES` + `CONTADORES`). Añadir uno es una
+  línea en `CONTADORES`: su kana, su clase de cambio (`hp`, `hpb`, `k`, `kg`,
+  `s`, `sz`, `t`, `p`, o `-`) y, si las tiene, lecturas sueltas en `over` o una
+  lista completa en `esp`. `.irr` marca lo que se desvía del patrón.
 - Criterio de qué entra: **lo que se olvida o confunde**, no todo lo que dice
   Genki. Nada de listas de lo que ya se sabe (いち・に・さん…).
 - Colores siempre por variable CSS (`--ai`, `--ok`, `--ng`, …): así el modo

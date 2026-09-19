@@ -93,13 +93,16 @@ p{margin:0}
 .rows .k{white-space:nowrap}
 .rows .v{color:var(--muted)}
 .table{overflow-x:auto}
-/* Tablas de contadores: cabecera tenue y primera columna fija al desplazar */
-table{border-collapse:collapse; min-width:max-content; font-size:.9rem}
-th, td{padding:6px 9px; border-bottom:1px solid var(--rule); text-align:left; white-space:nowrap}
-tbody tr:last-child th, tbody tr:last-child td{border-bottom:0}
-thead th{color:var(--muted); font-weight:500; font-size:.8rem}
-th[scope="row"]{position:sticky; left:0; background:var(--surface); font-weight:700}
 .irr{color:var(--ai); font-weight:700}
+/* Selector de contador y sus lecturas, en vertical (nada de scroll lateral) */
+.picker{
+  display:block; width:100%; font:inherit; font-size:1rem; color:var(--ink);
+  background:var(--surface); border:1px solid var(--rule); border-radius:8px;
+  padding:9px 10px; margin:4px 0 2px;
+}
+.nums{display:grid; grid-template-columns:repeat(auto-fill, minmax(128px, 1fr)); gap:3px 12px; padding:8px 0 4px}
+.nums div{display:flex; gap:8px; align-items:baseline}
+.nums .n{color:var(--muted); font-size:.78rem; min-width:2.1em; text-align:right; flex:none}
 /* Cuadrícula de kanji */
 .kanji{display:grid; grid-template-columns:repeat(auto-fill, minmax(76px, 1fr)); gap:6px; padding:6px 0 2px}
 .kanji div{
@@ -504,41 +507,27 @@ details.more .body p + p{margin-top:6px}
     </div>
   </div>
 
-  <h3>TABLA</h3>
+  <h3>BUSCA EL CONTADOR</h3>
   <div class="card">
     <div class="item">
-      <div class="table">
-        <table>
-          <thead>
-            <tr><th scope="col"></th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th><th scope="col">5</th><th scope="col">6</th><th scope="col">7</th><th scope="col">8</th><th scope="col">9</th><th scope="col">10</th><th scope="col">¿cuántos?</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">〜つ<br><span class="muted">cosas</span></th>
-              <td><span class="jp irr">ひとつ</span></td><td><span class="jp irr">ふたつ</span></td><td><span class="jp irr">みっつ</span></td><td><span class="jp irr">よっつ</span></td><td><span class="jp irr">いつつ</span></td><td><span class="jp irr">むっつ</span></td><td><span class="jp irr">ななつ</span></td><td><span class="jp irr">やっつ</span></td><td><span class="jp irr">ここのつ</span></td><td><span class="jp irr">とお</span></td><td><span class="jp">いくつ</span></td>
-            </tr>
-            <tr>
-              <th scope="row">〜人<br><span class="muted">personas</span></th>
-              <td><span class="jp irr">ひとり</span></td><td><span class="jp irr">ふたり</span></td><td><span class="jp">さんにん</span></td><td><span class="jp irr">よにん</span></td><td><span class="jp">ごにん</span></td><td><span class="jp">ろくにん</span></td><td><span class="jp">ななにん</span></td><td><span class="jp">はちにん</span></td><td><span class="jp">きゅうにん</span></td><td><span class="jp">じゅうにん</span></td><td><span class="jp">なんにん</span></td>
-            </tr>
-            <tr>
-              <th scope="row">〜時<br><span class="muted">horas</span></th>
-              <td><span class="jp">いちじ</span></td><td><span class="jp">にじ</span></td><td><span class="jp">さんじ</span></td><td><span class="jp irr">よじ</span></td><td><span class="jp">ごじ</span></td><td><span class="jp">ろくじ</span></td><td><span class="jp irr">しちじ</span></td><td><span class="jp">はちじ</span></td><td><span class="jp irr">くじ</span></td><td><span class="jp">じゅうじ</span></td><td><span class="jp">なんじ</span></td>
-            </tr>
-            <tr>
-              <th scope="row">〜分<br><span class="muted">minutos</span></th>
-              <td><span class="jp irr">いっぷん</span></td><td><span class="jp">にふん</span></td><td><span class="jp irr">さんぷん</span></td><td><span class="jp irr">よんぷん</span></td><td><span class="jp">ごふん</span></td><td><span class="jp irr">ろっぷん</span></td><td><span class="jp">ななふん</span></td><td><span class="jp irr">はっぷん</span></td><td><span class="jp">きゅうふん</span></td><td><span class="jp irr">じゅっぷん</span></td><td><span class="jp irr">なんぷん</span></td>
-            </tr>
-            <tr>
-              <th scope="row">〜歳<br><span class="muted">años</span></th>
-              <td><span class="jp irr">いっさい</span></td><td><span class="jp">にさい</span></td><td><span class="jp">さんさい</span></td><td><span class="jp">よんさい</span></td><td><span class="jp">ごさい</span></td><td><span class="jp">ろくさい</span></td><td><span class="jp">ななさい</span></td><td><span class="jp irr">はっさい</span></td><td><span class="jp">きゅうさい</span></td><td><span class="jp irr">じゅっさい</span></td><td><span class="jp">なんさい</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="muted">En azul, las casillas que no siguen el patrón. Desliza la tabla de lado.</p>
+      <label class="muted" for="picker">Elige y salen sus lecturas del 1 al 10</label>
+      <select class="picker" id="picker" aria-label="Contador"></select>
+      <div class="nums" id="lecturas"></div>
+      <p class="muted" id="nota-contador"></p>
+    </div>
+    <div class="item">
+      <p class="muted">En azul, lo que no sigue el patrón. El 10 admite <span class="jp">じゅっ</span> y <span class="jp">じっ</span> en todos; en el 8, algunos aceptan las dos (<span class="jp">はっぷん</span> / <span class="jp">はちふん</span>).</p>
     </div>
   </div>
+
+  <h3>POR QUÉ CAMBIAN</h3>
+  <div class="card">
+    <div class="item">
+      <p>Solo cambian <b>1, 3, 6, 8, 10</b> y <b>なん</b>. El 2, 5, 7 y 9 no cambian nunca.</p>
+      <p class="sub">Y el cambio no depende del contador, sino de <b>con qué sonido empieza</b>: son estas clases.</p>
+    </div>
+  </div>
+  <div class="card" id="clases"></div>
 
   <h3>DETALLES QUE PILLAN</h3>
   <div class="card">
@@ -553,6 +542,9 @@ details.more .body p + p{margin-top:6px}
       <details class="more"><summary></summary><div class="body">
         <p><span class="jp">ひとりで</span> = solo, por mi cuenta. Muy frecuente.</p>
       </div></details>
+    </div>
+    <div class="item">
+      <p>〜百 y 〜千 siguen estas mismas clases: por eso <span class="jp">さんびゃく</span> y <span class="jp">さんぜん</span>.</p>
     </div>
   </div>
 </section>
@@ -598,14 +590,25 @@ details.more .body p + p{margin-top:6px}
     synth.speak(u);
   }
 
-  document.querySelectorAll('.jp').forEach(function(el){
-    el.setAttribute('tabindex','0');
-    el.setAttribute('role','button');
-    el.setAttribute('aria-label','Escuchar ' + el.textContent);
-    el.addEventListener('click', function(e){ e.preventDefault(); speak(el); });
-    el.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); speak(el); }
+  // Accesibilidad de las palabras tocables; se repite sobre lo que se genera al vuelo.
+  function preparar(raiz){
+    raiz.querySelectorAll('.jp').forEach(function(el){
+      el.setAttribute('tabindex','0');
+      el.setAttribute('role','button');
+      el.setAttribute('aria-label','Escuchar ' + el.textContent);
     });
+  }
+  preparar(document);
+
+  // Por delegación, así vale también para lo que pinta el selector de contadores.
+  document.addEventListener('click', function(e){
+    var el = e.target.closest ? e.target.closest('.jp') : null;
+    if(el){ e.preventDefault(); speak(el); }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Enter' && e.key !== ' ') return;
+    var el = e.target.closest ? e.target.closest('.jp') : null;
+    if(el){ e.preventDefault(); speak(el); }
   });
 
   /* ── Pestañas ─────────────────────────────────────────────── */
@@ -654,6 +657,124 @@ details.more .body p + p{margin-top:6px}
   window.addEventListener('hashchange', sincronizar);
   window.addEventListener('resize', medirTopbar);
   sincronizar();
+
+  /* ── Contadores ───────────────────────────────────────────────
+     Las lecturas no están escritas a mano: se calculan con las mismas
+     reglas que usa la tabla del apéndice de Genki. Así añadir un
+     contador es una línea, y no puede quedar incoherente con el resto. */
+  var CIFRAS = [1,2,3,4,5,6,7,8,9,10,'n'];
+  var NUM = {1:'いち',2:'に',3:'さん',4:'よん',5:'ご',6:'ろく',7:'なな',8:'はち',9:'きゅう',10:'じゅう',n:'なん'};
+
+  // Cambio de la consonante inicial del contador.
+  var MUTA = {
+    p:{'ふ':'ぷ','ほ':'ぽ','は':'ぱ','ひ':'ぴ','へ':'ぺ'},
+    b:{'ふ':'ぶ','ほ':'ぼ','は':'ば','ひ':'び','へ':'べ'},
+    g:{'か':'が','き':'ぎ','く':'ぐ','け':'げ','こ':'ご'},
+    z:{'さ':'ざ','し':'じ','す':'ず','せ':'ぜ','そ':'ぞ'}
+  };
+
+  // corta: el número se acorta. muta: cómo cambia el contador.
+  var CLASES = [
+    {id:'-', nom:'Sin cambio de consonante', desc:'pero algunos piden lecturas especiales del número', corta:{}, muta:{}, callado:true},
+    {id:'hp', nom:'h → p', desc:'ふ se vuelve ぷ', corta:{1:'いっ',6:'ろっ',8:'はっ',10:'じゅっ'}, muta:{1:'p',3:'p',4:'p',6:'p',8:'p',10:'p',n:'p'}},
+    {id:'hpb', nom:'h → p / b', desc:'ぽ con 1・6・8・10, ぼ con 3 y なん; el 4 no cambia', corta:{1:'いっ',6:'ろっ',8:'はっ',10:'じゅっ'}, muta:{1:'p',3:'b',6:'p',8:'p',10:'p',n:'b'}},
+    {id:'k', nom:'k', desc:'el contador no cambia, el número se acorta', corta:{1:'いっ',6:'ろっ',8:'はっ',10:'じゅっ'}, muta:{}},
+    {id:'kg', nom:'k → g', desc:'か se vuelve が con 3 y なん', corta:{1:'いっ',6:'ろっ',8:'はっ',10:'じゅっ'}, muta:{3:'g',n:'g'}},
+    {id:'s', nom:'s', desc:'como k, pero el 6 tampoco cambia', corta:{1:'いっ',8:'はっ',10:'じゅっ'}, muta:{}},
+    {id:'sz', nom:'s → z', desc:'さ se vuelve ざ con 3 y なん', corta:{1:'いっ',8:'はっ',10:'じゅっ'}, muta:{3:'z',n:'z'}},
+    {id:'t', nom:'t', desc:'como s', corta:{1:'いっ',8:'はっ',10:'じゅっ'}, muta:{}},
+    {id:'p', nom:'p', desc:'el número se puede acortar, pero es opcional', corta:{1:'いっ',6:'ろっ',8:'はっ',10:'じゅっ'}, muta:{}}
+  ];
+
+  // esp: lecturas propias (no siguen ninguna regla). over: excepciones sueltas.
+  var CONTADORES = [
+    {g:'Lo más usado', lab:'〜つ', es:'cosas en general', esp:['ひとつ','ふたつ','みっつ','よっつ','いつつ','むっつ','ななつ','やっつ','ここのつ','とお','いくつ'], nota:'El comodín para lo que no tiene contador propio. Solo llega a 10.'},
+    {g:'Lo más usado', lab:'〜人', es:'personas', kana:'にん', clase:'-', over:{1:'ひとり',2:'ふたり',4:'よにん'}},
+    {g:'Lo más usado', lab:'〜時', es:'la hora en punto', kana:'じ', clase:'-', over:{4:'よじ',7:'しちじ',9:'くじ'}},
+    {g:'Lo más usado', lab:'〜分', es:'minutos', kana:'ふん', clase:'hp'},
+    {g:'Lo más usado', lab:'〜歳', es:'años de edad', kana:'さい', clase:'s', nota:'20 años es はたち.'},
+    {g:'Lo más usado', lab:'〜円', es:'yenes', kana:'えん', clase:'-', over:{4:'よえん'}},
+    {g:'Tiempo', lab:'〜時間', es:'horas de duración', kana:'じかん', clase:'-', over:{4:'よじかん',9:'くじかん'}},
+    {g:'Tiempo', lab:'〜日', es:'días del mes', esp:['ついたち','ふつか','みっか','よっか','いつか','むいか','なのか','ようか','ここのか','とおか','なんにち'], nota:'Y luego 14 じゅうよっか · 20 はつか · 24 にじゅうよっか. El resto, número + にち.'},
+    {g:'Tiempo', lab:'〜週間', es:'semanas', kana:'しゅうかん', clase:'s'},
+    {g:'Tiempo', lab:'〜か月', es:'meses de duración', kana:'かげつ', clase:'k'},
+    {g:'Tiempo', lab:'〜年', es:'años', kana:'ねん', clase:'-', over:{4:'よねん'}},
+    {g:'Tiempo', lab:'〜月', es:'meses del año', kana:'がつ', clase:'-', over:{4:'しがつ',7:'しちがつ',9:'くがつ'}},
+    {g:'Cosas', lab:'〜枚', es:'cosas planas: hojas, camisetas', kana:'まい', clase:'-'},
+    {g:'Cosas', lab:'〜本', es:'cosas alargadas: botellas, bolis', kana:'ほん', clase:'hpb'},
+    {g:'Cosas', lab:'〜杯', es:'tazas y vasos', kana:'はい', clase:'hpb'},
+    {g:'Cosas', lab:'〜匹', es:'animales pequeños', kana:'ひき', clase:'hpb'},
+    {g:'Cosas', lab:'〜冊', es:'libros y cuadernos', kana:'さつ', clase:'s'},
+    {g:'Cosas', lab:'〜個', es:'objetos pequeños', kana:'こ', clase:'k'},
+    {g:'Cosas', lab:'〜回', es:'veces', kana:'かい', clase:'k'},
+    {g:'Cosas', lab:'〜階', es:'pisos de un edificio', kana:'かい', clase:'kg'},
+    {g:'Cosas', lab:'〜足', es:'pares de zapatos', kana:'そく', clase:'sz'},
+    {g:'Cosas', lab:'〜通', es:'cartas', kana:'つう', clase:'t'},
+    {g:'Cosas', lab:'〜ページ', es:'páginas', kana:'ページ', clase:'p', nota:'Aquí acortar el número es opcional: いちページ vale igual que いっページ.'}
+  ];
+
+  function clase(id){
+    for(var i = 0; i < CLASES.length; i++) if(CLASES[i].id === id) return CLASES[i];
+    return CLASES[0];
+  }
+  function llano(c, n){ return NUM[n] + (c.kana || ''); }
+  function lectura(c, n){
+    if(c.esp) return c.esp[CIFRAS.indexOf(n)];
+    if(c.over && c.over[n]) return c.over[n];
+    var cl = clase(c.clase), kana = c.kana;
+    var m = cl.muta[n];
+    if(m && MUTA[m][kana.charAt(0)]) kana = MUTA[m][kana.charAt(0)] + kana.slice(1);
+    return (cl.corta[n] || NUM[n]) + kana;
+  }
+  function raro(c, n){ return !!c.esp || lectura(c, n) !== llano(c, n); }
+
+  var picker = document.getElementById('picker');
+  var lecturas = document.getElementById('lecturas');
+  var notaC = document.getElementById('nota-contador');
+
+  if(picker){
+    var grupo = '';
+    CONTADORES.forEach(function(c, i){
+      if(c.g !== grupo){ grupo = c.g; picker.appendChild(document.createElement('optgroup')).label = grupo; }
+      var o = document.createElement('option');
+      o.value = String(i);
+      o.textContent = c.lab + ' — ' + c.es;
+      picker.lastChild.appendChild(o);
+    });
+
+    function pintarContador(){
+      var c = CONTADORES[picker.value | 0];
+      lecturas.innerHTML = CIFRAS.map(function(n){
+        return '<div><span class="n">' + (n === 'n' ? '¿?' : n) + '</span>' +
+               '<span class="jp' + (raro(c, n) ? ' irr' : '') + '">' + lectura(c, n) + '</span></div>';
+      }).join('');
+      notaC.textContent = c.nota || '';
+      preparar(lecturas);
+      try{ localStorage.setItem('contador', picker.value); }catch(e){}
+    }
+    try{
+      var guardado = localStorage.getItem('contador');
+      if(guardado !== null && CONTADORES[guardado | 0]) picker.value = guardado;
+    }catch(e){}
+    picker.addEventListener('change', pintarContador);
+    pintarContador();
+  }
+
+  var cajaClases = document.getElementById('clases');
+  if(cajaClases){
+    cajaClases.innerHTML = CLASES.map(function(cl){
+      var suyos = CONTADORES.filter(function(c){ return c.clase === cl.id; });
+      if(!suyos.length) return '';
+      var ejemplo = '';
+      if(!cl.callado){
+        ejemplo = '<p class="sub">' + CIFRAS.filter(function(n){ return raro(suyos[0], n); })
+          .map(function(n){ return '<span class="jp">' + lectura(suyos[0], n) + '</span>'; }).join('・') + '</p>';
+      }
+      return '<div class="item"><p><b>' + cl.nom + '</b> <span class="muted">— ' + cl.desc + '</span></p>' +
+             '<p class="sub muted">' + suyos.map(function(c){ return c.lab; }).join(' · ') + '</p>' + ejemplo + '</div>';
+    }).join('');
+    preparar(cajaClases);
+  }
 
   // Service worker: guarda la guía para poder abrirla sin conexión.
   // Falla en silencio al abrir el fichero desde el disco (file://), donde no existe.
