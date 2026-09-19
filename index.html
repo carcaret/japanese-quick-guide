@@ -4,6 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Guía rápida de japonés</title>
+<meta name="description" content="Chuleta de japonés: sonidos, partículas, こそあど, interrogativos y expresiones.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F4F6F9">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#11151E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
+<!-- iOS: abrir sin barra de Safari y con nombre corto bajo el icono -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Japonés">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
@@ -399,6 +410,14 @@ details.more .body p + p{margin-top:6px}
       if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); speak(el); }
     });
   });
+
+  // Service worker: guarda la guía para poder abrirla sin conexión.
+  // Falla en silencio al abrir el fichero desde el disco (file://), donde no existe.
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('sw.js').catch(function(){});
+    });
+  }
 })();
 </script>
 </body>

@@ -13,11 +13,24 @@ interrogativos, negación de です y expresiones).
 
 - `index.html` — la guía entera: HTML, CSS y JS en un único fichero, sin
   dependencias ni build. Se puede abrir directamente desde el disco.
+- `manifest.webmanifest`, `sw.js`, `icons/` — lo que la convierte en PWA:
+  se instala en el móvil, se abre a pantalla completa y funciona sin conexión.
+- `tools/make-icons.py` — genera los iconos (un 日 blanco sobre azul) sin
+  dependencias ni fuentes instaladas: `python3 tools/make-icons.py`.
 - `.github/workflows/pages.yml` — publica el repo tal cual en GitHub Pages en
   cada `push` a `main`.
 
 La única dependencia externa es la tipografía Zen Kaku Gothic New de Google
-Fonts; sin conexión, el navegador cae en la fuente japonesa del sistema.
+Fonts; sin conexión, el navegador cae en la fuente japonesa del sistema
+(en iOS, Hiragino Sans).
+
+## Instalarla en el iPhone
+
+Safari → **Compartir → Añadir a pantalla de inicio**. Para tenerla instalada
+sin verla en ningún escritorio: dejar el icono solo en una página nueva y
+ocultar esa página (mantener pulsado el fondo → los puntitos → desmarcarla).
+Sigue saliendo al buscar "Japonés" en Spotlight. Un icono de web no aparece
+en la Biblioteca de Apps, así que **borrarlo del escritorio es desinstalarlo**.
 
 ## Actualizar la guía
 
@@ -28,6 +41,10 @@ git add -A && git commit -m "..." && git push
 ```
 
 En un par de minutos la Page queda actualizada (pestaña *Actions* del repo).
+La copia instalada en el móvil se actualiza sola al abrirla con conexión: el
+service worker pide siempre la versión de la red y solo tira de la copia
+guardada si no hay. Al tocar `sw.js` o los iconos, subir `VERSION` en `sw.js`
+para que se descarte la caché vieja.
 
 ### Convenciones del HTML
 
