@@ -96,6 +96,15 @@ para que se descarte la caché vieja.
 - Lo ampliable va en `<details class="more"><summary></summary><div class="body">…`
   (el botón "＋ más" lo pone el CSS; el `<summary>` va vacío a propósito).
 - Tablas de dos columnas: `.rows` con pares `.k` / `.v`.
+- **Un solo margen lateral, 18 px**, para `header`, `.tabs`, el `<nav>` y
+  `main`: las pestañas y las píldoras de sección tienen que arrancar justo
+  encima del borde de las tarjetas.
+- **Sangría francesa** en los `<p>` del `.item`: al margen solo arranca cada
+  concepto, y lo que continúa una línea larga cae al nivel de las `.sub`. Sin
+  ella, una línea que da la vuelta parece un concepto nuevo.
+- `.jp` lleva `word-break:keep-all`: el japonés se corta entre kana sin avisar
+  y partía las palabras (y su subrayado) por la mitad. Los cortes quedan en los
+  espacios y en los `・`. Para texto japonés suelto fuera de `.jp`, `.nb`.
 - Colores siempre por variable CSS (`--ai`, `--ok`, `--ng`, …): así el modo
   oscuro sale solo.
 - Nada de `id` repetidos entre pestañas: el `#hash` los usa para saber qué

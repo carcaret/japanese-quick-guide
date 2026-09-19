@@ -49,7 +49,7 @@ h1{font-size:1.45rem; line-height:1.25; margin:0; font-weight:700; letter-spacin
 .hint{color:var(--muted); font-size:.88rem; margin:6px 0 0}
 /* Barra superior: pestañas + índice de la pestaña activa */
 .topbar{position:sticky; top:0; z-index:5; background:var(--bg); border-bottom:1px solid var(--rule)}
-.tabs{max-width:680px; margin:0 auto; padding:6px 12px 0; display:flex; gap:4px}
+.tabs{max-width:680px; margin:0 auto; padding:6px 18px 0; display:flex; gap:4px}
 .tabs button{
   flex:1; font:inherit; font-size:.9rem; font-weight:500; cursor:pointer; color:var(--muted);
   background:none; border:0; border-bottom:2px solid transparent; padding:6px 4px 7px; border-radius:6px 6px 0 0;
@@ -57,7 +57,7 @@ h1{font-size:1.45rem; line-height:1.25; margin:0; font-weight:700; letter-spacin
 .tabs button[aria-selected="true"]{color:var(--ai); border-bottom-color:var(--ai); font-weight:700}
 .tabs button:focus-visible{outline:2px solid var(--ai); outline-offset:-2px}
 .panel[hidden]{display:none}
-nav .in{max-width:680px; margin:0 auto; padding:8px 12px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none}
+nav .in{max-width:680px; margin:0 auto; padding:8px 18px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none}
 nav .in::-webkit-scrollbar{display:none}
 nav a{
   flex:none; text-decoration:none; color:var(--ai); font-size:.85rem; font-weight:500;
@@ -77,14 +77,20 @@ h3{font-size:.95rem; margin:22px 0 4px; font-weight:700; letter-spacing:.03em}
 .card{background:var(--surface); border:1px solid var(--rule); border-radius:10px; padding:4px 16px}
 .item{padding:11px 0; border-bottom:1px solid var(--rule)}
 .item:last-child{border-bottom:0}
+/* Sangría francesa: al margen solo arranca cada concepto; lo que continúa una
+   línea larga cae al mismo nivel que las líneas secundarias. */
+.item > p{padding-left:1.15em; text-indent:-1.15em}
+.item > p.sub{text-indent:0}
 .sub{padding-left:1.15em; color:var(--ink)}
 .sub + .sub{margin-top:1px}
 .muted{color:var(--muted)}
+.nb{white-space:nowrap}
 .ok{color:var(--ok); font-weight:700}
 .ng{color:var(--ng); font-weight:700}
 p{margin:0}
 .jp{
   cursor:pointer; border-bottom:1px dotted var(--ai); border-radius:3px;
+  word-break:keep-all;   /* que no parta la palabra (ni su subrayado) a mitad */
   transition:background-color .2s; -webkit-tap-highlight-color:transparent;
 }
 .jp.abierto{background:var(--ai-tint)}
@@ -111,8 +117,10 @@ p{margin:0}
   padding:6px 4px; text-align:center; font-size:.78rem; color:var(--muted);
 }
 .kanji b{display:block; font-size:1.35rem; color:var(--ink); font-weight:500; line-height:1.3}
-.kso{display:grid; grid-template-columns:auto repeat(4, max-content); column-gap:12px; row-gap:4px; align-items:baseline; padding:6px 0; min-width:max-content}
-.kso .lab{color:var(--muted); font-size:.9rem; padding-right:6px}
+.kso{display:grid; grid-template-columns:repeat(4, 1fr); column-gap:8px; row-gap:3px; align-items:baseline; padding:2px 0 6px}
+.kso .lab{grid-column:1 / -1; color:var(--muted); font-size:.85rem; margin-top:10px}
+.kso .lab:first-child{margin-top:0}
+.kso > span{justify-self:start}
 /* Desplegables */
 details.more{margin-top:6px}
 details.more summary{
@@ -269,7 +277,7 @@ details.more .body p + p{margin-top:6px}
     <div class="item">
       <div class="table"><div class="kso">
         <span class="lab">Cosa (va sola)</span><span class="jp">これ</span><span class="jp">それ</span><span class="jp">あれ</span><span class="jp">どれ</span>
-        <span class="lab">+ sustantivo</span><span class="jp">この</span><span class="jp">その</span><span class="jp">あの</span><span><span class="jp">どの</span> <span class="muted">(+ ほん)</span></span>
+        <span class="lab">+ sustantivo</span><span class="jp">この</span><span class="jp">その</span><span class="jp">あの</span><span class="jp">どの</span>
         <span class="lab">Lugar</span><span class="jp">ここ</span><span class="jp">そこ</span><span class="jp">あそこ</span><span class="jp">どこ</span>
         <span class="lab">Dirección / cortés</span><span class="jp">こちら</span><span class="jp">そちら</span><span class="jp">あちら</span><span class="jp">どちら</span>
       </div></div>
@@ -353,7 +361,8 @@ details.more .body p + p{margin-top:6px}
     <div class="item"><p><span class="jp">そうですか</span> — bajando la voz: "ya veo" / subiendo: "¿ah sí?"</p></div>
     <div class="item"><p><span class="jp">そうです</span> / <span class="jp">ちがいます</span> — así es / no es así</p></div>
     <div class="item">
-      <p><span class="jp">すみません</span> — perdone; también para llamar al camarero</p>
+      <p><span class="jp">すみません</span> — "perdone"</p>
+      <p class="sub">También para llamar al camarero</p>
       <p class="sub">y para agradecer una molestia</p>
     </div>
     <div class="item">
@@ -532,7 +541,7 @@ details.more .body p + p{margin-top:6px}
       <p>20 años es <span class="jp">はたち</span>, no にじゅっさい.</p>
     </div>
     <div class="item">
-      <p><span class="jp">ひとり</span> y <span class="jp">ふたり</span> son las dos únicas raras de 〜人: de 3 en adelante, número + にん.</p>
+      <p><span class="jp">ひとり</span>、<span class="jp">ふたり</span> y <span class="jp">よにん</span> (nunca よんにん) son las tres raras de 〜人. El resto, número + にん.</p>
       <details class="more"><summary></summary><div class="body">
         <p><span class="jp">ひとりで</span> = solo, por mi cuenta. Muy frecuente.</p>
       </div></details>
@@ -833,7 +842,7 @@ details.more .body p + p{margin-top:6px}
           .map(function(n){ return '<span class="jp">' + lectura(suyos[0], n) + '</span>'; }).join('・') + '</p>';
       }
       return '<div class="item"><p><b>' + cl.nom + '</b> <span class="muted">— ' + cl.desc + '</span></p>' +
-             '<p class="sub muted">' + suyos.map(function(c){ return c.lab; }).join(' · ') + '</p>' + ejemplo + '</div>';
+             '<p class="sub muted">' + suyos.map(function(c){ return '<span class="nb">' + c.lab + '</span>'; }).join(' · ') + '</p>' + ejemplo + '</div>';
     }).join('');
     preparar(cajaClases);
   }
