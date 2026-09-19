@@ -102,9 +102,14 @@ para que se descarte la caché vieja.
 - **Sangría francesa** en los `<p>` del `.item`: al margen solo arranca cada
   concepto, y lo que continúa una línea larga cae al nivel de las `.sub`. Sin
   ella, una línea que da la vuelta parece un concepto nuevo.
-- `.jp` lleva `word-break:keep-all`: el japonés se corta entre kana sin avisar
-  y partía las palabras (y su subrayado) por la mitad. Los cortes quedan en los
-  espacios y en los `・`. Para texto japonés suelto fuera de `.jp`, `.nb`.
+- `.jp` lleva `white-space:nowrap`: el japonés se corta entre kana sin avisar y
+  partía las palabras (y su subrayado) por la mitad. Los cortes quedan entre
+  spans, en los `、` y los `・`. Para texto japonés suelto fuera de `.jp`, `.nb`.
+  **No usar `word-break:keep-all`**: en Chrome hace lo esperado, pero Safari
+  suprime además el corte en `・`, y una lista como
+  `いっぷん・さんぷん・…・なんぷん` se vuelve indivisible y desborda la pantalla.
+  Comprobar los cambios de corte con `documentElement.scrollWidth` a 393 px, no
+  solo a ojo, y recordar que el móvil del usuario es Safari.
 - Colores siempre por variable CSS (`--ai`, `--ok`, `--ng`, …): así el modo
   oscuro sale solo.
 - Nada de `id` repetidos entre pestañas: el `#hash` los usa para saber qué

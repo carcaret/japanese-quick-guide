@@ -90,7 +90,8 @@ h3{font-size:.95rem; margin:22px 0 4px; font-weight:700; letter-spacing:.03em}
 p{margin:0}
 .jp{
   cursor:pointer; border-bottom:1px dotted var(--ai); border-radius:3px;
-  word-break:keep-all;   /* que no parta la palabra (ni su subrayado) a mitad */
+  white-space:nowrap;    /* que no parta la palabra (ni su subrayado) a mitad;
+                            keep-all no vale: Safari suprime tambien el corte en 「・」 */
   transition:background-color .2s; -webkit-tap-highlight-color:transparent;
 }
 .jp.abierto{background:var(--ai-tint)}
