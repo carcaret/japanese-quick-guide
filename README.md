@@ -99,9 +99,11 @@ para que se descarte la caché vieja.
 - **Un solo margen lateral, 18 px**, para `header`, `.tabs`, el `<nav>` y
   `main`: las pestañas y las píldoras de sección tienen que arrancar justo
   encima del borde de las tarjetas.
-- **Sangría francesa** en los `<p>` del `.item`: al margen solo arranca cada
-  concepto, y lo que continúa una línea larga cae al nivel de las `.sub`. Sin
-  ella, una línea que da la vuelta parece un concepto nuevo.
+- Las `.sub` se distinguen por un **filete vertical**, no solo por la sangría.
+  Con la sangría sola no se sabe si una línea es la continuación de la de
+  arriba o una línea secundaria nueva, y en el móvil casi todo da la vuelta.
+  Probado antes con sangría francesa en los `<p>` del `.item`: arregla la
+  continuación pero la deja idéntica a la `.sub` de debajo.
 - `.jp` lleva `white-space:nowrap`: el japonés se corta entre kana sin avisar y
   partía las palabras (y su subrayado) por la mitad. Los cortes quedan entre
   spans, en los `、` y los `・`. Para texto japonés suelto fuera de `.jp`, `.nb`.

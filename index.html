@@ -77,12 +77,11 @@ h3{font-size:.95rem; margin:22px 0 4px; font-weight:700; letter-spacing:.03em}
 .card{background:var(--surface); border:1px solid var(--rule); border-radius:10px; padding:4px 16px}
 .item{padding:11px 0; border-bottom:1px solid var(--rule)}
 .item:last-child{border-bottom:0}
-/* Sangría francesa: al margen solo arranca cada concepto; lo que continúa una
-   línea larga cae al mismo nivel que las líneas secundarias. */
-.item > p{padding-left:1.15em; text-indent:-1.15em}
-.item > p.sub{text-indent:0}
-.sub{padding-left:1.15em; color:var(--ink)}
-.sub + .sub{margin-top:1px}
+/* Las líneas secundarias se marcan con un filete, no solo con la sangría: así no
+   se confunden con la continuación de una línea larga, se parta donde se parta.
+   Sin hueco entre ellas, para que el filete salga de una pieza. */
+.sub{padding-left:.7em; margin-left:.3em; border-left:2px solid var(--rule); color:var(--ink)}
+.sub + .sub{margin-top:0}
 .muted{color:var(--muted)}
 .nb{white-space:nowrap}
 .ok{color:var(--ok); font-weight:700}
