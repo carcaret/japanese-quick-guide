@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía rápida de japonés</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F6F9; --surface:#FFFFFF; --ink:#1C2230; --muted:#5A6376;
+  --rule:#D9DEE7; --ai:#2A4A8A; --ai-tint:#E3E9F5; --ok:#2E7550; --ng:#B23A34;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151E; --surface:#181E2B; --ink:#E6E9F0; --muted:#9AA3B5;
+    --rule:#2B3345; --ai:#93ACE3; --ai-tint:#222C44; --ok:#6CC495; --ng:#E8857E;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151E; --surface:#181E2B; --ink:#E6E9F0; --muted:#9AA3B5;
+  --rule:#2B3345; --ai:#93ACE3; --ai-tint:#222C44; --ok:#6CC495; --ng:#E8857E;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:64px}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  font-size:16px; line-height:1.65;
+}
+header{max-width:680px; margin:0 auto; padding:28px 18px 8px}
+h1{font-size:1.45rem; line-height:1.25; margin:0; font-weight:700; letter-spacing:.01em}
+.hint{color:var(--muted); font-size:.88rem; margin:6px 0 0}
+nav{
+  position:sticky; top:0; z-index:5; background:var(--bg);
+  border-bottom:1px solid var(--rule);
+}
+nav .in{max-width:680px; margin:0 auto; padding:8px 12px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none}
+nav .in::-webkit-scrollbar{display:none}
+nav a{
+  flex:none; text-decoration:none; color:var(--ai); font-size:.85rem; font-weight:500;
+  padding:5px 11px; border-radius:999px; background:var(--ai-tint);
+}
+nav a:focus-visible, summary:focus-visible, .jp:focus-visible{outline:2px solid var(--ai); outline-offset:2px}
+main{max-width:680px; margin:0 auto; padding:4px 18px 60px}
+section{margin-top:30px}
+h2{
+  display:flex; align-items:center; gap:10px; margin:0 0 10px;
+  font-size:1.02rem; font-weight:700; color:var(--ai); letter-spacing:.04em;
+}
+h2::before, h2::after{content:""; height:3px; background:var(--ai); border-radius:2px}
+h2::before{width:34px; flex:none}
+h2::after{flex:1}
+h3{font-size:.95rem; margin:22px 0 4px; font-weight:700; letter-spacing:.03em}
+.card{background:var(--surface); border:1px solid var(--rule); border-radius:10px; padding:4px 16px}
+.item{padding:11px 0; border-bottom:1px solid var(--rule)}
+.item:last-child{border-bottom:0}
+.sub{padding-left:1.15em; color:var(--ink)}
+.sub + .sub{margin-top:1px}
+.muted{color:var(--muted)}
+.ok{color:var(--ok); font-weight:700}
+.ng{color:var(--ng); font-weight:700}
+p{margin:0}
+.jp{
+  cursor:pointer; border-bottom:1px dotted var(--ai); border-radius:3px;
+  transition:background-color .2s; -webkit-tap-highlight-color:transparent;
+}
+.jp.speaking{background:var(--ai-tint)}
+/* Filas alineadas (vocales largas, こそあど, interrogativos, negación) */
+.rows{display:grid; grid-template-columns:max-content 1fr; column-gap:14px; row-gap:3px; padding:4px 0 2px}
+.rows .k{white-space:nowrap}
+.rows .v{color:var(--muted)}
+.table{overflow-x:auto}
+.kso{display:grid; grid-template-columns:auto repeat(4, max-content); column-gap:12px; row-gap:4px; align-items:baseline; padding:6px 0; min-width:max-content}
+.kso .lab{color:var(--muted); font-size:.9rem; padding-right:6px}
+/* Desplegables */
+details.more{margin-top:6px}
+details.more summary{
+  list-style:none; display:inline-block; cursor:pointer; user-select:none;
+  font-size:.78rem; font-weight:500; color:var(--ai); background:var(--ai-tint);
+  padding:1px 10px; border-radius:999px;
+}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:"＋ más"}
+details.more[open] summary::before{content:"− menos"}
+details.more .body{
+  margin-top:8px; padding:8px 12px; border-left:3px solid var(--ai);
+  background:var(--ai-tint); border-radius:0 8px 8px 0; font-size:.94rem;
+}
+details.more .body p + p{margin-top:6px}
+/* Diagrama こそあど */
+.dist{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; text-align:center; margin:6px 0 4px}
+.dist div{background:var(--surface); border:1px solid var(--rule); border-radius:8px; padding:8px 4px; font-size:.86rem}
+.dist b{display:block; font-size:1.25rem; color:var(--ai)}
+/* Aviso de audio */
+#toast{
+  position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
+  background:var(--ink); color:var(--bg); font-size:.85rem; padding:8px 14px;
+  border-radius:8px; opacity:0; pointer-events:none; transition:opacity .25s; max-width:90vw; text-align:center;
+}
+#toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Guía rápida de japonés — Lecciones 1–2</h1>
+  <p class="hint">Toca cualquier palabra japonesa subrayada para oírla.</p>
+</header>
+
+<nav aria-label="Secciones">
+  <div class="in">
+    <a href="#sonidos">Sonidos</a>
+    <a href="#particulas">Partículas</a>
+    <a href="#kosoado">こそあど</a>
+    <a href="#interrogativos">Interrogativos</a>
+    <a href="#negacion">Negación de です</a>
+    <a href="#expresiones">Expresiones</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ━━━ SONIDOS ━━━ -->
+<section id="sonidos">
+  <h2>SONIDOS</h2>
+  <div class="card">
+    <div class="item">
+      <p>っ duplica la consonante siguiente (solo ante k, s, t, p):</p>
+      <p class="sub"><span class="jp">きって</span>、<span class="jp">がっこう</span>、<span class="jp">ざっし</span>、<span class="jp">いっぱい</span></p>
+      <p class="sub">っ+ち se transcribe "tch" → <span class="jp">まっちゃ</span></p>
+      <details class="more"><summary></summary><div class="body">
+        <p>Se oye como una micro-pausa tensa antes de la consonante.</p>
+        <p>En katakana es ッ, y en préstamos también aparece ante otras consonantes: <span class="jp">ベッド</span>、<span class="jp">バッグ</span></p>
+      </div></details>
+    </div>
+    <div class="item">
+      <p>ん + fila な = nn: <span class="jp">おんな</span>、<span class="jp">こんにちは</span></p>
+      <details class="more"><summary></summary><div class="body">
+        <p>ん es una sílaba completa. Ante vocal o や・ゆ・よ se separa del sonido siguiente:</p>
+        <p><span class="jp">きんえん</span> (kin-en) ≠ <span class="jp">きねん</span> (ki-nen)</p>
+      </div></details>
+    </div>
+    <div class="item">
+      <p>ん suena "m" ante b/p/m (<span class="jp">せんぱい</span>、<span class="jp">こんばんは</span>)</p>
+      <p class="sub">y nasal velar ante k/g (<span class="jp">にほんご</span>)</p>
+    </div>
+    <div class="item">
+      <p>Tres kana con lectura propia al ser partícula:</p>
+      <p class="sub">は = wa · へ = e · を = o</p>
+      <details class="more"><summary></summary><div class="body">
+        <p>Solo cuando funcionan como partícula. Dentro de una palabra, は es "ha": <span class="jp">はな</span>、<span class="jp">はし</span></p>
+      </div></details>
+    </div>
+  </div>
+
+  <h3>VOCALES LARGAS</h3>
+  <div class="card">
+    <div class="item">
+      <p>La duración cambia el significado: <span class="jp">おばさん</span> (tía) / <span class="jp">おばあさん</span> (abuela)</p>
+      <div class="table"><div class="rows">
+        <span class="k">aa = あ+あ</span><span class="v">→ <span class="jp">おかあさん</span></span>
+        <span class="k">ii = い+い</span><span class="v">→ <span class="jp">おにいさん</span></span>
+        <span class="k">uu = う+う</span><span class="v">→ <span class="jp">すうじ</span></span>
+        <span class="k">ee = え+い</span><span class="v">← lo normal → <span class="jp">せんせい</span>, suena "sensee"</span>
+        <span class="k">ee = え+え</span><span class="v">← raro → <span class="jp">おねえさん</span></span>
+        <span class="k">oo = お+う</span><span class="v">← lo normal → <span class="jp">がっこう</span>, suena "gakkoo"</span>
+        <span class="k">oo = お+お</span><span class="v">← lista fija → <span class="jp">おおきい</span>、<span class="jp">おおい</span>、<span class="jp">とおい</span>、<span class="jp">とおか</span>、<span class="jp">こおり</span></span>
+      </div></div>
+      <p>Katakana: alarga con la raya ー → <span class="jp">コーヒー</span>、<span class="jp">ケーキ</span></p>
+      <details class="more"><summary></summary><div class="body">
+        <p>Más pares donde solo cambia la duración:</p>
+        <p><span class="jp">おじさん</span> (tío) / <span class="jp">おじいさん</span> (abuelo)</p>
+        <p><span class="jp">ビル</span> (edificio) / <span class="jp">ビール</span> (cerveza)</p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ PARTÍCULAS ━━━ -->
+<section id="particulas">
+  <h2>PARTÍCULAS</h2>
+  <div class="card">
+    <div class="item">
+      <p>は — tema de la frase (no siempre el sujeto)</p>
+      <details class="more"><summary></summary><div class="body">
+        <p>は fija de qué se habla; lo que va detrás es lo que se dice de ello.</p>
+        <p>Pidiendo en un restaurante: <span class="jp">わたしは すしです</span> → "yo, sushi" (no "soy sushi").</p>
+      </div></details>
+    </div>
+    <div class="item">
+      <p>の — B の A = el A relacionado con B. La posesión es solo un caso:</p>
+      <div class="table"><div class="rows">
+        <span class="k"><span class="jp">たなかさんの ほん</span></span><span class="v">→ el libro de Tanaka (posesión)</span>
+        <span class="k"><span class="jp">にほんごの せんせい</span></span><span class="v">→ el profesor de japonés (materia)</span>
+        <span class="k"><span class="jp">だいがくの がくせい</span></span><span class="v">→ estudiante universitario (pertenencia)</span>
+        <span class="k"><span class="jp">にほんの くるま</span></span><span class="v">→ coche japonés (origen)</span>
+      </div></div>
+      <details class="more"><summary></summary><div class="body">
+        <p>Se puede encadenar: <span class="jp">にほんの だいがくの せんせい</span> → profesor de una universidad japonesa.</p>
+      </div></details>
+    </div>
+    <div class="item">
+      <p>も — también / tampoco</p>
+      <p class="sub">SUSTITUYE a は・が・を → <span class="ng">✗</span> わたしはも <span class="ok">○</span> <span class="jp">わたしも</span></p>
+      <p class="sub">Con に・で・から sí se combina: にも、でも、からも</p>
+      <details class="more"><summary></summary><div class="body">
+        <p>Con verbo negativo significa "tampoco": <span class="jp">わたしも がくせいじゃないです</span> → yo tampoco soy estudiante.</p>
+      </div></details>
+    </div>
+    <div class="item">
+      <p>ね — busca acuerdo: "¿verdad?"</p>
+    </div>
+    <div class="item">
+      <p>よ — informa o insiste: "que sí, oye". Abusar suena impositivo.</p>
+      <details class="more"><summary></summary><div class="body">
+        <p>Juntas, よね = "¿a que sí?": crees saberlo, pero pides confirmación.</p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ SERIE こそあど ━━━ -->
+<section id="kosoado">
+  <h2>SERIE こそあど</h2>
+  <div class="card">
+    <div class="item">
+      <div class="table"><div class="kso">
+        <span class="lab">Cosa (va sola)</span><span class="jp">これ</span><span class="jp">それ</span><span class="jp">あれ</span><span class="jp">どれ</span>
+        <span class="lab">+ sustantivo</span><span class="jp">この</span><span class="jp">その</span><span class="jp">あの</span><span><span class="jp">どの</span> <span class="muted">(+ ほん)</span></span>
+        <span class="lab">Lugar</span><span class="jp">ここ</span><span class="jp">そこ</span><span class="jp">あそこ</span><span class="jp">どこ</span>
+        <span class="lab">Dirección / cortés</span><span class="jp">こちら</span><span class="jp">そちら</span><span class="jp">あちら</span><span class="jp">どちら</span>
+      </div></div>
+    </div>
+    <div class="item">
+      <p>こ = cerca de mí · そ = cerca de ti · あ = lejos de ambos · ど = pregunta</p>
+      <details class="more"><summary></summary><div class="body">
+        <div class="dist">
+          <div><b>こ</b>junto a mí</div>
+          <div><b>そ</b>junto a ti</div>
+          <div><b>あ</b>lejos de los dos</div>
+        </div>
+        <p>こちら también sirve para presentar a alguien con cortesía: <span class="jp">こちらは たなかさんです</span> → este es el señor Tanaka.</p>
+      </div></details>
+    </div>
+    <div class="item">
+      <p>これ va sola; この necesita sustantivo (<span class="ng">✗</span> これほん)</p>
+    </div>
+    <div class="item">
+      <p>どれ = cuál entre 3 o más · どちら / どっち = cuál entre 2</p>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ INTERROGATIVOS ━━━ -->
+<section id="interrogativos">
+  <h2>INTERROGATIVOS</h2>
+  <div class="card">
+    <div class="item">
+      <p>何 tiene dos lecturas:</p>
+      <p class="sub">なん → ante です y ante contadores con t/d/n: <span class="jp">なんですか</span>、<span class="jp">なんじ</span>、<span class="jp">なんにん</span></p>
+      <p class="sub">なに → en el resto: <span class="jp">なにを たべますか</span></p>
+      <details class="more"><summary></summary><div class="body">
+        <p>También なん ante の: <span class="jp">なんの ほん</span> → ¿un libro de qué?</p>
+      </div></details>
+    </div>
+    <div class="item">
+      <div class="table"><div class="rows">
+        <span class="k"><span class="jp">なんじ</span></span><span class="v">qué hora</span>
+        <span class="k"><span class="jp">なんさい</span></span><span class="v">cuántos años</span>
+        <span class="k"><span class="jp">なんねんせい</span></span><span class="v">qué curso</span>
+        <span class="k"><span class="jp">なんばん</span></span><span class="v">qué número</span>
+        <span class="k"><span class="jp">なんにん</span></span><span class="v">cuántas personas</span>
+        <span class="k"><span class="jp">だれ</span></span><span class="v">quién</span>
+        <span class="k"><span class="jp">だれの</span></span><span class="v">de quién</span>
+        <span class="k"><span class="jp">どこ</span></span><span class="v">dónde</span>
+        <span class="k"><span class="jp">いくら</span></span><span class="v">cuánto cuesta</span>
+      </div></div>
+    </div>
+    <div class="item">
+      <p>Van en el hueco del dato que falta, sin tocar el resto de la frase:</p>
+      <p class="sub"><span class="jp">たなかさんは がくせいですか</span> → <span class="jp">たなかさんは なんですか</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ NEGACIÓN DE です ━━━ -->
+<section id="negacion">
+  <h2>NEGACIÓN DE です</h2>
+  <div class="card">
+    <div class="item">
+      <p>じゃ = contracción de では</p>
+      <p>ないです = versión informal de ありません</p>
+    </div>
+    <div class="item">
+      <div class="table"><div class="rows">
+        <span class="k"><span class="jp">じゃないです</span></span><span class="v">la normal del día a día</span>
+        <span class="k"><span class="jp">じゃありません</span></span><span class="v">un paso más formal</span>
+        <span class="k"><span class="jp">ではないです</span></span><span class="v">poco frecuente</span>
+        <span class="k"><span class="jp">ではありません</span></span><span class="v">la más formal (escrito, discursos, negocios)</span>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ EXPRESIONES ━━━ -->
+<section id="expresiones">
+  <h2>EXPRESIONES</h2>
+  <div class="card">
+    <div class="item"><p><span class="jp">あのう</span> — "esto…", para arrancar o llamar la atención</p></div>
+    <div class="item"><p><span class="jp">そうですか</span> — bajando la voz: "ya veo" / subiendo: "¿ah sí?"</p></div>
+    <div class="item"><p><span class="jp">そうです</span> / <span class="jp">ちがいます</span> — así es / no es así</p></div>
+    <div class="item">
+      <p><span class="jp">すみません</span> — perdone; también para llamar al camarero</p>
+      <p class="sub">y para agradecer una molestia</p>
+    </div>
+    <div class="item">
+      <p><span class="jp">じゃあ</span> — "entonces / pues", para decidir o cerrar un tema</p>
+      <p class="sub"><span class="jp">じゃあ、これを ください</span> → pues entonces, deme esto</p>
+      <p class="sub">Más formal: <span class="jp">では</span></p>
+    </div>
+  </div>
+
+  <h3>ください</h3>
+  <div class="card">
+    <div class="item">
+      <p>ください = "deme" (de くださる, "dar a mí", respetuoso).</p>
+      <p>No significa "por favor" en sí: la cortesía va dentro del verbo.</p>
+    </div>
+    <div class="item">
+      <p>1) Cosa + を + ください → "deme X, por favor"</p>
+      <p class="sub"><span class="jp">しんぶんを ください</span> → deme el periódico</p>
+      <p class="sub"><span class="jp">これを ください</span> → deme esto (típico en tiendas)</p>
+      <p class="sub">En el habla se suele omitir を: <span class="jp">しんぶん ください</span></p>
+    </div>
+    <div class="item">
+      <p>2) Verbo en forma-te + ください → "haga X, por favor" <span class="muted">(se ve en L6)</span></p>
+      <p class="sub"><span class="jp">ゆっくり いってください</span> → dígalo despacio</p>
+      <p class="sub"><span class="jp">もういちど いってください</span> → dígalo otra vez</p>
+    </div>
+    <div class="item">
+      <p>3) <span class="jp">おねがいします</span> → "por favor / se lo ruego"</p>
+      <p class="sub">Algo más cortés que ください. Sirve para pedir cosas</p>
+      <p class="sub">y también favores o servicios: <span class="jp">コーヒー、おねがいします</span></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var synth = window.speechSynthesis;
+  var voice = null, warned = false;
+  var toast = document.getElementById('toast'), tTimer;
+
+  function showToast(msg){
+    toast.textContent = msg; toast.classList.add('show');
+    clearTimeout(tTimer); tTimer = setTimeout(function(){ toast.classList.remove('show'); }, 2600);
+  }
+  function pickVoice(){
+    if(!synth) return;
+    var vs = synth.getVoices() || [];
+    voice = vs.find(function(v){ return /^ja(-|_|$)/i.test(v.lang); }) || null;
+  }
+  if(synth){
+    pickVoice();
+    if(typeof synth.onvoiceschanged !== 'undefined') synth.onvoiceschanged = pickVoice;
+  }
+
+  function speak(el){
+    if(!synth){ showToast('Este navegador no puede leer en voz alta.'); return; }
+    if(!voice) pickVoice();
+    var text = el.getAttribute('data-say') || el.textContent;
+    synth.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ja-JP'; u.rate = 0.85;
+    if(voice) u.voice = voice;
+    else if(!warned){ warned = true; showToast('No hay voz japonesa instalada; puede sonar mal.'); }
+    document.querySelectorAll('.jp.speaking').forEach(function(x){ x.classList.remove('speaking'); });
+    el.classList.add('speaking');
+    u.onend = u.onerror = function(){ el.classList.remove('speaking'); };
+    synth.speak(u);
+  }
+
+  document.querySelectorAll('.jp').forEach(function(el){
+    el.setAttribute('tabindex','0');
+    el.setAttribute('role','button');
+    el.setAttribute('aria-label','Escuchar ' + el.textContent);
+    el.addEventListener('click', function(e){ e.preventDefault(); speak(el); });
+    el.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); speak(el); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
