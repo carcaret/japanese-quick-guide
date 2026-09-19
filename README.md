@@ -18,7 +18,7 @@ interrogativos, negación de です y expresiones).
 - `tools/make-icons.py` — genera los iconos (un 日 blanco sobre azul) sin
   dependencias ni fuentes instaladas: `python3 tools/make-icons.py`.
 - `.github/workflows/pages.yml` — publica el repo tal cual en GitHub Pages en
-  cada `push` a `main`.
+  cada `push` a `master`.
 
 La única dependencia externa es la tipografía Zen Kaku Gothic New de Google
 Fonts; sin conexión, el navegador cae en la fuente japonesa del sistema
