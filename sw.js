@@ -1,6 +1,6 @@
 /* Service worker: la guía funciona sin conexión una vez abierta. */
 
-var VERSION = 'v4';
+var VERSION = 'v5';
 var CACHE = 'guia-japones-' + VERSION;
 
 /* Lo imprescindible, guardado al instalar. */
@@ -45,7 +45,9 @@ self.addEventListener('fetch', function(e){
   // y de paso se refresca la copia de reserva. Sin conexión, la guardada.
   if(req.mode === 'navigate'){
     e.respondWith(
-      fetch(req).then(function(r){
+      // no-cache: revalida siempre contra el servidor. Sin esto, la caché HTTP
+      // del navegador (GitHub Pages manda max-age=600) tapa la actualización.
+      fetch(new Request(req.url, {cache: 'no-cache', credentials: 'same-origin'})).then(function(r){
         var copia = r.clone();
         caches.open(CACHE).then(function(c){ c.put('./index.html', copia); });
         return r;

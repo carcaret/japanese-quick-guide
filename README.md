@@ -161,6 +161,12 @@ libro, y el romaji de las 202 palabras de la página.
   Actions): no lo puede hacer ni un token ni el `GITHUB_TOKEN` del workflow.
 - Para relanzar un despliegue sin cambios, commit vacío: no hay permiso de
   `workflow_dispatch`.
+- GitHub Pages sirve `index.html` con `Cache-Control: max-age=600`. El `fetch`
+  del service worker pasa por la caché HTTP del navegador, así que "red
+  primero" no bastaba: durante 10 minutos seguías viendo la página vieja aunque
+  el despliegue hubiera terminado. Por eso la navegación pide
+  `cache:'no-cache'`, que revalida contra el servidor. Para comprobar qué hay
+  publicado de verdad, `curl` a la URL, no el móvil.
 
 ## Ideas pendientes
 
