@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Guía rápida de japonés</title>
-<meta name="description" content="Chuleta de japonés: sonidos, partículas, こそあど, interrogativos y expresiones.">
+<meta name="description" content="Chuleta de japonés: sonidos, partículas, こそあど, interrogativos, verbos y expresiones.">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F4F6F9">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#11151E">
 <link rel="manifest" href="manifest.webmanifest">
@@ -95,6 +95,15 @@ p{margin:0}
 }
 .jp.abierto{background:var(--ai-tint)}
 .romaji{color:var(--muted); font-size:.86em; font-style:italic; margin-left:.35em}
+/* Kanji con furigana: la lectura va encima y es la que se transcribe a romaji */
+rt{font-size:.52em; font-weight:400; color:var(--muted); line-height:1; letter-spacing:.02em}
+.jp.abierto rt{color:var(--ai)}
+/* Conjugación de un verbo, en vertical como las lecturas de los contadores.
+   Cada palabra va envuelta en su propia celda: el romaji se inserta detrás de
+   la palabra, y si ésta fuera celda de la rejilla, el romaji sería otra y
+   descolocaría todas las filas siguientes (le pasaba también a .kso). */
+.conj{display:grid; grid-template-columns:max-content 1fr; column-gap:14px; row-gap:7px; align-items:baseline; padding:10px 0 2px}
+.conj .n{color:var(--muted); font-size:.78rem}
 /* Filas alineadas (vocales largas, こそあど, interrogativos, negación) */
 .rows{display:grid; grid-template-columns:max-content 1fr; column-gap:14px; row-gap:3px; padding:4px 0 2px}
 .rows .k{white-space:nowrap}
@@ -146,12 +155,13 @@ details.more .body p + p{margin-top:6px}
 
 <header>
   <h1>Guía rápida de japonés</h1>
-  <p class="hint">Genki, lecciones 1–2. Toca cualquier palabra japonesa subrayada para ver su romaji.</p>
+  <p class="hint">Genki, lecciones 1–3. Toca cualquier palabra japonesa subrayada para ver su romaji.</p>
 </header>
 
 <div class="topbar">
   <div class="tabs" role="tablist" aria-label="Apartados">
     <button type="button" role="tab" data-panel="guia" aria-selected="true" aria-controls="guia">Guía</button>
+    <button type="button" role="tab" data-panel="verbos" aria-selected="false" aria-controls="verbos">Verbos</button>
     <button type="button" role="tab" data-panel="numeros" aria-selected="false" aria-controls="numeros">Números</button>
     <button type="button" role="tab" data-panel="contadores" aria-selected="false" aria-controls="contadores">Contadores</button>
   </div>
@@ -276,10 +286,10 @@ details.more .body p + p{margin-top:6px}
   <div class="card">
     <div class="item">
       <div class="table"><div class="kso">
-        <span class="lab">Cosa (va sola)</span><span class="jp">これ</span><span class="jp">それ</span><span class="jp">あれ</span><span class="jp">どれ</span>
-        <span class="lab">+ sustantivo</span><span class="jp">この</span><span class="jp">その</span><span class="jp">あの</span><span class="jp">どの</span>
-        <span class="lab">Lugar</span><span class="jp">ここ</span><span class="jp">そこ</span><span class="jp">あそこ</span><span class="jp">どこ</span>
-        <span class="lab">Dirección / cortés</span><span class="jp">こちら</span><span class="jp">そちら</span><span class="jp">あちら</span><span class="jp">どちら</span>
+        <span class="lab">Cosa (va sola)</span><span><span class="jp">これ</span></span><span><span class="jp">それ</span></span><span><span class="jp">あれ</span></span><span><span class="jp">どれ</span></span>
+        <span class="lab">+ sustantivo</span><span><span class="jp">この</span></span><span><span class="jp">その</span></span><span><span class="jp">あの</span></span><span><span class="jp">どの</span></span>
+        <span class="lab">Lugar</span><span><span class="jp">ここ</span></span><span><span class="jp">そこ</span></span><span><span class="jp">あそこ</span></span><span><span class="jp">どこ</span></span>
+        <span class="lab">Dirección / cortés</span><span><span class="jp">こちら</span></span><span><span class="jp">そちら</span></span><span><span class="jp">あちら</span></span><span><span class="jp">どちら</span></span>
       </div></div>
     </div>
     <div class="item">
@@ -398,6 +408,109 @@ details.more .body p + p{margin-top:6px}
 </section>
 
 </div><!-- /guia -->
+
+<!-- ━━━━━━━━━━━━ VERBOS ━━━━━━━━━━━━ -->
+<div class="panel" id="verbos" role="tabpanel" hidden>
+
+<section>
+  <h2>LOS TRES GRUPOS</h2>
+  <div class="card">
+    <div class="item">
+      <p>Cada verbo pertenece a un grupo, y de ahí sale toda su conjugación. Lo que los distingue es de qué está hecha la forma diccionario.</p>
+    </div>
+    <div class="item">
+      <p><b>En -ru</b> — raíz acabada en <i>e</i> o en <i>i</i>, más る</p>
+      <p class="sub"><span class="jp"><ruby>食<rt>た</rt></ruby>べる</span> = tabe + ru　·　<span class="jp"><ruby>見<rt>み</rt></ruby>る</span> = mi + ru</p>
+    </div>
+    <div class="item">
+      <p><b>En -u</b> — raíz acabada en consonante, más う</p>
+      <p class="sub"><span class="jp"><ruby>飲<rt>の</rt></ruby>む</span> = nom + u　·　<span class="jp"><ruby>話<rt>はな</rt></ruby>す</span> = hanas + u</p>
+    </div>
+    <div class="item">
+      <p><b>Irregulares</b> — solo hay dos: <span class="jp">する</span> y <span class="jp">くる</span></p>
+      <p class="sub"><span class="jp">する</span> se pega a un sustantivo y lo convierte en verbo: <span class="jp"><ruby>勉強<rt>べんきょう</rt></ruby>する</span></p>
+    </div>
+    <div class="item">
+      <p><span class="jp"><ruby>帰<rt>かえ</rt></ruby>る</span> acaba en <i>eru</i> y aun así es <b>en -u</b>: esa <i>r</i> es de la raíz (kaer + u), no del sufijo.</p>
+      <p class="sub">Por eso hace <span class="jp"><ruby>帰<rt>かえ</rt></ruby>ります</span>, y no <span class="ng">×</span><ruby>帰<rt>かえ</rt></ruby>ます.</p>
+    </div>
+  </div>
+
+  <h3>¿DE QUÉ GRUPO ES?</h3>
+  <div class="card">
+    <div class="item">
+      <p>Si <b>no</b> acaba en る, es en -u. Siempre.</p>
+    </div>
+    <div class="item">
+      <p>Si acaba en る, decide lo que viene justo antes:</p>
+      <div class="table"><div class="rows">
+        <span class="k"><span class="nb">〜ある・〜おる</span></span><span class="v">en -u, seguro</span>
+        <span class="k"><span class="nb">〜うる</span></span><span class="v">irregular o en -u</span>
+        <span class="k"><span class="nb">〜いる・〜える</span></span><span class="v">casi siempre en -ru, pero puede ser en -u</span>
+      </div></div>
+      <p class="sub muted">La regla no cierra del todo, y <span class="jp"><ruby>帰<rt>かえ</rt></ruby>る</span> es el primer 〜える que se le escapa.</p>
+    </div>
+    <div class="item">
+      <p class="muted">Por eso conviene memorizar cada verbo en pareja, <span class="jp"><ruby>行<rt>い</rt></ruby>く</span>—<span class="jp"><ruby>行<rt>い</rt></ruby>きます</span>, y no solo la forma diccionario.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>PRESENTE: ます・ません</h2>
+  <div class="card">
+    <div class="item">
+      <p>El presente se monta sobre una raíz: afirmativo <span class="jp">ます</span>, negativo <span class="jp">ません</span>. Cómo se saca esa raíz depende del grupo.</p>
+    </div>
+    <div class="item">
+      <p><b>En -ru</b> — quita る</p>
+      <p class="sub"><span class="jp"><ruby>食<rt>た</rt></ruby>べる</span> → <span class="jp"><ruby>食<rt>た</rt></ruby>べます</span>・<span class="jp"><ruby>食<rt>た</rt></ruby>べません</span></p>
+    </div>
+    <div class="item">
+      <p><b>En -u</b> — cambia la う por la <i>i</i> de su misma columna de hiragana</p>
+      <p class="sub"><span class="jp"><ruby>飲<rt>の</rt></ruby>む</span> → <span class="jp"><ruby>飲<rt>の</rt></ruby>みます</span>　(む → み)</p>
+      <details class="more"><summary></summary><div class="body">
+        <p>La lista entera: う→い · く→き · ぐ→ぎ · す→し · つ→ち · ぬ→に · ぶ→び · む→み · る→り</p>
+      </div></details>
+    </div>
+    <div class="item">
+      <p><b>Irregulares</b></p>
+      <p class="sub"><span class="jp">する</span> → <span class="jp">します</span>　·　<span class="jp">くる</span> → <span class="jp">きます</span></p>
+    </div>
+  </div>
+
+  <h3>CONJUGA UN VERBO</h3>
+  <div class="card">
+    <div class="item">
+      <label class="muted" for="verbo">Elige y sale su presente, sacado con estas mismas reglas</label>
+      <select class="picker" id="verbo" aria-label="Verbo"></select>
+      <div class="conj" id="conjugacion"></div>
+      <p class="muted" id="nota-verbo"></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>EL PRESENTE NO ES «AHORA»</h2>
+  <div class="card">
+    <div class="item">
+      <p>En los verbos de acción, la forma <span class="jp">ます</span> no dice que lo estés haciendo ahora mismo. Dice una de dos cosas:</p>
+    </div>
+    <div class="item">
+      <p><b>Lo habitual</b> — lo que haces de normal</p>
+      <p class="sub"><span class="jp">よく テレビを <ruby>見<rt>み</rt></ruby>ます</span> → veo la tele a menudo</p>
+    </div>
+    <div class="item">
+      <p><b>El futuro</b> — lo que vas a hacer</p>
+      <p class="sub"><span class="jp">あした <ruby>京都<rt>きょうと</rt></ruby>に <ruby>行<rt>い</rt></ruby>きます</span> → mañana voy a Kioto</p>
+    </div>
+    <div class="item">
+      <p class="muted">Para «lo estoy haciendo ahora» hay otra forma, 〜ている (L7).</p>
+    </div>
+  </div>
+</section>
+
+</div><!-- /verbos -->
 
 <!-- ━━━━━━━━━━━━ NÚMEROS ━━━━━━━━━━━━ -->
 <div class="panel" id="numeros" role="tabpanel" hidden>
@@ -648,6 +761,20 @@ details.more .body p + p{margin-top:6px}
     return t.replace(/(desu|deshita|masu|masen|mashita)ka(?=$|[ ,])/g, '$1 ka');
   }
 
+  // Qué hay que leer de un elemento: con furigana, la lectura del <rt> sustituye
+  // al kanji (si no, se transcribirían los dos seguidos: “食たべる” → “食taberu”).
+  function leer(nodo, enRuby){
+    var out = '';
+    for(var n = nodo.firstChild; n; n = n.nextSibling){
+      if(n.nodeType === 3){ if(!enRuby) out += n.nodeValue; continue; }
+      if(n.nodeType !== 1) continue;
+      var t = n.tagName;
+      if(t === 'RP' || t === 'RB') continue;   // paréntesis de respaldo y base explícita
+      out += leer(n, t === 'RUBY' ? true : (t === 'RT' ? false : enRuby));
+    }
+    return out;
+  }
+
   // Muestra u oculta el romaji junto a la palabra tocada.
   function alternar(el){
     var sig = el.nextElementSibling;
@@ -659,7 +786,7 @@ details.more .body p + p{margin-top:6px}
     }
     var caja = document.createElement('span');
     caja.className = 'romaji';
-    caja.textContent = el.getAttribute('data-romaji') || separar(romaji(el.textContent));
+    caja.textContent = el.getAttribute('data-romaji') || separar(romaji(leer(el)));
     el.parentNode.insertBefore(caja, el.nextSibling);
     el.classList.add('abierto');
     el.setAttribute('aria-expanded', 'true');
@@ -671,7 +798,7 @@ details.more .body p + p{margin-top:6px}
       el.setAttribute('tabindex','0');
       el.setAttribute('role','button');
       el.setAttribute('aria-expanded','false');
-      el.setAttribute('aria-label','Romaji de ' + el.textContent);
+      el.setAttribute('aria-label','Romaji de ' + leer(el));
     });
   }
   preparar(document);
@@ -850,6 +977,92 @@ details.more .body p + p{margin-top:6px}
              '<p class="sub muted">' + suyos.map(function(c){ return '<span class="nb">' + c.lab + '</span>'; }).join(' · ') + '</p>' + ejemplo + '</div>';
     }).join('');
     preparar(cajaClases);
+  }
+
+  /* ── Verbos ────────────────────────────────────
+     Como los contadores: la conjugación no está escrita, se calcula. Cada
+     verbo se guarda una sola vez, con la lectura del kanji entre corchetes
+     (食[た]べる); de ahí salen el furigana que se pinta y el kana que lee el
+     romaji. Añadir un verbo es una línea. */
+  var VERBOS = [
+    {g:'ru',  k:'食[た]べる',  es:'comer'},
+    {g:'ru',  k:'見[み]る',    es:'ver, mirar'},
+    {g:'ru',  k:'寝[ね]る',    es:'acostarse'},
+    {g:'ru',  k:'起[お]きる',  es:'levantarse'},
+    {g:'u',   k:'飲[の]む',    es:'beber'},
+    {g:'u',   k:'読[よ]む',    es:'leer'},
+    {g:'u',   k:'聞[き]く',    es:'escuchar, preguntar'},
+    {g:'u',   k:'行[い]く',    es:'ir'},
+    {g:'u',   k:'話[はな]す',  es:'hablar'},
+    {g:'u',   k:'帰[かえ]る',  es:'volver a casa'},
+    {g:'irr', k:'する',        es:'hacer'},
+    {g:'irr', k:'勉強[べんきょう]する', es:'estudiar'},
+    {g:'irr', k:'来[く]る',    es:'venir'}
+  ];
+  var GRUPOS = {ru:'Verbos en -ru', u:'Verbos en -u', irr:'Irregulares'};
+  // La う final baja a la i de su misma columna de hiragana.
+  var COLUMNA = {'う':'い','く':'き','ぐ':'ぎ','す':'し','つ':'ち','ぬ':'に','ぶ':'び','む':'み','る':'り'};
+  var CONLECTURA = /[\u4E00-\u9FFF\u3005]+\[([^\]]+)\]/g;
+
+  function conRuby(s){
+    return s.replace(CONLECTURA, function(m, lec){
+      return '<ruby>' + m.slice(0, m.indexOf('[')) + '<rt>' + lec + '</rt></ruby>';
+    });
+  }
+  function enKana(s){ return s.replace(CONLECTURA, '$1'); }
+  function enKanji(s){ return s.replace(CONLECTURA, function(m){ return m.slice(0, m.indexOf('[')); }); }
+
+  // La terminación va siempre en kana suelto al final, así que la misma cirugía
+  // vale para la forma con kanji y para la de kana. Salvo 来る, donde lo que
+  // cambia es la lectura del propio kanji: く → き.
+  function raiz(s, g){
+    if(/する$/.test(s)) return s.slice(0, -2) + 'し';
+    if(/\[く\]る$/.test(s)) return s.replace(/\[く\]る$/, '[き]');
+    if(/くる$/.test(s)) return s.slice(0, -2) + 'き';
+    if(g === 'ru') return s.slice(0, -1);
+    return s.slice(0, -1) + COLUMNA[s.slice(-1)];
+  }
+
+  function reglaDe(v){
+    var k = enKana(v.k);
+    if(v.g === 'ru') return 'Verbo en -ru: fuera la る.';
+    if(v.g === 'u') return 'Verbo en -u: ' + k.slice(-1) + ' → ' + COLUMNA[k.slice(-1)] + '.';
+    return 'Irregular: ' + k + ' → ' + enKana(raiz(v.k, v.g)) + '.';
+  }
+
+  var selVerbo = document.getElementById('verbo');
+  var cajaConj = document.getElementById('conjugacion');
+  var notaV = document.getElementById('nota-verbo');
+
+  if(selVerbo){
+    var gv = '';
+    VERBOS.forEach(function(v, i){
+      if(v.g !== gv){ gv = v.g; selVerbo.appendChild(document.createElement('optgroup')).label = GRUPOS[gv]; }
+      var kanji = enKanji(v.k), kana = enKana(v.k);
+      var o = document.createElement('option');
+      o.value = String(i);
+      o.textContent = kanji + (kanji === kana ? '' : '（' + kana + '）') + ' — ' + v.es;
+      selVerbo.lastChild.appendChild(o);
+    });
+
+    var FORMAS = [['diccionario', ''], ['afirmativo', 'ます'], ['negativo', 'ません']];
+
+    function pintarVerbo(){
+      var v = VERBOS[selVerbo.value | 0], r = raiz(v.k, v.g);
+      cajaConj.innerHTML = FORMAS.map(function(f){
+        return '<span class="n">' + f[0] + '</span>' +
+               '<span><span class="jp">' + conRuby(f[1] ? r + f[1] : v.k) + '</span></span>';
+      }).join('');
+      notaV.textContent = reglaDe(v);
+      preparar(cajaConj);
+      try{ localStorage.setItem('verbo', selVerbo.value); }catch(e){}
+    }
+    try{
+      var vGuardado = localStorage.getItem('verbo');
+      if(vGuardado !== null && VERBOS[vGuardado | 0]) selVerbo.value = vGuardado;
+    }catch(e){}
+    selVerbo.addEventListener('change', pintarVerbo);
+    pintarVerbo();
   }
 
   // Service worker: guarda la guía para poder abrirla sin conexión.

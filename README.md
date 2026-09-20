@@ -10,8 +10,9 @@ y se esconde. La transliteración se calcula en el momento (Hepburn literal:
 せんせい → *sensei*, がっこう → *gakkou*), con っ, ん + apóstrofo, la ー del
 katakana y las partículas は・へ・を separadas y leídas *wa*, *e*, *o*.
 
-Contenido actual (Genki L1–2): pestaña *Guía* (sonidos, partículas, こそあど,
-interrogativos, negación de です, expresiones), *Números* y *Contadores*.
+Contenido actual (Genki L1–3): pestaña *Guía* (sonidos, partículas, こそあど,
+interrogativos, negación de です, expresiones), *Verbos* (los tres grupos y el
+presente ます／ません), *Números* y *Contadores*.
 
 ## Cómo está montado
 
@@ -44,6 +45,11 @@ está lo irregular. Lo básico de la lección 1 (X は Y です, か, saludos) s
 descartó a propósito; si alguna vez se escapa, entonces se añade. は sigue en
 *Partículas* pero es candidata a salir.
 
+**Vocabulario, no.** El vocabulario va en Anki, no aquí. Por eso los ejemplos
+son los justos: uno por regla, y solo donde la regla no se entiende sin él. La
+lista de verbos del conjugador es la excepción aparente, y está por las
+conjugaciones, no por lo que significan.
+
 **Cómo se ordena.** Por temas, no por lecciones: Genki ya va por lecciones, y
 la gracia de esta página es ver todas las partículas juntas aunque vengan de
 cuatro sitios. Sí conviene poder rastrear de dónde sale cada cosa.
@@ -53,21 +59,28 @@ consulta, un `<select>` y la respuesta en vertical (así está *Contadores*).
 Todo lo largo, dentro de `<details class="more">`.
 
 **Pestañas: leer frente a consultar.** *Guía* se lee de corrido; *Números* y
-*Contadores* se consultan. Por eso están separadas. Las siguientes naturales,
-según avance el curso, son *Verbos* (L3, ます/ません) y *Adjetivos* (L5).
+*Contadores* se consultan. Por eso están separadas. *Verbos* va la segunda, justo
+detrás de *Guía*: primero lo que se lee, luego lo que se consulta. Tiene pestaña
+propia y no sección dentro de *Guía* porque es lo que más va a crecer (forma-te en
+L6, pasado en L9…). La siguiente natural es *Adjetivos* (L5).
 
 **Un solo fichero.** Aunque llegue a las 23 lecciones son ~150 KB: sigue
 funcionando sin conexión, se despliega de una pieza y buscar dentro de una
 página gana a navegar entre varias.
 
-**Kana o kanji.** Los ejemplos van en kana; el kanji solo aparece cuando el
-tema *es* el kanji (何, la cuadrícula de números). Si algún día entra kanji con
-furigana (`<ruby>`), el romaji automático leería el carácter y su lectura
-seguidos: hay que ponerle `data-romaji`.
+**Kana o kanji.** Los ejemplos de la *Guía* van en kana. En *Verbos* van en
+kanji con furigana (`<ruby>`), que es la forma de irse familiarizando con él sin
+perder la lectura. El romaji automático lo soporta: `leer()` recorre el elemento
+y dentro de un `<ruby>` se queda con el `<rt>` en lugar del kanji, así que
+`<ruby>食<rt>た</rt></ruby>べる` se transcribe *taberu* y no *食taberu*. No hace falta
+`data-romaji` (el atributo sigue existiendo por si algún caso se resiste).
 
-**Los datos se calculan, no se copian.** Las lecturas de los contadores y el
-romaji salen de reglas, no de listas escritas a mano. Añadir algo es una línea
-y no puede quedar incoherente con el resto.
+**Los datos se calculan, no se copian.** Las lecturas de los contadores, el
+presente de los verbos y el romaji salen de reglas, no de listas escritas a
+mano. Añadir algo es una línea y no puede quedar incoherente con el resto. Cada
+verbo se guarda una sola vez, con la lectura del kanji entre corchetes
+(`食[た]べる`), y de ahí salen el furigana que se pinta y el kana que lee el
+romaji.
 
 ## Actualizar la guía
 
@@ -96,6 +109,8 @@ para que se descarte la caché vieja.
 - Lo ampliable va en `<details class="more"><summary></summary><div class="body">…`
   (el botón "＋ más" lo pone el CSS; el `<summary>` va vacío a propósito).
 - Tablas de dos columnas: `.rows` con pares `.k` / `.v`.
+- Palabra japonesa tocable: `<span class="jp">`. Con kanji, dentro va
+  `<ruby>漢<rt>かん</rt></ruby>字`; el romaji sale solo de la lectura.
 - **Un solo margen lateral, 18 px**, para `header`, `.tabs`, el `<nav>` y
   `main`: las pestañas y las píldoras de sección tienen que arrancar justo
   encima del borde de las tarjetas.
@@ -153,8 +168,12 @@ efímero: se extrae el bloque de JS a un fichero bajo `/home/carcaret`
 docker run --rm -v /home/carcaret:/t:ro node:22-alpine node /t/check.js
 ```
 
-Así se comprobaron las 253 lecturas de los 23 contadores contra la tabla del
-libro, y el romaji de las 202 palabras de la página.
+El truco: el propio `index.html` es la entrada. Se extrae el `<script>` y se
+ejecuta con un `document` de pega, así que lo que se prueba es el código de la
+página y no una copia. Así se comprobaron las 253 lecturas de los 23 contadores
+contra la tabla del libro, el presente de los 13 verbos, y el romaji de todas
+las palabras tocables — incluido el de las que llevan furigana, que no puede
+dejar ningún kanji sin leer.
 
 ### Trampas del despliegue
 
@@ -181,5 +200,7 @@ libro, y el romaji de las 202 palabras de la página.
   que más va a hacer falta cuando haya varias lecciones más.
 - **Etiqueta de lección** (L1, L2…) en cada ítem, con filtro "hasta la N", para
   repasar sin adelantarse y saber de dónde salió cada cosa.
-- Pestañas de **Verbos** y **Adjetivos** cuando lleguen L3 y L5.
+- Pestaña de **Adjetivos** cuando llegue L5.
+- Partículas de L3 (を・に・で・へ) a la sección *Partículas* de la *Guía*, que es
+  donde tiene gracia verlas todas juntas.
 - Audio otra vez, como opción, si el romaji deja de bastar.
