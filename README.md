@@ -93,8 +93,15 @@ git add -A && git commit -m "..." && git push
 En un par de minutos la Page queda actualizada (pestaña *Actions* del repo).
 La copia instalada en el móvil se actualiza sola al abrirla con conexión: el
 service worker pide siempre la versión de la red y solo tira de la copia
-guardada si no hay. Al tocar `sw.js` o los iconos, subir `VERSION` en `sw.js`
-para que se descarte la caché vieja.
+guardada si no hay.
+
+**Subir la versión en cada entrega**, en el `<span class="ver">` del
+encabezado: `v1` → `v2`. Es un contador a secas, sin puntos, y sirve para dos
+cosas: mirar el móvil y saber si tienes lo último, y descartar la caché vieja
+del service worker. No hay un segundo número que mantener: `index.html` se lo
+pasa al SW en la URL de registro (`sw.js?v1`) y `sw.js` lo lee de
+`self.location.search`. Cambiar esa URL basta además para que el navegador se
+baje el `sw.js` nuevo, que antes era la razón de tocarlo al mover los iconos.
 
 ### Convenciones del HTML
 

@@ -1,6 +1,8 @@
 /* Service worker: la guía funciona sin conexión una vez abierta. */
 
-var VERSION = 'v5';
+/* La versión la pone index.html en la URL de registro (sw.js?v1): un solo
+   sitio donde subirla, y así la que se ve en la página es la que manda. */
+var VERSION = self.location.search.slice(1) || 'dev';
 var CACHE = 'guia-japones-' + VERSION;
 
 /* Lo imprescindible, guardado al instalar. */
