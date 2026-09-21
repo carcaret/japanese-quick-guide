@@ -10,8 +10,8 @@ y se esconde. La transliteración se calcula en el momento (Hepburn literal:
 せんせい → *sensei*, がっこう → *gakkou*), con っ, ん + apóstrofo, la ー del
 katakana y las partículas は・へ・を separadas y leídas *wa*, *e*, *o*.
 
-Contenido actual (Genki L1–3): pestaña *Guía* (sonidos, partículas, こそあど,
-interrogativos, negación de です, expresiones), *Verbos* (los tres grupos y el
+Contenido actual (Genki L1–3): pestaña *Guía* (sonidos, partículas, tiempo y に,
+こそあど, interrogativos, negación de です, expresiones), *Verbos* (los tres grupos y el
 presente ます／ません), *Números* y *Contadores*.
 
 ## Cómo está montado
@@ -208,6 +208,4 @@ dejar ningún kanji sin leer.
 - **Etiqueta de lección** (L1, L2…) en cada ítem, con filtro "hasta la N", para
   repasar sin adelantarse y saber de dónde salió cada cosa.
 - Pestaña de **Adjetivos** cuando llegue L5.
-- Partículas de L3 (を・に・で・へ) a la sección *Partículas* de la *Guía*, que es
-  donde tiene gracia verlas todas juntas.
 - Audio otra vez, como opción, si el romaji deja de bastar.

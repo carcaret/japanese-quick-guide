@@ -84,6 +84,7 @@ h3{font-size:.95rem; margin:22px 0 4px; font-weight:700; letter-spacing:.03em}
 .sub + .sub{margin-top:0}
 .muted{color:var(--muted)}
 .nb{white-space:nowrap}
+main a{color:var(--ai)}
 .ok{color:var(--ok); font-weight:700}
 .ng{color:var(--ng); font-weight:700}
 p{margin:0}
@@ -155,7 +156,7 @@ details.more .body p + p{margin-top:6px}
 
 <header>
   <h1>Guía rápida de japonés</h1>
-  <span class="ver" id="version">v1</span>
+  <span class="ver" id="version">v2</span>
 </header>
 
 <div class="topbar">
@@ -169,6 +170,7 @@ details.more .body p + p{margin-top:6px}
     <div class="in">
       <a href="#sonidos">Sonidos</a>
       <a href="#particulas">Partículas</a>
+      <a href="#tiempo">Tiempo</a>
       <a href="#kosoado">こそあど</a>
       <a href="#interrogativos">Interrogativos</a>
       <a href="#negacion">Negación de です</a>
@@ -240,6 +242,7 @@ details.more .body p + p{margin-top:6px}
 <!-- ━━━ PARTÍCULAS ━━━ -->
 <section id="particulas">
   <h2>PARTÍCULAS</h2>
+  <h3>DETRÁS DEL SUSTANTIVO: SU PAPEL</h3>
   <div class="card">
     <div class="item">
       <p>は — tema de la frase (no siempre el sujeto)</p>
@@ -269,6 +272,31 @@ details.more .body p + p{margin-top:6px}
       </div></details>
     </div>
     <div class="item">
+      <p>を — objeto directo: lo que recibe la acción</p>
+      <p class="sub"><span class="jp">おちゃを のみます</span></p>
+    </div>
+    <div class="item">
+      <p>で — dónde ocurre la acción</p>
+      <p class="sub"><span class="jp">うちで べんきょうします</span> → estudio en casa</p>
+    </div>
+    <div class="item">
+      <p>に — dos usos (de momento):</p>
+      <p class="sub">Destino, con いく・くる・かえる: <span class="jp">がっこうに いきます</span></p>
+      <p class="sub">Momento concreto: <span class="jp">しちじに おきます</span> → ver <a href="#tiempo">Tiempo</a></p>
+      <details class="more"><summary></summary><div class="body">
+        <p>No confundir con で: に es adónde vas; で, dónde haces algo.</p>
+      </div></details>
+    </div>
+    <div class="item">
+      <p>へ — destino, igual que に con verbos de movimiento</p>
+      <p class="sub"><span class="jp">うちへ かえります</span> = <span class="jp">うちに かえります</span></p>
+      <p class="sub">Solo destino, nunca tiempo: <span class="nb"><span class="ng">✗</span> しちじへ</span></p>
+    </div>
+  </div>
+
+  <h3>AL FINAL DE LA FRASE: EL TONO</h3>
+  <div class="card">
+    <div class="item">
       <p>ね — busca acuerdo: "¿verdad?"</p>
     </div>
     <div class="item">
@@ -276,6 +304,30 @@ details.more .body p + p{margin-top:6px}
       <details class="more"><summary></summary><div class="body">
         <p>Juntas, よね = "¿a que sí?": crees saberlo, pero pides confirmación.</p>
       </div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ TIEMPO ━━━ -->
+<section id="tiempo">
+  <h2>TIEMPO: ¿LLEVA に?</h2>
+  <div class="card">
+    <div class="item">
+      <p><span class="ok">Sí</span> — días de la semana, y horas o fechas con número</p>
+      <p class="sub"><span class="jp">どようびに</span>、<span class="jp">さんじに</span>、<span class="jp">しがつに</span></p>
+    </div>
+    <div class="item">
+      <p><span class="ng">No</span> — lo relativo a hoy, las frecuencias y いつ</p>
+      <p class="sub"><span class="jp">きょう</span>、<span class="jp">あした</span>、<span class="jp">まいにち</span>、<span class="jp">まいばん</span>、<span class="jp">いつ</span></p>
+      <p class="sub"><span class="nb"><span class="ng">✗</span> あしたに いきます</span></p>
+    </div>
+    <div class="item">
+      <p>Opcional — partes del día y fin de semana</p>
+      <p class="sub"><span class="jp">あさ</span>、<span class="jp">よる</span>、<span class="jp">しゅうまつ</span> → con o sin に, según estilo</p>
+    </div>
+    <div class="item">
+      <p>ごろ = hora aproximada, "sobre las…"; puede ir con o sin に</p>
+      <p class="sub"><span class="jp">さんじごろ</span> = <span class="jp">さんじごろに</span></p>
     </div>
   </div>
 </section>
