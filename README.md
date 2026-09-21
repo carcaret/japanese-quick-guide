@@ -121,6 +121,12 @@ baje el `sw.js` nuevo, que antes era la razón de tocarlo al mover los iconos.
 - **Un solo margen lateral, 18 px**, para `header`, `.tabs`, el `<nav>` y
   `main`: las pestañas y las píldoras de sección tienen que arrancar justo
   encima del borde de las tarjetas.
+- **`.sub` es solo para ejemplos.** La regla, el uso o la aclaración van en la
+  línea principal (`<p>` del `.item`). Si hay varios usos, cada uno en su línea
+  principal numerada (1), 2)…) con sus ejemplos debajo: sin número, dos líneas
+  principales seguidas se leen como un solo párrafo.
+- Tablas `.rows` cuando hay tres o más pares paralelos (palabra → significado,
+  forma → uso); ejemplos sueltos, en `.sub`.
 - Las `.sub` se distinguen por un **filete vertical**, no solo por la sangría.
   Con la sangría sola no se sabe si una línea es la continuación de la de
   arriba o una línea secundaria nueva, y en el móvil casi todo da la vuelta.
