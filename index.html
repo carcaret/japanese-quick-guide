@@ -84,6 +84,7 @@ h3{font-size:.95rem; margin:22px 0 4px; font-weight:700; letter-spacing:.03em}
 .sub + .sub{margin-top:0}
 .muted{color:var(--muted)}
 .nb{white-space:nowrap}
+.head{font-weight:700; font-size:1.15em}  /* lo que define el ítem: は, 何, すみません… */
 main a{color:var(--ai)}
 .ok{color:var(--ok); font-weight:700}
 .ng{color:var(--ng); font-weight:700}
@@ -156,7 +157,7 @@ details.more .body p + p{margin-top:6px}
 
 <header>
   <h1>Guía rápida de japonés</h1>
-  <span class="ver" id="version">v3</span>
+  <span class="ver" id="version">v4</span>
 </header>
 
 <div class="topbar">
@@ -188,7 +189,7 @@ details.more .body p + p{margin-top:6px}
   <h2>SONIDOS</h2>
   <div class="card">
     <div class="item">
-      <p>っ duplica la consonante siguiente (solo ante k, s, t, p). Ante ち se transcribe "tch".</p>
+      <p><span class="head">っ</span> duplica la consonante siguiente (solo ante k, s, t, p). Ante ち se transcribe "tch".</p>
       <p class="sub"><span class="jp">きって</span>、<span class="jp">がっこう</span>、<span class="jp">ざっし</span>、<span class="jp">いっぱい</span>、<span class="jp">まっちゃ</span></p>
       <details class="more"><summary></summary><div class="body">
         <p>Se oye como una micro-pausa tensa antes de la consonante.</p>
@@ -196,14 +197,14 @@ details.more .body p + p{margin-top:6px}
       </div></details>
     </div>
     <div class="item">
-      <p>ん + fila な = nn: <span class="jp">おんな</span>、<span class="jp" data-romaji="konnichiwa">こんにちは</span></p>
+      <p><span class="head">ん</span> + fila な = nn: <span class="jp">おんな</span>、<span class="jp" data-romaji="konnichiwa">こんにちは</span></p>
       <details class="more"><summary></summary><div class="body">
         <p>ん es una sílaba completa. Ante vocal o や・ゆ・よ se separa del sonido siguiente:</p>
         <p><span class="jp">きんえん</span> (kin-en) ≠ <span class="jp">きねん</span> (ki-nen)</p>
       </div></details>
     </div>
     <div class="item">
-      <p>ん suena "m" ante b/p/m, y nasal velar ante k/g</p>
+      <p><span class="head">ん</span> suena "m" ante b/p/m, y nasal velar ante k/g</p>
       <p class="sub"><span class="jp">せんぱい</span>、<span class="jp" data-romaji="konbanwa">こんばんは</span> · <span class="jp">にほんご</span></p>
     </div>
     <div class="item">
@@ -243,41 +244,39 @@ details.more .body p + p{margin-top:6px}
   <h3>DETRÁS DEL SUSTANTIVO: SU PAPEL</h3>
   <div class="card">
     <div class="item">
-      <p>は — tema de la frase (no siempre el sujeto)</p>
+      <p><span class="head">は</span> — tema de la frase (no siempre el sujeto)</p>
       <details class="more"><summary></summary><div class="body">
         <p>は fija de qué se habla; lo que va detrás es lo que se dice de ello.</p>
         <p>Pidiendo en un restaurante: <span class="jp">わたしは すしです</span> → "yo, sushi" (no "soy sushi").</p>
       </div></details>
     </div>
     <div class="item">
-      <p>の — B の A = el A relacionado con B. La posesión es solo un caso:</p>
-      <div class="table"><div class="rows">
-        <span class="k"><span class="jp">たなかさんの ほん</span></span><span class="v">→ el libro de Tanaka (posesión)</span>
-        <span class="k"><span class="jp">にほんごの せんせい</span></span><span class="v">→ el profesor de japonés (materia)</span>
-        <span class="k"><span class="jp">だいがくの がくせい</span></span><span class="v">→ estudiante universitario (pertenencia)</span>
-        <span class="k"><span class="jp">にほんの くるま</span></span><span class="v">→ coche japonés (origen)</span>
-      </div></div>
+      <p><span class="head">の</span> — B の A = el A relacionado con B. No solo posesión: también materia, pertenencia, origen…</p>
+      <p class="sub"><span class="jp">たなかさんの ほん</span> → el libro de Tanaka</p>
+      <p class="sub"><span class="jp">にほんごの せんせい</span> → el profesor de japonés</p>
+      <p class="sub"><span class="jp">だいがくの がくせい</span> → estudiante universitario</p>
+      <p class="sub"><span class="jp">にほんの くるま</span> → coche japonés</p>
       <details class="more"><summary></summary><div class="body">
         <p>Se puede encadenar: <span class="jp">にほんの だいがくの せんせい</span> → profesor de una universidad japonesa.</p>
       </div></details>
     </div>
     <div class="item">
-      <p>も — también / tampoco. SUSTITUYE a は・が・を; con に・で・から sí se combina: にも、でも、からも</p>
+      <p><span class="head">も</span> — también / tampoco. SUSTITUYE a は・が・を; con に・で・から sí se combina: にも、でも、からも</p>
       <p class="sub"><span class="ng">✗</span> わたしはも <span class="ok">○</span> <span class="jp" data-romaji="watashi mo">わたしも</span></p>
       <details class="more"><summary></summary><div class="body">
         <p>Con verbo negativo significa "tampoco": <span class="jp" data-romaji="watashi mo gakusei ja nai desu">わたしも がくせいじゃないです</span> → yo tampoco soy estudiante.</p>
       </div></details>
     </div>
     <div class="item">
-      <p>を — objeto directo: lo que recibe la acción</p>
+      <p><span class="head">を</span> — objeto directo: lo que recibe la acción</p>
       <p class="sub"><span class="jp">おちゃを のみます</span></p>
     </div>
     <div class="item">
-      <p>で — dónde ocurre la acción</p>
+      <p><span class="head">で</span> — dónde ocurre la acción</p>
       <p class="sub"><span class="jp">うちで べんきょうします</span> → estudio en casa</p>
     </div>
     <div class="item">
-      <p>に — 1) destino, con いく・くる・かえる</p>
+      <p><span class="head">に</span> — 1) destino, con いく・くる・かえる</p>
       <p class="sub"><span class="jp">がっこうに いきます</span></p>
       <p>2) momento concreto (ver <a href="#tiempo">Tiempo</a>)</p>
       <p class="sub"><span class="jp">しちじに おきます</span></p>
@@ -286,7 +285,7 @@ details.more .body p + p{margin-top:6px}
       </div></details>
     </div>
     <div class="item">
-      <p>へ — destino, igual que に con verbos de movimiento. Solo destino, nunca tiempo.</p>
+      <p><span class="head">へ</span> — destino, igual que に con verbos de movimiento. Solo destino, nunca tiempo.</p>
       <p class="sub"><span class="jp">うちへ かえります</span> = <span class="jp">うちに かえります</span></p>
       <p class="sub"><span class="nb"><span class="ng">✗</span> しちじへ</span></p>
     </div>
@@ -295,10 +294,10 @@ details.more .body p + p{margin-top:6px}
   <h3>AL FINAL DE LA FRASE: EL TONO</h3>
   <div class="card">
     <div class="item">
-      <p>ね — busca acuerdo: "¿verdad?"</p>
+      <p><span class="head">ね</span> — busca acuerdo: "¿verdad?"</p>
     </div>
     <div class="item">
-      <p>よ — informa o insiste: "que sí, oye". Abusar suena impositivo.</p>
+      <p><span class="head">よ</span> — informa o insiste: "que sí, oye". Abusar suena impositivo.</p>
       <details class="more"><summary></summary><div class="body">
         <p>Juntas, よね = "¿a que sí?": crees saberlo, pero pides confirmación.</p>
       </div></details>
@@ -311,20 +310,20 @@ details.more .body p + p{margin-top:6px}
   <h2>TIEMPO: ¿LLEVA に?</h2>
   <div class="card">
     <div class="item">
-      <p><span class="ok">Sí</span> — días de la semana, y horas o fechas con número</p>
+      <p><span class="ok head">Sí</span> — días de la semana, y horas o fechas con número</p>
       <p class="sub"><span class="jp">どようびに</span>、<span class="jp">さんじに</span>、<span class="jp">しがつに</span></p>
     </div>
     <div class="item">
-      <p><span class="ng">No</span> — lo relativo a hoy, las frecuencias y いつ</p>
+      <p><span class="ng head">No</span> — lo relativo a hoy, las frecuencias y いつ</p>
       <p class="sub"><span class="jp">きょう</span>、<span class="jp">あした</span>、<span class="jp">まいにち</span>、<span class="jp">まいばん</span>、<span class="jp">いつ</span></p>
       <p class="sub"><span class="nb"><span class="ng">✗</span> あしたに いきます</span></p>
     </div>
     <div class="item">
-      <p>Opcional — partes del día y fin de semana: con o sin に, según estilo</p>
+      <p><span class="head">Opcional</span> — partes del día y fin de semana: con o sin に, según estilo</p>
       <p class="sub"><span class="jp">あさ</span>、<span class="jp">よる</span>、<span class="jp">しゅうまつ</span></p>
     </div>
     <div class="item">
-      <p>ごろ = hora aproximada, "sobre las…"; puede ir con o sin に</p>
+      <p><span class="head">ごろ</span> = hora aproximada, "sobre las…"; puede ir con o sin に</p>
       <p class="sub"><span class="jp">さんじごろ</span> = <span class="jp">さんじごろに</span></p>
     </div>
   </div>
@@ -367,7 +366,7 @@ details.more .body p + p{margin-top:6px}
   <h2>INTERROGATIVOS</h2>
   <div class="card">
     <div class="item">
-      <p>何 — 1) なん ante です y ante contadores con t/d/n</p>
+      <p><span class="head">何</span> — 1) なん ante です y ante contadores con t/d/n</p>
       <p class="sub"><span class="jp">なんですか</span>、<span class="jp">なんじ</span>、<span class="jp">なんにん</span></p>
       <p>2) なに en el resto</p>
       <p class="sub"><span class="jp">なにを たべますか</span></p>
@@ -418,14 +417,14 @@ details.more .body p + p{margin-top:6px}
 <section id="expresiones">
   <h2>EXPRESIONES</h2>
   <div class="card">
-    <div class="item"><p><span class="jp">あのう</span> — "esto…", para arrancar o llamar la atención</p></div>
-    <div class="item"><p><span class="jp">そうですか</span> — bajando la voz: "ya veo" / subiendo: "¿ah sí?"</p></div>
-    <div class="item"><p><span class="jp">そうです</span> / <span class="jp">ちがいます</span> — así es / no es así</p></div>
+    <div class="item"><p><span class="jp head">あのう</span> — "esto…", para arrancar o llamar la atención</p></div>
+    <div class="item"><p><span class="jp head">そうですか</span> — bajando la voz: "ya veo" / subiendo: "¿ah sí?"</p></div>
+    <div class="item"><p><span class="jp head">そうです</span> / <span class="jp head">ちがいます</span> — así es / no es así</p></div>
     <div class="item">
-      <p><span class="jp">すみません</span> — "perdone". También para llamar al camarero y para agradecer una molestia.</p>
+      <p><span class="jp head">すみません</span> — "perdone". También para llamar al camarero y para agradecer una molestia.</p>
     </div>
     <div class="item">
-      <p><span class="jp">じゃあ</span> — "entonces / pues", para decidir o cerrar un tema. Más formal: <span class="jp">では</span></p>
+      <p><span class="jp head">じゃあ</span> — "entonces / pues", para decidir o cerrar un tema. Más formal: <span class="jp">では</span></p>
       <p class="sub"><span class="jp">じゃあ、これを ください</span> → pues entonces, deme esto</p>
     </div>
   </div>
@@ -466,15 +465,15 @@ details.more .body p + p{margin-top:6px}
       <p>Cada verbo pertenece a un grupo, y de ahí sale toda su conjugación. Lo que los distingue es de qué está hecha la forma diccionario.</p>
     </div>
     <div class="item">
-      <p><b>En -ru</b> — raíz acabada en <i>e</i> o en <i>i</i>, más る</p>
+      <p><span class="head">En -ru</span> — raíz acabada en <i>e</i> o en <i>i</i>, más る</p>
       <p class="sub"><span class="jp"><ruby>食<rt>た</rt></ruby>べる</span> = tabe + ru　·　<span class="jp"><ruby>見<rt>み</rt></ruby>る</span> = mi + ru</p>
     </div>
     <div class="item">
-      <p><b>En -u</b> — raíz acabada en consonante, más う</p>
+      <p><span class="head">En -u</span> — raíz acabada en consonante, más う</p>
       <p class="sub"><span class="jp"><ruby>飲<rt>の</rt></ruby>む</span> = nom + u　·　<span class="jp"><ruby>話<rt>はな</rt></ruby>す</span> = hanas + u</p>
     </div>
     <div class="item">
-      <p><b>Irregulares</b> — solo hay dos: <span class="jp">する</span> y <span class="jp">くる</span>. <span class="jp">する</span> se pega a un sustantivo y lo convierte en verbo.</p>
+      <p><span class="head">Irregulares</span> — solo hay dos: <span class="jp">する</span> y <span class="jp">くる</span>. <span class="jp">する</span> se pega a un sustantivo y lo convierte en verbo.</p>
       <p class="sub"><span class="jp"><ruby>勉強<rt>べんきょう</rt></ruby>する</span></p>
     </div>
     <div class="item">
@@ -510,18 +509,18 @@ details.more .body p + p{margin-top:6px}
       <p>El presente se monta sobre una raíz: afirmativo <span class="jp">ます</span>, negativo <span class="jp">ません</span>. Cómo se saca esa raíz depende del grupo.</p>
     </div>
     <div class="item">
-      <p><b>En -ru</b> — quita る</p>
+      <p><span class="head">En -ru</span> — quita る</p>
       <p class="sub"><span class="jp"><ruby>食<rt>た</rt></ruby>べる</span> → <span class="jp"><ruby>食<rt>た</rt></ruby>べます</span>・<span class="jp"><ruby>食<rt>た</rt></ruby>べません</span></p>
     </div>
     <div class="item">
-      <p><b>En -u</b> — cambia la う por la <i>i</i> de su misma columna de hiragana</p>
+      <p><span class="head">En -u</span> — cambia la う por la <i>i</i> de su misma columna de hiragana</p>
       <p class="sub"><span class="jp"><ruby>飲<rt>の</rt></ruby>む</span> → <span class="jp"><ruby>飲<rt>の</rt></ruby>みます</span>　(む → み)</p>
       <details class="more"><summary></summary><div class="body">
         <p>La lista entera: う→い · く→き · ぐ→ぎ · す→し · つ→ち · ぬ→に · ぶ→び · む→み · る→り</p>
       </div></details>
     </div>
     <div class="item">
-      <p><b>Irregulares</b></p>
+      <p><span class="head">Irregulares</span></p>
       <p class="sub"><span class="jp">する</span> → <span class="jp">します</span>　·　<span class="jp">くる</span> → <span class="jp">きます</span></p>
     </div>
   </div>
@@ -544,11 +543,11 @@ details.more .body p + p{margin-top:6px}
       <p>En los verbos de acción, la forma <span class="jp">ます</span> no dice que lo estés haciendo ahora mismo. Dice una de dos cosas:</p>
     </div>
     <div class="item">
-      <p><b>Lo habitual</b> — lo que haces de normal</p>
+      <p><span class="head">Lo habitual</span> — lo que haces de normal</p>
       <p class="sub"><span class="jp">よく テレビを <ruby>見<rt>み</rt></ruby>ます</span> → veo la tele a menudo</p>
     </div>
     <div class="item">
-      <p><b>El futuro</b> — lo que vas a hacer</p>
+      <p><span class="head">El futuro</span> — lo que vas a hacer</p>
       <p class="sub"><span class="jp">あした <ruby>京都<rt>きょうと</rt></ruby>に <ruby>行<rt>い</rt></ruby>きます</span> → mañana voy a Kioto</p>
     </div>
     <div class="item">
@@ -643,11 +642,11 @@ details.more .body p + p{margin-top:6px}
   <h3>PRECIOS Y HORAS</h3>
   <div class="card">
     <div class="item">
-      <p><span class="jp">いくらですか</span> → ¿cuánto cuesta? Se responde con el número + えん.</p>
+      <p><span class="jp head">いくらですか</span> → ¿cuánto cuesta? Se responde con el número + えん.</p>
       <p class="sub"><span class="jp">にせんさんびゃくえんです</span> (2.300 ¥)</p>
     </div>
     <div class="item">
-      <p><span class="jp">なんじですか</span> → ¿qué hora es? はん = y media; ごぜん (de la mañana) y ごご (de la tarde) van <b>delante</b>.</p>
+      <p><span class="jp head">なんじですか</span> → ¿qué hora es? はん = y media; ごぜん (de la mañana) y ごご (de la tarde) van <b>delante</b>.</p>
       <p class="sub"><span class="jp">にじはん</span> (2:30) · <span class="jp">ごご さんじ</span> (las 3 de la tarde)</p>
     </div>
   </div>
@@ -1018,7 +1017,7 @@ details.more .body p + p{margin-top:6px}
         ejemplo = '<p class="sub">' + CIFRAS.filter(function(n){ return raro(suyos[0], n); })
           .map(function(n){ return '<span class="jp">' + lectura(suyos[0], n) + '</span>'; }).join('・') + '</p>';
       }
-      return '<div class="item"><p><b>' + cl.nom + '</b> <span class="muted">— ' + cl.desc + '</span></p>' +
+      return '<div class="item"><p><span class="head">' + cl.nom + '</span> <span class="muted">— ' + cl.desc + '</span></p>' +
              '<p class="sub muted">' + suyos.map(function(c){ return '<span class="nb">' + c.lab + '</span>'; }).join(' · ') + '</p>' + ejemplo + '</div>';
     }).join('');
     preparar(cajaClases);

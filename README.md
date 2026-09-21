@@ -125,8 +125,11 @@ baje el `sw.js` nuevo, que antes era la razón de tocarlo al mover los iconos.
   línea principal (`<p>` del `.item`). Si hay varios usos, cada uno en su línea
   principal numerada (1), 2)…) con sus ejemplos debajo: sin número, dos líneas
   principales seguidas se leen como un solo párrafo.
-- Tablas `.rows` cuando hay tres o más pares paralelos (palabra → significado,
-  forma → uso); ejemplos sueltos, en `.sub`.
+- Tablas `.rows` para listas de consulta, donde el par es el contenido
+  (palabra → significado, forma → uso). Los ejemplos van siempre en `.sub`,
+  aunque sean varios.
+- Lo que define un ítem (la partícula, la expresión: は, 何, すみません…) va al
+  principio en `.head`: negrita y algo más grande, para encontrarlo de un vistazo.
 - Las `.sub` se distinguen por un **filete vertical**, no solo por la sangría.
   Con la sangría sola no se sabe si una línea es la continuación de la de
   arriba o una línea secundaria nueva, y en el móvil casi todo da la vuelta.
