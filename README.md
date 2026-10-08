@@ -68,9 +68,12 @@ L6, pasado en L9…). La siguiente natural es *Adjetivos* (L5).
 funcionando sin conexión, se despliega de una pieza y buscar dentro de una
 página gana a navegar entre varias.
 
-**Kana o kanji.** Los ejemplos de la *Guía* van en kana. En *Verbos* van en
-kanji con furigana (`<ruby>`), que es la forma de irse familiarizando con él sin
-perder la lectura. El romaji automático lo soporta: `leer()` recorre el elemento
+**Kana o kanji.** Las palabras del vocabulario de Genki ya visto van en kanji
+con furigana (`<ruby>`), igual que las escribe Genki; lo que Genki escribe en
+kana (うち, だれ, いつも…) o aún no ha salido, en kana. Así uno se va
+familiarizando con el kanji sin perder la lectura. Excepciones a propósito:
+*Sonidos* y *Números* van en kana, porque lo que enseñan es cómo se escribe o se
+lee en kana. El romaji automático lo soporta: `leer()` recorre el elemento
 y dentro de un `<ruby>` se queda con el `<rt>` en lugar del kanji, así que
 `<ruby>食<rt>た</rt></ruby>べる` se transcribe *taberu* y no *食taberu*. No hace falta
 `data-romaji` (el atributo sigue existiendo por si algún caso se resiste).
