@@ -178,9 +178,11 @@ baje el `sw.js` nuevo, que antes era la razón de tocarlo al mover los iconos.
   de cada `<rt>`. La う de 思う va fuera de la lectura, es terminación y no
   alarga: `<ruby>思<rt>おも</rt></ruby>う` → *omou* (igual 拾う *hirou*, 吸う
   *suu*), y 子馬 → *kouma*. Una vocal larga de verdad va siempre dentro de una
-  misma lectura (`<rt>おお</rt>きい`, `<rt>とうきょう</rt>`). Por eso **los verbos
-  en おう / うう se escriben con kanji y furigana**, aunque estén en la *Guía*: en
-  kana suelto (おもう) no hay borde y saldría *omō*.
+  misma lectura (`<rt>おお</rt>きい`, `<rt>とうきょう</rt>`).
+- **En kana suelto el límite se marca a mano**, con `&zwnj;` (invisible): un
+  verbo en おう / うう que vaya en kana se escribe `おも&zwnj;う` → *omou*; sin
+  marca saldría *omō*. Es el mismo carácter que pone el furigana, así que el
+  código no distingue uno de otro.
 - La puntuación 、。？！ también separa palabras: `わたし<wbr>は、` → *watashi wa,*.
 - Cuando la regla no puede acertar, se fuerza con `data-romaji="…"`. Hoy solo
   los saludos こんにちは / こんばんは, que se escriben con は y se leen *wa*

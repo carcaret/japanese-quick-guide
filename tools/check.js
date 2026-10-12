@@ -37,7 +37,7 @@ function parse(h){
   const re = /<(\/?)([a-zA-Z]+)[^>]*>|([^<]+)/g; let m;
   while((m = re.exec(h))){
     const top = pila[pila.length-1];
-    if(m[3] !== undefined) top.hijos.push({ nodeType:3, nodeValue:m[3] });
+    if(m[3] !== undefined) top.hijos.push({ nodeType:3, nodeValue:m[3].replace(/&zwnj;/g, '\u200C') });
     else if(m[1]) pila.pop();
     else {
       const n = { nodeType:1, tagName:m[2].toUpperCase(), hijos:[] }; top.hijos.push(n);
@@ -120,6 +120,8 @@ console.log('\n=== Romaji: palabras y vocales largas ===');
  ['<ruby>東<rt>とう</rt>京<rt>きょう</rt></ruby>','tōkyō'], ['<ruby>原因<rt>げんいん</rt></ruby>',"gen'in"],
  ['<ruby>金<rt>きん</rt></ruby><ruby>曜<rt>よう</rt></ruby>','kin\'yō'],
  ['<ruby>行<rt>い</rt></ruby>こう','ikō'],
+ // en kana suelto, el límite se marca a mano
+ ['おも&zwnj;う','omou'], ['おもう','omō'], ['こ&zwnj;うま','kouma'],
  // puntuación: separa palabras, también la partícula de delante
  ['わたし<wbr>は、がくせい<wbr>です。','watashi wa, gakusei desu.'],
  ['ほんとう<wbr>です<wbr>か？','hontō desu ka?'], ['すごい！ いい<wbr>です<wbr>ね。','sugoi! ii desu ne.'],

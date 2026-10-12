@@ -810,9 +810,10 @@ details.more .body p + p{margin-top:6px}
   // を no hace falta: solo existe como partícula y en KANA ya es o.
   var PARTICULA = {'は':'wa', 'へ':'e'};
   var PUNTUACION = {'、':', ', '。':'. ', '？':'? ', '！':'! '};
-  // Límite de morfema dentro de una palabra: lo pone leer() en los bordes del
-  // furigana. Ahí no se alarga: 思[おも]う → omou, 子[こ]馬[うま] → kouma.
-  // Es U+200C ("no unir"): invisible si llega a la etiqueta de accesibilidad.
+  // Límite de morfema dentro de una palabra, donde no se alarga: 思[おも]う →
+  // omou, 子[こ]馬[うま] → kouma. Lo pone leer() en los bordes del furigana, y en
+  // kana suelto se escribe a mano con &zwnj;: おも&zwnj;う → omou. Es U+200C
+  // ("no unir"): invisible en la página y en la etiqueta de accesibilidad.
   var CORTE = '\u200C';
 
   function aHiragana(t){
