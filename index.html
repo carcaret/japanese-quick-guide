@@ -160,7 +160,7 @@ details.more .body p + p{margin-top:6px}
 
 <header>
   <h1>Guía rápida de japonés</h1>
-  <span class="ver" id="version">v13</span>
+  <span class="ver" id="version">v14</span>
 </header>
 
 <div class="topbar">
@@ -810,14 +810,19 @@ details.more .body p + p{margin-top:6px}
   // を no hace falta: solo existe como partícula y en KANA ya es o.
   var PARTICULA = {'は':'wa', 'へ':'e'};
   var PUNTUACION = {'、':', ', '。':'. ', '？':'? ', '！':'! '};
-  // Límite de morfema dentro de una palabra, donde no se alarga: 思[おも]う →
-  // omou, 子[こ]馬[うま] → kouma. Lo pone leer() en los bordes del furigana, y en
-  // kana suelto se escribe a mano con &zwnj;: おも&zwnj;う → omou. Es U+200C
-  // ("no unir"): invisible en la página y en la etiqueta de accesibilidad.
-  var CORTE = '\u200C';
-  // Marca interna: lo que sigue es un nombre propio y va con mayúscula. La pone
-  // leer() en los <span class="propio">; carácter de uso privado, nunca se ve.
-  var NOMBRE = '\uE000';
+
+  /* Marcas que leer() deja en el kana para romaji(), además del espacio entre
+     palabras. Ninguna se ve: kanaDe() las quita para la etiqueta de accesibilidad.
+     - CORTE: límite de morfema dentro de una palabra, donde no se alarga
+       (思[おも]う → omou, 子[こ]馬[うま] → kouma). Va en los bordes de cada <rt>, y
+       en kana suelto se escribe a mano: おも&zwnj;う. Es U+200C, "no unir".
+     - NOMBRE: la palabra que sigue es nombre propio y va con mayúscula
+       (<span class="propio">). Carácter de uso privado.
+     - GUION: une un sufijo de trato (<wbr class="sufijo">): Tanaka-san. */
+  var CORTE = '\u200C', NOMBRE = '\uE000', GUION = '-';
+  var MARCAS = new RegExp('[' + CORTE + NOMBRE + GUION + ']', 'g');
+  // Lo que parte el texto en palabras: espacios y signos de puntuación.
+  var TROZOS = new RegExp('([ 　]+|[' + Object.keys(PUNTUACION).join('') + '])');
 
   function aHiragana(t){
     return t.replace(/[ァ-ヶ]/g, function(c){
@@ -825,29 +830,30 @@ details.more .body p + p{margin-top:6px}
     });
   }
 
-  // Texto → romaji. Las palabras las separan los espacios (los del texto y los
-  // <wbr>, que leer() convierte en espacio) y los signos de puntuación. Un sufijo
-  // de trato va unido con guion: Tanaka-san.
+  // Texto (lo que devuelve leer()) → romaji, palabra a palabra.
   function romaji(texto){
-    return aHiragana(texto).split(/([ 　]+|[、。？！])/).map(function(t){
+    return aHiragana(texto).split(TROZOS).map(function(t){
       if(!t) return '';
       if(/^[ 　]+$/.test(t)) return ' ';
-      return PUNTUACION[t] || PARTICULA[t] || transcribir(t);
-    }).join('').replace(/ +([,.?!])/g, '$1').replace(/ +/g, ' ').trim();
+      return PUNTUACION[t] || PARTICULA[t] || romajiDePalabra(t);
+    }).join('').replace(/ +/g, ' ').trim();
+  }
+
+  // Un nombre propio empieza palabra: la mayúscula va a su primera letra.
+  function romajiDePalabra(p){
+    if(p.charAt(0) !== NOMBRE) return transcribir(p);
+    var r = transcribir(p.slice(1));
+    return r.charAt(0).toUpperCase() + r.slice(1);
   }
 
   // Una sola palabra, kana a kana.
   function transcribir(palabra){
-    var s = '', corte = {}, nombre = {}, mayusculas = [], out = '', i = 0;
+    var s = '', corte = {}, out = '', i = 0;
     for(var k = 0; k < palabra.length; k++){
-      var m = palabra[k];
-      if(m === CORTE) corte[s.length] = true;
-      else if(m === NOMBRE) nombre[s.length] = true;
-      else s += m;
+      if(palabra[k] === CORTE) corte[s.length] = true; else s += palabra[k];
     }
     while(i < s.length){
       var c = s[i], sig = s[i + 1], previa = corte[i] ? '' : out.slice(-1);
-      if(nombre[i]) mayusculas.push(out.length);
       // っ duplica la consonante de la sílaba siguiente (っ+ch → tch)
       if(c === 'っ'){
         var resto = transcribir(s.slice(i + 1));
@@ -865,20 +871,15 @@ details.more .body p + p{margin-top:6px}
         i++; continue;
       }
       if(KANA[c]){ out += KANA[c]; i++; continue; }
-      if(c !== 'ー') out += c;   // signos y kanji, tal cual; una ー sin vocal delante, nada
+      if(c !== 'ー') out += c;   // guion, signos y kanji, tal cual; una ー sin vocal delante, nada
       i++;
     }
-    mayusculas.forEach(function(p){
-      out = out.slice(0, p) + out.charAt(p).toUpperCase() + out.slice(p + 1);
-    });
     return out;
   }
 
   // Qué hay que leer de un elemento: con furigana, la lectura del <rt> sustituye
   // al kanji (si no, se transcribirían los dos seguidos: “食たべる” → “食taberu”).
-  // Un <wbr> separa palabras, como un espacio, y <wbr class="sufijo"> une un sufijo
-  // de trato con guion (たなか<wbr class="sufijo">さん → Tanaka-san); los bordes de
-  // cada <rt> son límites de morfema, y <span class="propio"> marca un nombre propio.
+  // De paso traduce el marcado de palabras a las marcas de arriba.
   function leer(nodo, enRuby){
     var out = '';
     for(var n = nodo.firstChild; n; n = n.nextSibling){
@@ -886,7 +887,7 @@ details.more .body p + p{margin-top:6px}
       if(n.nodeType !== 1) continue;
       var t = n.tagName;
       if(t === 'RP' || t === 'RB') continue;   // paréntesis de respaldo y base explícita
-      if(t === 'WBR'){ out += n.className === 'sufijo' ? '-' : ' '; continue; }
+      if(t === 'WBR'){ out += n.className === 'sufijo' ? GUION : ' '; continue; }
       if(t === 'RT'){ out += CORTE + leer(n, false) + CORTE; continue; }
       if(n.className === 'propio'){ out += NOMBRE + leer(n, enRuby); continue; }
       out += leer(n, t === 'RUBY' ? true : enRuby);
@@ -894,9 +895,9 @@ details.more .body p + p{margin-top:6px}
     return out;
   }
 
-  // Lo que se lee, sin las marcas para el romaji: para la etiqueta de accesibilidad.
+  // Lo que se lee, sin las marcas: para la etiqueta de accesibilidad.
   function kanaDe(el){
-    return leer(el).replace(/[-\u200C\uE000]/g, '');
+    return leer(el).replace(MARCAS, '');
   }
 
   // Muestra u oculta el romaji junto a la palabra tocada.

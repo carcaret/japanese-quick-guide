@@ -184,7 +184,8 @@ baje el `sw.js` nuevo, que antes era la razón de tocarlo al mover los iconos.
   marca saldría *omō*. Es el mismo carácter que pone el furigana, así que el
   código no distingue uno de otro.
 - **Nombres propios y sufijos de trato.** Un nombre de persona o de lugar va
-  en `<span class="propio">` y sale con mayúscula; un sufijo de trato (さん,
+  en `<span class="propio">`, que abarca la palabra desde su principio, y sale
+  con mayúscula; un sufijo de trato (さん,
   先生, くん, ちゃん, さま) se une con `<wbr class="sufijo">` y sale con guion:
   `<span class="propio">たなか</span><wbr class="sufijo">さん` → *Tanaka-san*,
   `<span class="propio"><ruby>京都<rt>きょうと</rt></ruby></span>` → *Kyōto*.

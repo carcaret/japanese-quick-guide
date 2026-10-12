@@ -26,10 +26,10 @@ let alCargar = null, registrado = null;
 const win = { addEventListener(ev, f){ if(ev === 'load') alCargar = f; }, scrollTo(){} };
 const nav = { serviceWorker: { register(u){ registrado = u; return Promise.resolve(); } } };
 const api = new Function('document','window','location','navigator','localStorage',
-  src + '\nreturn {romaji, leer, enPalabras, raiz, conRuby, enKana, enKanji, VERBOS, COLUMNA};'
+  src + '\nreturn {romaji, leer, kanaDe, enPalabras, raiz, conRuby, enKana, enKanji, VERBOS, COLUMNA};'
 )(doc, win, { hash: '' }, nav, { getItem: () => null, setItem(){} });
 
-const { romaji, leer, enPalabras, raiz, conRuby, enKana, VERBOS } = api;
+const { romaji, leer, kanaDe, enPalabras, raiz, conRuby, enKana, VERBOS } = api;
 
 // ── Mini-DOM para poder pasarle HTML a leer() ──────────────────────────────
 function parse(h){
@@ -137,6 +137,8 @@ console.log('\n=== Romaji: palabras y vocales largas ===');
  ['<span class="propio"><ruby>日本<rt>にほん</rt></ruby></span><wbr>の くるま','Nihon no kuruma'],
  ['<ruby>日本語<rt>にほんご</rt></ruby>','nihongo'], ['おかあさん','okāsan'],
  ['<span class="propio">メアリー</span><wbr class="sufijo">さん','Mearī-san'],
+ // un nombre propio a mitad de frase, y con furigana
+ ['<ruby>明日<rt>あした</rt></ruby> <span class="propio"><ruby>東京<rt>とうきょう</rt></ruby></span><wbr>へ','ashita Tōkyō e'],
  // en kana suelto, el límite se marca a mano
  ['おも&zwnj;う','omou'], ['おもう','omō'], ['こ&zwnj;うま','kouma'],
  // puntuación: separa palabras, también la partícula de delante
@@ -153,6 +155,10 @@ comprobar('勉強する', romajiDe(conRuby(enPalabras(benkyo, benkyo.k))), 'benk
 comprobar('勉強します', romajiDe(conRuby(enPalabras(benkyo, raiz(benkyo.k, 'irr') + 'ます'))), 'benkyō shimasu');
 const suru = VERBOS.find(v => v.k === 'する');
 comprobar('する', romajiDe(conRuby(enPalabras(suru, 'します'))), 'shimasu');
+
+// la etiqueta de accesibilidad lleva el kana limpio, sin las marcas del romaji
+comprobar('kanaDe', kanaDe(parse('<span class="propio">たなか</span><wbr class="sufijo">さん<wbr>は <ruby>思<rt>おも</rt></ruby>う')),
+  'たなかさん は おもう');
 
 // ── 4. La versión: un solo sitio donde subirla ────────────────────────────
 console.log('\n=== Versión ===');
