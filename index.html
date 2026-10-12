@@ -160,7 +160,7 @@ details.more .body p + p{margin-top:6px}
 
 <header>
   <h1>Guía rápida de japonés</h1>
-  <span class="ver" id="version">v12</span>
+  <span class="ver" id="version">v13</span>
 </header>
 
 <div class="topbar">
@@ -256,12 +256,12 @@ details.more .body p + p{margin-top:6px}
     </div>
     <div class="item">
       <p><span class="head">の</span> — B の A = el A relacionado con B. No solo posesión (B es el dueño de A): también materia, pertenencia, origen…</p>
-      <p class="sub"><span class="jp">たなかさん<wbr>の <ruby>本<rt>ほん</rt></ruby></span> → el libro de Tanaka</p>
+      <p class="sub"><span class="jp"><span class="propio">たなか</span><wbr class="sufijo">さん<wbr>の <ruby>本<rt>ほん</rt></ruby></span> → el libro de Tanaka</p>
       <p class="sub"><span class="jp"><ruby>日本語<rt>にほんご</rt></ruby><wbr>の <ruby>先生<rt>せんせい</rt></ruby></span> → el profesor de japonés</p>
       <p class="sub"><span class="jp"><ruby>大学<rt>だいがく</rt></ruby><wbr>の <ruby>学生<rt>がくせい</rt></ruby></span> → estudiante universitario</p>
-      <p class="sub"><span class="jp"><ruby>日本<rt>にほん</rt></ruby><wbr>の くるま</span> → coche japonés</p>
+      <p class="sub"><span class="jp"><span class="propio"><ruby>日本<rt>にほん</rt></ruby></span><wbr>の くるま</span> → coche japonés</p>
       <details class="more"><summary></summary><div class="body">
-        <p>Se puede encadenar: <span class="jp"><ruby>日本<rt>にほん</rt></ruby><wbr>の <ruby>大学<rt>だいがく</rt></ruby><wbr>の <ruby>先生<rt>せんせい</rt></ruby></span> → profesor de una universidad japonesa.</p>
+        <p>Se puede encadenar: <span class="jp"><span class="propio"><ruby>日本<rt>にほん</rt></ruby></span><wbr>の <ruby>大学<rt>だいがく</rt></ruby><wbr>の <ruby>先生<rt>せんせい</rt></ruby></span> → profesor de una universidad japonesa.</p>
       </div></details>
     </div>
     <div class="item">
@@ -371,7 +371,7 @@ details.more .body p + p{margin-top:6px}
           <div><b>そ</b>junto a ti</div>
           <div><b>あ</b>lejos de los dos</div>
         </div>
-        <p>こちら también sirve para presentar a alguien con cortesía: <span class="jp">こちら<wbr>は たなかさん<wbr>です</span> → este es el señor Tanaka.</p>
+        <p>こちら también sirve para presentar a alguien con cortesía: <span class="jp">こちら<wbr>は <span class="propio">たなか</span><wbr class="sufijo">さん<wbr>です</span> → este es el señor Tanaka.</p>
       </div></details>
     </div>
     <div class="item">
@@ -411,7 +411,7 @@ details.more .body p + p{margin-top:6px}
     </div>
     <div class="item">
       <p>Van en el hueco del dato que falta, sin tocar el resto de la frase:</p>
-      <p class="sub"><span class="jp">たなかさん<wbr>は <ruby>学生<rt>がくせい</rt></ruby><wbr>です<wbr>か</span> → <span class="jp">たなかさん<wbr>は <ruby>何<rt>なん</rt></ruby><wbr>です<wbr>か</span></p>
+      <p class="sub"><span class="jp"><span class="propio">たなか</span><wbr class="sufijo">さん<wbr>は <ruby>学生<rt>がくせい</rt></ruby><wbr>です<wbr>か</span> → <span class="jp"><span class="propio">たなか</span><wbr class="sufijo">さん<wbr>は <ruby>何<rt>なん</rt></ruby><wbr>です<wbr>か</span></p>
     </div>
   </div>
 </section>
@@ -570,7 +570,7 @@ details.more .body p + p{margin-top:6px}
     </div>
     <div class="item">
       <p><span class="head">El futuro</span> — lo que vas a hacer</p>
-      <p class="sub"><span class="jp"><ruby>明日<rt>あした</rt></ruby> <ruby>京都<rt>きょうと</rt></ruby><wbr>に <ruby>行<rt>い</rt></ruby>きます</span> → mañana voy a Kioto</p>
+      <p class="sub"><span class="jp"><ruby>明日<rt>あした</rt></ruby> <span class="propio"><ruby>京都<rt>きょうと</rt></ruby></span><wbr>に <ruby>行<rt>い</rt></ruby>きます</span> → mañana voy a Kioto</p>
     </div>
     <div class="item">
       <p class="muted">Para «lo estoy haciendo ahora» hay otra forma, 〜ている (L7).</p>
@@ -815,6 +815,9 @@ details.more .body p + p{margin-top:6px}
   // kana suelto se escribe a mano con &zwnj;: おも&zwnj;う → omou. Es U+200C
   // ("no unir"): invisible en la página y en la etiqueta de accesibilidad.
   var CORTE = '\u200C';
+  // Marca interna: lo que sigue es un nombre propio y va con mayúscula. La pone
+  // leer() en los <span class="propio">; carácter de uso privado, nunca se ve.
+  var NOMBRE = '\uE000';
 
   function aHiragana(t){
     return t.replace(/[ァ-ヶ]/g, function(c){
@@ -823,7 +826,8 @@ details.more .body p + p{margin-top:6px}
   }
 
   // Texto → romaji. Las palabras las separan los espacios (los del texto y los
-  // <wbr>, que leer() convierte en espacio) y los signos de puntuación.
+  // <wbr>, que leer() convierte en espacio) y los signos de puntuación. Un sufijo
+  // de trato va unido con guion: Tanaka-san.
   function romaji(texto){
     return aHiragana(texto).split(/([ 　]+|[、。？！])/).map(function(t){
       if(!t) return '';
@@ -834,12 +838,16 @@ details.more .body p + p{margin-top:6px}
 
   // Una sola palabra, kana a kana.
   function transcribir(palabra){
-    var s = '', corte = {}, out = '', i = 0;
+    var s = '', corte = {}, nombre = {}, mayusculas = [], out = '', i = 0;
     for(var k = 0; k < palabra.length; k++){
-      if(palabra[k] === CORTE) corte[s.length] = true; else s += palabra[k];
+      var m = palabra[k];
+      if(m === CORTE) corte[s.length] = true;
+      else if(m === NOMBRE) nombre[s.length] = true;
+      else s += m;
     }
     while(i < s.length){
       var c = s[i], sig = s[i + 1], previa = corte[i] ? '' : out.slice(-1);
+      if(nombre[i]) mayusculas.push(out.length);
       // っ duplica la consonante de la sílaba siguiente (っ+ch → tch)
       if(c === 'っ'){
         var resto = transcribir(s.slice(i + 1));
@@ -860,12 +868,17 @@ details.more .body p + p{margin-top:6px}
       if(c !== 'ー') out += c;   // signos y kanji, tal cual; una ー sin vocal delante, nada
       i++;
     }
+    mayusculas.forEach(function(p){
+      out = out.slice(0, p) + out.charAt(p).toUpperCase() + out.slice(p + 1);
+    });
     return out;
   }
 
   // Qué hay que leer de un elemento: con furigana, la lectura del <rt> sustituye
   // al kanji (si no, se transcribirían los dos seguidos: “食たべる” → “食taberu”).
-  // Un <wbr> separa palabras, como un espacio; los bordes de cada <rt>, morfemas.
+  // Un <wbr> separa palabras, como un espacio, y <wbr class="sufijo"> une un sufijo
+  // de trato con guion (たなか<wbr class="sufijo">さん → Tanaka-san); los bordes de
+  // cada <rt> son límites de morfema, y <span class="propio"> marca un nombre propio.
   function leer(nodo, enRuby){
     var out = '';
     for(var n = nodo.firstChild; n; n = n.nextSibling){
@@ -873,11 +886,17 @@ details.more .body p + p{margin-top:6px}
       if(n.nodeType !== 1) continue;
       var t = n.tagName;
       if(t === 'RP' || t === 'RB') continue;   // paréntesis de respaldo y base explícita
-      if(t === 'WBR'){ out += ' '; continue; }
+      if(t === 'WBR'){ out += n.className === 'sufijo' ? '-' : ' '; continue; }
       if(t === 'RT'){ out += CORTE + leer(n, false) + CORTE; continue; }
+      if(n.className === 'propio'){ out += NOMBRE + leer(n, enRuby); continue; }
       out += leer(n, t === 'RUBY' ? true : enRuby);
     }
     return out;
+  }
+
+  // Lo que se lee, sin las marcas para el romaji: para la etiqueta de accesibilidad.
+  function kanaDe(el){
+    return leer(el).replace(/[-\u200C\uE000]/g, '');
   }
 
   // Muestra u oculta el romaji junto a la palabra tocada.
@@ -903,7 +922,7 @@ details.more .body p + p{margin-top:6px}
       el.setAttribute('tabindex','0');
       el.setAttribute('role','button');
       el.setAttribute('aria-expanded','false');
-      el.setAttribute('aria-label','Romaji de ' + leer(el));
+      el.setAttribute('aria-label','Romaji de ' + kanaDe(el));
     });
   }
   preparar(document);

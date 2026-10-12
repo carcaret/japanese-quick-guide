@@ -34,13 +34,14 @@ const { romaji, leer, enPalabras, raiz, conRuby, enKana, VERBOS } = api;
 // ── Mini-DOM para poder pasarle HTML a leer() ──────────────────────────────
 function parse(h){
   const raiz_ = { nodeType:1, tagName:'SPAN', hijos:[] }, pila = [raiz_];
-  const re = /<(\/?)([a-zA-Z]+)[^>]*>|([^<]+)/g; let m;
+  const re = /<(\/?)([a-zA-Z]+)([^>]*)>|([^<]+)/g; let m;
   while((m = re.exec(h))){
     const top = pila[pila.length-1];
-    if(m[3] !== undefined) top.hijos.push({ nodeType:3, nodeValue:m[3].replace(/&zwnj;/g, '\u200C') });
+    if(m[4] !== undefined) top.hijos.push({ nodeType:3, nodeValue:m[4].replace(/&zwnj;/g, '\u200C') });
     else if(m[1]) pila.pop();
     else {
-      const n = { nodeType:1, tagName:m[2].toUpperCase(), hijos:[] }; top.hijos.push(n);
+      const clase = (m[3].match(/class="([^"]*)"/) || [, ''])[1];
+      const n = { nodeType:1, tagName:m[2].toUpperCase(), className:clase, hijos:[] }; top.hijos.push(n);
       if(n.tagName !== 'WBR') pila.push(n);   // <wbr> no tiene cierre
     }
   }
@@ -87,7 +88,15 @@ comprobar('13 verbos', VERBOS.length, 13);
 
 // ── 3. Romaji de todo lo japonés de la página ──────────────────────────────
 console.log('\n=== Romaji de cada palabra tocable ===');
-const jp = [...html.matchAll(/<span class="jp(?: head)?">([\s\S]*?)<\/span>/g)].map(m => m[1]);
+// El contenido de cada .jp, contando los <span> de dentro (class="propio"…)
+const jp = [...html.matchAll(/<span class="jp(?: head)?">/g)].map(m => {
+  const ini = m.index + m[0].length, re = /<(\/?)span\b[^>]*>/g;
+  re.lastIndex = ini;
+  for(let nivel = 0, t; (t = re.exec(html)); ){
+    if(!t[1]) nivel++;
+    else if(nivel-- === 0) return html.slice(ini, t.index);
+  }
+});
 const conRubyEnHTML = jp.filter(w => w.includes('<ruby>'));
 conRubyEnHTML.forEach(w => console.log('  ' + w.replace(/<[^>]+>/g, '·').padEnd(30) + ' → ' + romajiDe(w)));
 console.log('\n  (' + jp.length + ' palabras tocables, ' + conRubyEnHTML.length + ' con furigana)');
@@ -120,6 +129,14 @@ console.log('\n=== Romaji: palabras y vocales largas ===');
  ['<ruby>東<rt>とう</rt>京<rt>きょう</rt></ruby>','tōkyō'], ['<ruby>原因<rt>げんいん</rt></ruby>',"gen'in"],
  ['<ruby>金<rt>きん</rt></ruby><ruby>曜<rt>よう</rt></ruby>','kin\'yō'],
  ['<ruby>行<rt>い</rt></ruby>こう','ikō'],
+ // nombres propios con mayúscula y sufijos de trato con guion
+ ['<span class="propio">たなか</span><wbr class="sufijo">さん<wbr>は <ruby>学生<rt>がくせい</rt></ruby><wbr>です<wbr>か','Tanaka-san wa gakusei desu ka'],
+ ['<span class="propio">やまだ</span><wbr class="sufijo"><ruby>先生<rt>せんせい</rt></ruby>','Yamada-sensei'],
+ ['<span class="propio"><ruby>大阪<rt>おおさか</rt></ruby></span>','Ōsaka'],
+ ['<span class="propio"><ruby>京都<rt>きょうと</rt></ruby></span><wbr>に','Kyōto ni'],
+ ['<span class="propio"><ruby>日本<rt>にほん</rt></ruby></span><wbr>の くるま','Nihon no kuruma'],
+ ['<ruby>日本語<rt>にほんご</rt></ruby>','nihongo'], ['おかあさん','okāsan'],
+ ['<span class="propio">メアリー</span><wbr class="sufijo">さん','Mearī-san'],
  // en kana suelto, el límite se marca a mano
  ['おも&zwnj;う','omou'], ['おもう','omō'], ['こ&zwnj;うま','kouma'],
  // puntuación: separa palabras, también la partícula de delante

@@ -183,6 +183,13 @@ baje el `sw.js` nuevo, que antes era la razón de tocarlo al mover los iconos.
   verbo en おう / うう que vaya en kana se escribe `おも&zwnj;う` → *omou*; sin
   marca saldría *omō*. Es el mismo carácter que pone el furigana, así que el
   código no distingue uno de otro.
+- **Nombres propios y sufijos de trato.** Un nombre de persona o de lugar va
+  en `<span class="propio">` y sale con mayúscula; un sufijo de trato (さん,
+  先生, くん, ちゃん, さま) se une con `<wbr class="sufijo">` y sale con guion:
+  `<span class="propio">たなか</span><wbr class="sufijo">さん` → *Tanaka-san*,
+  `<span class="propio"><ruby>京都<rt>きょうと</rt></ruby></span>` → *Kyōto*.
+  Los idiomas van en minúscula, como en español: 日本 → *Nihon*, pero 日本語 →
+  *nihongo*. ごろ y えん no son de trato y van pegados (*sanjigoro*).
 - La puntuación 、。？！ también separa palabras: `わたし<wbr>は、` → *watashi wa,*.
 - Cuando la regla no puede acertar, se fuerza con `data-romaji="…"`. Hoy solo
   los saludos こんにちは / こんばんは, que se escriben con は y se leen *wa*
