@@ -66,6 +66,9 @@ nav a{
 nav a:focus-visible, summary:focus-visible, .jp:focus-visible{outline:2px solid var(--ai); outline-offset:2px}
 main{max-width:680px; margin:0 auto; padding:4px 18px 60px}
 section{margin-top:30px}
+/* Los títulos se escriben normales y se ven en mayúsculas: el chip de cada
+   sección sale de su <h2>, y un lector de pantalla no los deletrea */
+h2, h3{text-transform:uppercase}
 h2{
   display:flex; align-items:center; gap:10px; margin:0 0 10px;
   font-size:1.02rem; font-weight:700; color:var(--ai); letter-spacing:.04em;
@@ -160,7 +163,7 @@ details.more .body p + p{margin-top:6px}
 
 <header>
   <h1>Guía rápida de japonés</h1>
-  <span class="ver" id="version">v16</span>
+  <span class="ver" id="version">v17</span>
 </header>
 
 <div class="topbar">
@@ -170,18 +173,7 @@ details.more .body p + p{margin-top:6px}
     <button type="button" role="tab" data-panel="numeros" aria-selected="false" aria-controls="numeros">Números</button>
     <button type="button" role="tab" data-panel="contadores" aria-selected="false" aria-controls="contadores">Contadores</button>
   </div>
-  <nav aria-label="Secciones">
-    <div class="in">
-      <a href="#sonidos">Sonidos</a>
-      <a href="#particulas">Partículas</a>
-      <a href="#tiempo">Tiempo</a>
-      <a href="#frecuencia">Frecuencia</a>
-      <a href="#kosoado">こそあど</a>
-      <a href="#interrogativos">Interrogativos</a>
-      <a href="#negacion">Negación de です</a>
-      <a href="#expresiones">Expresiones</a>
-    </div>
-  </nav>
+  <nav aria-label="Secciones" hidden><div class="in"></div></nav>
 </div>
 
 <main>
@@ -190,7 +182,7 @@ details.more .body p + p{margin-top:6px}
 
 <!-- ━━━ SONIDOS ━━━ -->
 <section id="sonidos">
-  <h2>SONIDOS</h2>
+  <h2>Sonidos</h2>
   <div class="card">
     <div class="item">
       <p><span class="head">っ</span> duplica la consonante siguiente (solo ante k, s, t, p). Ante ち se transcribe "tch".</p>
@@ -219,7 +211,7 @@ details.more .body p + p{margin-top:6px}
     </div>
   </div>
 
-  <h3>VOCALES LARGAS</h3>
+  <h3>Vocales largas</h3>
   <div class="card">
     <div class="item">
       <p>La duración cambia el significado: <span class="jp">おばさん</span> (tía) / <span class="jp">おばあさん</span> (abuela)</p>
@@ -244,8 +236,8 @@ details.more .body p + p{margin-top:6px}
 
 <!-- ━━━ PARTÍCULAS ━━━ -->
 <section id="particulas">
-  <h2>PARTÍCULAS</h2>
-  <h3>DETRÁS DEL SUSTANTIVO: SU PAPEL</h3>
+  <h2>Partículas</h2>
+  <h3>Detrás del sustantivo: su papel</h3>
   <div class="card">
     <div class="item">
       <p><span class="head">は</span> — tema de la frase (no siempre el sujeto)</p>
@@ -295,7 +287,7 @@ details.more .body p + p{margin-top:6px}
     </div>
   </div>
 
-  <h3>AL FINAL DE LA FRASE: EL TONO</h3>
+  <h3>Al final de la frase: el tono</h3>
   <div class="card">
     <div class="item">
       <p><span class="head">ね</span> — busca acuerdo: "¿verdad?"</p>
@@ -311,7 +303,7 @@ details.more .body p + p{margin-top:6px}
 
 <!-- ━━━ TIEMPO ━━━ -->
 <section id="tiempo">
-  <h2>TIEMPO: ¿LLEVA に?</h2>
+  <h2>Tiempo: ¿lleva に?</h2>
   <div class="card">
     <div class="item">
       <p><span class="ok head">Sí</span> — días de la semana, y horas o fechas con número</p>
@@ -335,7 +327,7 @@ details.more .body p + p{margin-top:6px}
 
 <!-- ━━━ FRECUENCIA ━━━ -->
 <section id="frecuencia">
-  <h2>FRECUENCIA</h2>
+  <h2>Frecuencia</h2>
   <div class="card">
     <div class="item">
       <p>De más a menos:</p>
@@ -353,7 +345,7 @@ details.more .body p + p{margin-top:6px}
 
 <!-- ━━━ SERIE こそあど ━━━ -->
 <section id="kosoado">
-  <h2>SERIE こそあど</h2>
+  <h2>Serie こそあど</h2>
   <div class="card">
     <div class="item">
       <div class="table"><div class="kso">
@@ -385,7 +377,7 @@ details.more .body p + p{margin-top:6px}
 
 <!-- ━━━ INTERROGATIVOS ━━━ -->
 <section id="interrogativos">
-  <h2>INTERROGATIVOS</h2>
+  <h2>Interrogativos</h2>
   <div class="card">
     <div class="item">
       <p><span class="head">何</span> — 1) なん ante です y ante contadores con t/d/n</p>
@@ -419,7 +411,7 @@ details.more .body p + p{margin-top:6px}
 
 <!-- ━━━ NEGACIÓN DE です ━━━ -->
 <section id="negacion">
-  <h2>NEGACIÓN DE です</h2>
+  <h2>Negación de です</h2>
   <div class="card">
     <div class="item">
       <p>じゃ = contracción de では</p>
@@ -438,7 +430,7 @@ details.more .body p + p{margin-top:6px}
 
 <!-- ━━━ EXPRESIONES ━━━ -->
 <section id="expresiones">
-  <h2>EXPRESIONES</h2>
+  <h2>Expresiones</h2>
   <div class="card">
     <div class="item"><p><span class="jp head">あのう</span> — "esto…", para arrancar o llamar la atención</p></div>
     <div class="item"><p><span class="jp head">そう<wbr>です<wbr>か</span> — bajando la voz: "ya veo" / subiendo: "¿ah sí?"</p></div>
@@ -481,8 +473,8 @@ details.more .body p + p{margin-top:6px}
 <!-- ━━━━━━━━━━━━ VERBOS ━━━━━━━━━━━━ -->
 <div class="panel" id="verbos" role="tabpanel" hidden>
 
-<section>
-  <h2>LOS TRES GRUPOS</h2>
+<section id="grupos">
+  <h2>Los tres grupos</h2>
   <div class="card">
     <div class="item">
       <p>Cada verbo pertenece a un grupo, y de ahí sale toda su conjugación. Lo que los distingue es de qué está hecha la forma diccionario.</p>
@@ -505,7 +497,7 @@ details.more .body p + p{margin-top:6px}
     </div>
   </div>
 
-  <h3>¿DE QUÉ GRUPO ES?</h3>
+  <h3>¿De qué grupo es?</h3>
   <div class="card">
     <div class="item">
       <p>Si <b>no</b> acaba en る, es en -u. Siempre.</p>
@@ -525,8 +517,8 @@ details.more .body p + p{margin-top:6px}
   </div>
 </section>
 
-<section>
-  <h2>PRESENTE: ます・ません</h2>
+<section id="presente">
+  <h2>Presente: ます・ません</h2>
   <div class="card">
     <div class="item">
       <p>El presente se monta sobre una raíz: afirmativo <span class="jp">ます</span>, negativo <span class="jp">ません</span>. Cómo se saca esa raíz depende del grupo.</p>
@@ -548,7 +540,7 @@ details.more .body p + p{margin-top:6px}
     </div>
   </div>
 
-  <h3>CONJUGA UN VERBO</h3>
+  <h3>Conjuga un verbo</h3>
   <div class="card">
     <div class="item">
       <label class="muted" for="verbo">Elige y sale su presente, sacado con estas mismas reglas</label>
@@ -560,7 +552,7 @@ details.more .body p + p{margin-top:6px}
 </section>
 
 <section id="invitar">
-  <h2>INVITAR: 〜ませんか</h2>
+  <h2>Invitar: 〜ませんか</h2>
   <div class="card">
     <div class="item">
       <p><span class="head">〜ませんか</span> — negativo + か = «¿y si…?», una invitación</p>
@@ -593,8 +585,8 @@ details.more .body p + p{margin-top:6px}
 <!-- ━━━━━━━━━━━━ NÚMEROS ━━━━━━━━━━━━ -->
 <div class="panel" id="numeros" role="tabpanel" hidden>
 
-<section>
-  <h2>LECTURAS DOBLES</h2>
+<section id="dobles">
+  <h2>Lecturas dobles</h2>
   <div class="card">
     <div class="item">
       <p>Tres cifras tienen dos lecturas, y cuál toca lo decide el contador:</p>
@@ -617,7 +609,7 @@ details.more .body p + p{margin-top:6px}
     </div>
   </div>
 
-  <h3>CIENTOS Y MILES</h3>
+  <h3>Cientos y miles</h3>
   <div class="card">
     <div class="item">
       <div class="table"><div class="rows">
@@ -631,7 +623,7 @@ details.more .body p + p{margin-top:6px}
     </div>
   </div>
 
-  <h3>DE 万 EN 万</h3>
+  <h3>De 万 en 万</h3>
   <div class="card">
     <div class="item">
       <p>10.000 no es "diez miles", es una unidad nueva: <span class="jp">いちまん</span> (一万).</p>
@@ -648,7 +640,7 @@ details.more .body p + p{margin-top:6px}
     </div>
   </div>
 
-  <h3>EN KANJI</h3>
+  <h3>En kanji</h3>
   <div class="card">
     <div class="item">
       <div class="kanji">
@@ -671,7 +663,7 @@ details.more .body p + p{margin-top:6px}
     </div>
   </div>
 
-  <h3>PRECIOS Y HORAS</h3>
+  <h3>Precios y horas</h3>
   <div class="card">
     <div class="item">
       <p><span class="jp head">いくら<wbr>です<wbr>か</span> → ¿cuánto cuesta? Se responde con el número + えん.</p>
@@ -689,8 +681,8 @@ details.more .body p + p{margin-top:6px}
 <!-- ━━━━━━━━━━━━ CONTADORES ━━━━━━━━━━━━ -->
 <div class="panel" id="contadores" role="tabpanel" hidden>
 
-<section>
-  <h2>CÓMO SE CUENTA</h2>
+<section id="contar">
+  <h2>Cómo se cuenta</h2>
   <div class="card">
     <div class="item">
       <p>El número no va solo: se le pega un contador según lo que cuentes. Si no sabes cuál toca, <b>〜つ</b> sirve para casi cualquier cosa… hasta 10.</p>
@@ -701,7 +693,7 @@ details.more .body p + p{margin-top:6px}
     </div>
   </div>
 
-  <h3>BUSCA EL CONTADOR</h3>
+  <h3>Busca el contador</h3>
   <div class="card">
     <div class="item">
       <label class="muted" for="picker">Elige y salen sus lecturas del 1 al 10</label>
@@ -714,7 +706,7 @@ details.more .body p + p{margin-top:6px}
     </div>
   </div>
 
-  <h3>POR QUÉ CAMBIAN</h3>
+  <h3>Por qué cambian</h3>
   <div class="card">
     <div class="item">
       <p>El <b>contador</b> cambia con <b>1, 3, 6, 8, 10</b> y <b>なん</b>; y con el <b>4</b>, solo en 〜分 (<span class="jp">よんぷん</span>). El cambio no depende del contador, sino de <b>con qué sonido empieza</b>: son estas clases.</p>
@@ -726,7 +718,7 @@ details.more .body p + p{margin-top:6px}
   </div>
   <div class="card" id="clases"></div>
 
-  <h3>DETALLES QUE PILLAN</h3>
+  <h3>Detalles que pillan</h3>
   <div class="card">
     <div class="item">
       <p>〜つ se acaba en <span class="jp">とお</span> (10): del 11 en adelante se usa el número a secas, <span class="jp">じゅういち</span>.</p>
@@ -932,19 +924,39 @@ details.more .body p + p{margin-top:6px}
   var botones = Array.prototype.slice.call(document.querySelectorAll('.tabs button'));
   var paneles = Array.prototype.slice.call(document.querySelectorAll('.panel'));
   var indice = document.querySelector('.topbar nav');
+  var chips = indice.querySelector('.in');
+
+  // El chip de una sección es su título hasta los dos puntos:
+  // "Tiempo: ¿lleva に?" → "Tiempo".
+  function etiqueta(titulo){
+    return titulo.split(':')[0].trim();
+  }
+
+  // Un chip por sección de la pestaña; con una sola, no hay índice que valga.
+  function pintarIndice(panel){
+    var secciones = panel.querySelectorAll('section[id]');
+    chips.textContent = '';
+    secciones.forEach(function(sec){
+      var a = document.createElement('a');
+      a.href = '#' + sec.id;
+      a.textContent = etiqueta(sec.querySelector('h2').textContent);
+      chips.appendChild(a);
+    });
+    chips.scrollLeft = 0;
+    indice.hidden = secciones.length < 2;
+  }
 
   function medirTopbar(){
     document.documentElement.style.setProperty('--topbar', topbar.offsetHeight + 'px');
   }
 
   function abrir(id){
-    if(!document.getElementById(id)) id = 'guia';
-    paneles.forEach(function(p){ p.hidden = (p.id !== id); });
-    botones.forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.panel === id)); });
-    // El índice de secciones solo tiene sentido en la guía.
-    indice.hidden = (id !== 'guia');
+    var panel = document.getElementById(id) || document.getElementById('guia');
+    paneles.forEach(function(p){ p.hidden = (p !== panel); });
+    botones.forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.panel === panel.id)); });
+    pintarIndice(panel);
     medirTopbar();
-    return id;
+    return panel.id;
   }
 
   // El hash puede ser una pestaña (#numeros) o una sección de dentro (#kosoado).

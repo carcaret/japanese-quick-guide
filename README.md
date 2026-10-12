@@ -116,8 +116,14 @@ baje el `sw.js` nuevo, que antes era la razón de tocarlo al mover los iconos.
   dentro de `<main>`, con su `<button data-panel="...">` en `.tabs`. Se navega
   por `#hash` (vale tanto `#numeros` como `#kosoado`, que abre su pestaña y
   baja a la sección), así que el botón atrás funciona.
-- El `<nav>` de secciones es solo de la pestaña *Guía*; se oculta en las demás.
-- Cada sección es un `<section id="...">` con su enlace en el `<nav>`.
+- Cada sección es un `<section id="...">` que empieza por su `<h2>`. De ahí
+  salen solos los chips del `<nav>` de la pestaña: el título hasta los dos
+  puntos ("Tiempo: ¿lleva に?" → *Tiempo*). No hay lista que mantener: una
+  sección nueva ya tiene su chip. Una pestaña con una sola sección no muestra
+  índice. `check.js` comprueba que todas tengan `id` y `<h2>`.
+- Los títulos (`<h2>`, `<h3>`) se escriben normales, con mayúscula solo al
+  principio; las MAYÚSCULAS las pone el CSS. Así el chip sale bien escrito y un
+  lector de pantalla no los deletrea.
 - Una sección se compone de `.card` con `.item` dentro (un concepto por
   `.item`); `.sub` para las líneas secundarias.
 - Lo ampliable va en `<details class="more"><summary></summary><div class="body">…`

@@ -12,24 +12,26 @@ const nada = {
   offsetHeight: 64, hidden: false, id: 'guia', value: '0', innerHTML: '', textContent: '',
   lastChild: null, dataset: {}, style: { setProperty(){} }, classList: { contains:()=>false, add(){}, remove(){} },
   setAttribute(){}, getAttribute(){ return null; }, addEventListener(){},
-  querySelectorAll(){ return []; }, querySelector(){ return null; }, closest(){ return null; },
+  querySelectorAll(){ return []; }, querySelector(){ return nada; }, closest(){ return null; },
   appendChild(x){ return x; }, insertBefore(){}, removeChild(){}, scrollIntoView(){}
 };
 // La versión que declara el encabezado, para comprobar que es la que se registra
 const VER_HTML = html.match(/<span class="ver" id="version">([^<]+)<\/span>/)[1];
+// Las pestañas existen (abrir() siempre encuentra la suya); el resto de ids, no
+const PANELES = [...html.matchAll(/class="panel" id="([^"]+)"/g)].map(m => m[1]);
 const doc = {
   documentElement: nada, querySelector: () => nada,
-  getElementById: id => (id === 'version' ? { textContent: VER_HTML } : null),
+  getElementById: id => (id === 'version' ? { textContent: VER_HTML } : PANELES.includes(id) ? Object.create(nada, { id: { value: id } }) : null),
   querySelectorAll: () => [], addEventListener(){}, createElement: () => Object.create(nada)
 };
 let alCargar = null, registrado = null;
 const win = { addEventListener(ev, f){ if(ev === 'load') alCargar = f; }, scrollTo(){} };
 const nav = { serviceWorker: { register(u){ registrado = u; return Promise.resolve(); } } };
 const api = new Function('document','window','location','navigator','localStorage',
-  src + '\nreturn {romaji, leer, kanaDe, enPalabras, raiz, conRuby, enKana, enKanji, VERBOS, COLUMNA};'
+  src + '\nreturn {romaji, leer, kanaDe, etiqueta, enPalabras, raiz, conRuby, enKana, enKanji, VERBOS, COLUMNA};'
 )(doc, win, { hash: '' }, nav, { getItem: () => null, setItem(){} });
 
-const { romaji, leer, kanaDe, enPalabras, raiz, conRuby, enKana, VERBOS } = api;
+const { romaji, leer, kanaDe, etiqueta, enPalabras, raiz, conRuby, enKana, VERBOS } = api;
 
 // ── Mini-DOM para poder pasarle HTML a leer() ──────────────────────────────
 function parse(h){
@@ -159,6 +161,32 @@ comprobar('する', romajiDe(conRuby(enPalabras(suru, 'します'))), 'shimasu')
 // la etiqueta de accesibilidad lleva el kana limpio, sin las marcas del romaji
 comprobar('kanaDe', kanaDe(parse('<span class="propio">たなか</span><wbr class="sufijo">さん<wbr>は <ruby>思<rt>おも</rt></ruby>う')),
   'たなかさん は おもう');
+
+// ── Secciones: cada una con su id y su <h2>, de donde sale su chip ─────────
+console.log('\n=== Chips de cada pestaña ===');
+comprobar('etiqueta con dos puntos', etiqueta('Tiempo: ¿lleva に?'), 'Tiempo');
+comprobar('etiqueta sin dos puntos', etiqueta('Negación de です'), 'Negación de です');
+const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]);
+ids.filter((id, i) => ids.indexOf(id) !== i).forEach(id => { fallos++; console.log('  ✗ id repetido: ' + id); });
+const CHIPS = {
+  guia: ['Sonidos', 'Partículas', 'Tiempo', 'Frecuencia', 'Serie こそあど', 'Interrogativos', 'Negación de です', 'Expresiones'],
+  verbos: ['Los tres grupos', 'Presente', 'Invitar'],
+  numeros: ['Lecturas dobles'],      // una sola sección: sin índice
+  contadores: ['Cómo se cuenta']
+};
+html.split(/<div class="panel" /).slice(1).forEach(trozo => {
+  const panel = trozo.match(/^id="([^"]+)"/)[1];
+  const secciones = [...trozo.matchAll(/<section([^>]*)>\s*<h2>([^<]*)<\/h2>/g)];
+  const conIdYTitulo = secciones.filter(m => / id="/.test(m[1])).length;
+  comprobar(panel + ': secciones con id y <h2>', conIdYTitulo, (trozo.match(/<section\b/g) || []).length);
+  const chips = secciones.map(m => etiqueta(m[2]));
+  console.log('  ' + panel.padEnd(11) + (chips.length > 1 ? chips.join(' · ') : '(sin índice)'));
+  comprobar(panel + ': chips', chips.join(' · '), (CHIPS[panel] || []).join(' · '));
+});
+// los títulos van escritos normales: las mayúsculas las pone el CSS
+[...html.matchAll(/<h[23]>([^<]*)<\/h[23]>/g)].forEach(m => {
+  if(/[A-ZÁÉÍÓÚÑ]{2,}/.test(m[1])){ fallos++; console.log('  ✗ título en mayúsculas: ' + m[1]); }
+});
 
 // ── 4. La versión: un solo sitio donde subirla ────────────────────────────
 console.log('\n=== Versión ===');
