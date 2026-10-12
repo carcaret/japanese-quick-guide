@@ -792,8 +792,13 @@ details.more .body p + p{margin-top:6px}
     'にゃ':'nya','にゅ':'nyu','にょ':'nyo','ひゃ':'hya','ひゅ':'hyu','ひょ':'hyo',
     'びゃ':'bya','びゅ':'byu','びょ':'byo','ぴゃ':'pya','ぴゅ':'pyu','ぴょ':'pyo',
     'みゃ':'mya','みゅ':'myu','みょ':'myo','りゃ':'rya','りゅ':'ryu','りょ':'ryo',
-    'ふぁ':'fa','ふぃ':'fi','ふぇ':'fe','ふぉ':'fo','てぃ':'ti','でぃ':'di',
-    'ちぇ':'che','しぇ':'she','じぇ':'je','うぃ':'wi','うぇ':'we','ゔぁ':'va'
+    // Los de los préstamos (ティー, ウォッカ, ヴァイオリン…)
+    'ふぁ':'fa','ふぃ':'fi','ふぇ':'fe','ふぉ':'fo','ふゅ':'fyu',
+    'てぃ':'ti','てゅ':'tyu','でぃ':'di','でゅ':'dyu','とぅ':'tu','どぅ':'du',
+    'ちぇ':'che','しぇ':'she','じぇ':'je','いぇ':'ye',
+    'うぃ':'wi','うぇ':'we','うぉ':'wo',
+    'つぁ':'tsa','つぃ':'tsi','つぇ':'tse','つぉ':'tso',
+    'ゔぁ':'va','ゔぃ':'vi','ゔぇ':'ve','ゔぉ':'vo'
   };
 
   var MACRON = {a:'ā', i:'ī', u:'ū', e:'ē', o:'ō'};
@@ -804,6 +809,11 @@ details.more .body p + p{margin-top:6px}
   // は y へ, cuando son una palabra por sí solas, son partícula: wa y e.
   // を no hace falta: solo existe como partícula y en KANA ya es o.
   var PARTICULA = {'は':'wa', 'へ':'e'};
+  var PUNTUACION = {'、':', ', '。':'. ', '？':'? ', '！':'! '};
+  // Límite de morfema dentro de una palabra: lo pone leer() en los bordes del
+  // furigana. Ahí no se alarga: 思[おも]う → omou, 子[こ]馬[うま] → kouma.
+  // Es U+200C ("no unir"): invisible si llega a la etiqueta de accesibilidad.
+  var CORTE = '\u200C';
 
   function aHiragana(t){
     return t.replace(/[ァ-ヶ]/g, function(c){
@@ -811,17 +821,24 @@ details.more .body p + p{margin-top:6px}
     });
   }
 
+  // Texto → romaji. Las palabras las separan los espacios (los del texto y los
+  // <wbr>, que leer() convierte en espacio) y los signos de puntuación.
   function romaji(texto){
-    return aHiragana(texto).split(/[ 　]+/).filter(Boolean).map(function(p){
-      return PARTICULA[p] || transcribir(p);
-    }).join(' ');
+    return aHiragana(texto).split(/([ 　]+|[、。？！])/).map(function(t){
+      if(!t) return '';
+      if(/^[ 　]+$/.test(t)) return ' ';
+      return PUNTUACION[t] || PARTICULA[t] || transcribir(t);
+    }).join('').replace(/ +([,.?!])/g, '$1').replace(/ +/g, ' ').trim();
   }
 
   // Una sola palabra, kana a kana.
-  function transcribir(s){
-    var out = '', i = 0;
+  function transcribir(palabra){
+    var s = '', corte = {}, out = '', i = 0;
+    for(var k = 0; k < palabra.length; k++){
+      if(palabra[k] === CORTE) corte[s.length] = true; else s += palabra[k];
+    }
     while(i < s.length){
-      var c = s[i], sig = s[i + 1], previa = out.slice(-1);
+      var c = s[i], sig = s[i + 1], previa = corte[i] ? '' : out.slice(-1);
       // っ duplica la consonante de la sílaba siguiente (っ+ch → tch)
       if(c === 'っ'){
         var resto = transcribir(s.slice(i + 1));
@@ -839,7 +856,6 @@ details.more .body p + p{margin-top:6px}
         i++; continue;
       }
       if(KANA[c]){ out += KANA[c]; i++; continue; }
-      if(c === '、'){ out += ', '; i++; continue; }
       if(c !== 'ー') out += c;   // signos y kanji, tal cual; una ー sin vocal delante, nada
       i++;
     }
@@ -848,7 +864,7 @@ details.more .body p + p{margin-top:6px}
 
   // Qué hay que leer de un elemento: con furigana, la lectura del <rt> sustituye
   // al kanji (si no, se transcribirían los dos seguidos: “食たべる” → “食taberu”).
-  // Un <wbr> separa palabras, como un espacio.
+  // Un <wbr> separa palabras, como un espacio; los bordes de cada <rt>, morfemas.
   function leer(nodo, enRuby){
     var out = '';
     for(var n = nodo.firstChild; n; n = n.nextSibling){
@@ -857,7 +873,8 @@ details.more .body p + p{margin-top:6px}
       var t = n.tagName;
       if(t === 'RP' || t === 'RB') continue;   // paréntesis de respaldo y base explícita
       if(t === 'WBR'){ out += ' '; continue; }
-      out += leer(n, t === 'RUBY' ? true : (t === 'RT' ? false : enRuby));
+      if(t === 'RT'){ out += CORTE + leer(n, false) + CORTE; continue; }
+      out += leer(n, t === 'RUBY' ? true : enRuby);
     }
     return out;
   }

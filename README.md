@@ -24,6 +24,8 @@ presente ます／ません e invitar con 〜ませんか), *Números* y *Contad
   se instala en el móvil, se abre a pantalla completa y funciona sin conexión.
 - `tools/make-icons.py` — genera los iconos (un 日 blanco sobre azul) sin
   dependencias ni fuentes instaladas: `python3 tools/make-icons.py`.
+- `tools/check.js` — las pruebas: ejecuta el `<script>` de `index.html` contra
+  casos conocidos (ver *Cómo comprobar antes de subir*).
 - `.github/workflows/pages.yml` — publica el repo tal cual en GitHub Pages en
   cada `push` a `master`.
 
@@ -171,9 +173,15 @@ baje el `sw.js` nuevo, que antes era la razón de tocarlo al mover los iconos.
   él pese al `nowrap` (Safari no).
 - El macrón se pone dentro de cada palabra: お+う / お+お → ō, う+う → ū,
   あ+あ → ā, え+え → ē, y la ー alarga cualquier vocal (ビール → *bīru*). い no
-  alarga: *oniisan*, *sensei*. Ojo con los verbos que acaben en おう / うう
-  (思う, 吸う): esa う no es vocal larga (*omou*, *suu*) y la regla daría *omō*;
-  hoy no hay ninguno en la guía.
+  alarga: *oniisan*, *sensei*.
+- Pero no a través de un límite de morfema, y el furigana los marca: el borde
+  de cada `<rt>`. La う de 思う va fuera de la lectura, es terminación y no
+  alarga: `<ruby>思<rt>おも</rt></ruby>う` → *omou* (igual 拾う *hirou*, 吸う
+  *suu*), y 子馬 → *kouma*. Una vocal larga de verdad va siempre dentro de una
+  misma lectura (`<rt>おお</rt>きい`, `<rt>とうきょう</rt>`). Por eso **los verbos
+  en おう / うう se escriben con kanji y furigana**, aunque estén en la *Guía*: en
+  kana suelto (おもう) no hay borde y saldría *omō*.
+- La puntuación 、。？！ también separa palabras: `わたし<wbr>は、` → *watashi wa,*.
 - Cuando la regla no puede acertar, se fuerza con `data-romaji="…"`. Hoy solo
   los saludos こんにちは / こんばんは, que se escriben con は y se leen *wa*
   dentro de la palabra.
@@ -197,17 +205,24 @@ No se escriben a mano: se calculan con las mismas clases del apéndice de Genki
 
 ### Cómo comprobar antes de subir
 
-En este NAS no hay Node, así que la lógica se verifica en un contenedor
-efímero: se extrae el bloque de JS a un fichero bajo `/home/carcaret`
-(visible desde el host) y se ejecuta contra todos los casos de la página.
+En este NAS no hay Node, así que las pruebas (`tools/check.js`) se ejecutan en
+un contenedor efímero, desde la raíz del repo:
 
 ```sh
-docker run --rm -v /home/carcaret:/t:ro node:22-alpine node /t/check.js
+docker run --rm -v "$PWD":/t:ro node:22-alpine node /t/tools/check.js
 ```
 
 El truco: el propio `index.html` es la entrada. Se extrae el `<script>` y se
 ejecuta con un `document` de pega, así que lo que se prueba es el código de la
-página y no una copia. Así se comprobaron las 253 lecturas de los 23 contadores
+página y no una copia. **Cada regla nueva, con sus casos en `check.js`**,
+también los que no deben cambiar (*oniisan*, *omou*).
+
+Lo que depende del navegador (cortes de línea, `<wbr>`, lo que se ve al
+tocar) se prueba con Safari y Chrome de verdad, con Playwright en otro
+contenedor: `mcr.microsoft.com/playwright:v1.48.0-jammy`, `npm i
+playwright@1.48.0` dentro y un script que abra `file:///t/index.html` a 393 px
+con `webkit` y con `chromium`. Así salió que Chrome corta por `<wbr>` pese al
+`nowrap` y Safari no. Así se comprobaron las 253 lecturas de los 23 contadores
 contra la tabla del libro, el presente de los 13 verbos, y el romaji de todas
 las palabras tocables — incluido el de las que llevan furigana, que no puede
 dejar ningún kanji sin leer.
