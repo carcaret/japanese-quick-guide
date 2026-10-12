@@ -6,10 +6,11 @@ curso de **Genki**: no lo resume, recoge lo que se olvida.
 **Publicada en:** https://carcaret.github.io/japanese-quick-guide/
 
 Cada palabra japonesa subrayada se toca y muestra su romaji; se vuelve a tocar
-y se esconde. La transliteración se calcula en el momento (Hepburn con macrón:
-がっこう → *gakkō*, コーヒー → *kōhī*, pero せんせい → *sensei* y
-おにいさん → *oniisan*), con っ, ん + apóstrofo y las partículas は・へ・を
-separadas y leídas *wa*, *e*, *o*.
+y se esconde. La transliteración se calcula en el momento, en Hepburn: palabra
+a palabra (にほんごの せんせい → *nihongo no sensei*), con macrón en las vocales
+largas (がっこう → *gakkō*, コーヒー → *kōhī*, pero せんせい → *sensei* y
+おにいさん → *oniisan*), っ, ん + apóstrofo y las partículas は・へ・を leídas
+*wa*, *e*, *o*.
 
 Contenido actual (Genki L1–3): pestaña *Guía* (sonidos, partículas, tiempo y に, frecuencia,
 こそあど, interrogativos, negación de です, expresiones), *Verbos* (los tres grupos, el
@@ -121,7 +122,8 @@ baje el `sw.js` nuevo, que antes era la razón de tocarlo al mover los iconos.
   (el botón "＋ más" lo pone el CSS; el `<summary>` va vacío a propósito).
 - Tablas de dos columnas: `.rows` con pares `.k` / `.v`.
 - Palabra japonesa tocable: `<span class="jp">`. Con kanji, dentro va
-  `<ruby>漢<rt>かん</rt></ruby>字`; el romaji sale solo de la lectura.
+  `<ruby>漢<rt>かん</rt></ruby>字`; el romaji sale solo de la lectura. Si dentro
+  hay más de una palabra, cada límite va marcado (ver *Romaji*).
 - **Un solo margen lateral, 18 px**, para `header`, `.tabs`, el `<nav>` y
   `main`: las pestañas y las píldoras de sección tienen que arrancar justo
   encima del borde de las tarjetas.
@@ -157,9 +159,24 @@ baje el `sw.js` nuevo, que antes era la razón de tocarlo al mover los iconos.
 - Texto japonés: `<span class="jp">…</span>`, y nada más; el romaji lo pone el
   JS al tocarlo, también en lo que se genera al vuelo (por eso los eventos van
   por delegación en `document`, no elemento a elemento).
-- Cuando la regla no puede acertar, se fuerza con `data-romaji="…"`. Hoy hay
-  cuatro casos: わたしも (separar も por regla rompería palabras como *kodomo*)
-  y los saludos こんにちは / こんばんは, que se escriben de una pieza.
+- **Cada palabra, marcada.** El kana no separa palabras y el romaji sí
+  (*nihongo no sensei*, *mō ichido*), así que donde acaba cada una lo dice el
+  texto, no el código: un espacio entre bloques, como en Genki, y `<wbr>`
+  dentro de un bloque: `にほんご<wbr>の せんせい`, `もう<wbr>いちど`,
+  `たべます<wbr>か`. Partículas, です, ください y el する de los compuestos
+  van aparte; ます y los sufijos (さん, ごろ, えん) van pegados. Adivinarlo con
+  reglas no sale: separar la も de わたしも rompe *kodomo*. Los compuestos con
+  する de *Verbos* se marcan solos (`enPalabras`).
+- `<wbr>` va oculto dentro de `.jp`: es un punto de corte, y Chrome cortaba por
+  él pese al `nowrap` (Safari no).
+- El macrón se pone dentro de cada palabra: お+う / お+お → ō, う+う → ū,
+  あ+あ → ā, え+え → ē, y la ー alarga cualquier vocal (ビール → *bīru*). い no
+  alarga: *oniisan*, *sensei*. Ojo con los verbos que acaben en おう / うう
+  (思う, 吸う): esa う no es vocal larga (*omou*, *suu*) y la regla daría *omō*;
+  hoy no hay ninguno en la guía.
+- Cuando la regla no puede acertar, se fuerza con `data-romaji="…"`. Hoy solo
+  los saludos こんにちは / こんばんは, que se escriben con は y se leen *wa*
+  dentro de la palabra.
 - El lector en voz alta se quitó a favor del romaji; está en el historial
   (`git log -S SpeechSynthesis`) por si vuelve.
 
