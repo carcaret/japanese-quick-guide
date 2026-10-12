@@ -14,7 +14,7 @@ largas (がっこう → *gakkō*, コーヒー → *kōhī*, pero せんせい 
 
 Contenido actual (Genki L1–3): pestaña *Guía* (sonidos, partículas, tiempo y に, frecuencia,
 こそあど, interrogativos, negación de です, expresiones), *Verbos* (los tres grupos, el
-presente ます／ません e invitar con 〜ませんか), *Números* y *Contadores*.
+presente ます／ません, invitar con 〜ませんか y proponer con 〜はどうですか), *Números* y *Contadores*.
 
 ## Cómo está montado
 
