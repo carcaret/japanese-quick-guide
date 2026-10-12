@@ -157,7 +157,7 @@ details.more .body p + p{margin-top:6px}
 
 <header>
   <h1>Guía rápida de japonés</h1>
-  <span class="ver" id="version">v11</span>
+  <span class="ver" id="version">v12</span>
 </header>
 
 <div class="topbar">
@@ -221,13 +221,13 @@ details.more .body p + p{margin-top:6px}
     <div class="item">
       <p>La duración cambia el significado: <span class="jp">おばさん</span> (tía) / <span class="jp">おばあさん</span> (abuela)</p>
       <div class="table"><div class="rows">
-        <span class="k">aa = あ+あ</span><span class="v">→ <span class="jp">おかあさん</span></span>
+        <span class="k">ā = あ+あ</span><span class="v">→ <span class="jp">おかあさん</span></span>
         <span class="k">ii = い+い</span><span class="v">→ <span class="jp">おにいさん</span></span>
-        <span class="k">uu = う+う</span><span class="v">→ <span class="jp">すうじ</span></span>
-        <span class="k">ee = え+い</span><span class="v">← lo normal → <span class="jp">せんせい</span>, suena "sensee"</span>
-        <span class="k">ee = え+え</span><span class="v">← raro → <span class="jp">おねえさん</span></span>
-        <span class="k">oo = お+う</span><span class="v">← lo normal → <span class="jp">がっこう</span>, suena "gakkoo"</span>
-        <span class="k">oo = お+お</span><span class="v">← lista fija → <span class="jp">おおきい</span>、<span class="jp">おおい</span>、<span class="jp">とおい</span>、<span class="jp">とおか</span>、<span class="jp">こおり</span></span>
+        <span class="k">ū = う+う</span><span class="v">→ <span class="jp">すうじ</span></span>
+        <span class="k">ei = え+い</span><span class="v">← lo normal → <span class="jp">せんせい</span>, suena "sensē"</span>
+        <span class="k">ē = え+え</span><span class="v">← raro → <span class="jp">おねえさん</span></span>
+        <span class="k">ō = お+う</span><span class="v">← lo normal → <span class="jp">がっこう</span></span>
+        <span class="k">ō = お+お</span><span class="v">← lista fija → <span class="jp">おおきい</span>、<span class="jp">おおい</span>、<span class="jp">とおい</span>、<span class="jp">とおか</span>、<span class="jp">こおり</span></span>
       </div></div>
       <p>Katakana: alarga con la raya ー → <span class="jp">コーヒー</span>、<span class="jp">ケーキ</span></p>
       <details class="more"><summary></summary><div class="body">
@@ -762,8 +762,8 @@ details.more .body p + p{margin-top:6px}
 <script>
 (function(){
   /* ── Kana → romaji ────────────────────────────────────────────
-     Hepburn, transcrito tal cual se escribe (せんせい → sensei,
-     がっこう → gakkou), que es lo que ayuda a leer el kana. */
+     Hepburn con macrón en las vocales largas (がっこう → gakkō,
+     コーヒー → kōhī); ii y ei se quedan como están (せんせい → sensei). */
   var KANA = {
     'あ':'a','い':'i','う':'u','え':'e','お':'o',
     'か':'ka','き':'ki','く':'ku','け':'ke','こ':'ko',
@@ -791,6 +791,8 @@ details.more .body p + p{margin-top:6px}
     'ちぇ':'che','しぇ':'she','じぇ':'je','うぃ':'wi','うぇ':'we','ゔぁ':'va'
   };
 
+  var MACRON = {a:'ā', i:'ī', u:'ū', e:'ē', o:'ō'};
+
   function aHiragana(t){
     return t.replace(/[ァ-ヶ]/g, function(c){
       return String.fromCharCode(c.charCodeAt(0) - 0x60);
@@ -801,8 +803,8 @@ details.more .body p + p{margin-top:6px}
     var s = aHiragana(texto), out = '', i = 0;
     while(i < s.length){
       var c = s[i], sig = s[i + 1];
-      // ー alarga la vocal anterior
-      if(c === 'ー'){ out += (out.match(/[aeiou]$/) || [''])[0]; i++; continue; }
+      // ー alarga la vocal anterior, también la i y la e (ビール → bīru)
+      if(c === 'ー'){ out = out.replace(/[aeiou]$/, function(v){ return MACRON[v]; }); i++; continue; }
       // っ duplica la consonante de la sílaba siguiente (っ+ch → tch)
       if(c === 'っ'){
         var resto = romaji(s.slice(i + 1));
@@ -846,6 +848,13 @@ details.more .body p + p{margin-top:6px}
     return t.replace(/(desu|deshita|masu|masen|mashita)ka(?=$|[ ,])/g, '$1 ka');
   }
 
+  // Vocal larga escrita con dos kana → macrón: おかあさん → okāsan, すうじ → sūji,
+  // おねえさん → onēsan, がっこう / おおきい → gakkō / ōkii. ii y ei se quedan.
+  // Va después de separar(): じゃ ありません no es "jārimasen".
+  function alargar(t){
+    return t.replace(/aa|uu|ee|o[ou]/g, function(d){ return MACRON[d.charAt(0)]; });
+  }
+
   // Qué hay que leer de un elemento: con furigana, la lectura del <rt> sustituye
   // al kanji (si no, se transcribirían los dos seguidos: “食たべる” → “食taberu”).
   function leer(nodo, enRuby){
@@ -871,7 +880,7 @@ details.more .body p + p{margin-top:6px}
     }
     var caja = document.createElement('span');
     caja.className = 'romaji';
-    caja.textContent = el.getAttribute('data-romaji') || separar(romaji(leer(el)));
+    caja.textContent = el.getAttribute('data-romaji') || alargar(separar(romaji(leer(el))));
     el.parentNode.insertBefore(caja, el.nextSibling);
     el.classList.add('abierto');
     el.setAttribute('aria-expanded', 'true');

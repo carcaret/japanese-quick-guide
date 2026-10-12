@@ -6,9 +6,10 @@ curso de **Genki**: no lo resume, recoge lo que se olvida.
 **Publicada en:** https://carcaret.github.io/japanese-quick-guide/
 
 Cada palabra japonesa subrayada se toca y muestra su romaji; se vuelve a tocar
-y se esconde. La transliteración se calcula en el momento (Hepburn literal:
-せんせい → *sensei*, がっこう → *gakkou*), con っ, ん + apóstrofo, la ー del
-katakana y las partículas は・へ・を separadas y leídas *wa*, *e*, *o*.
+y se esconde. La transliteración se calcula en el momento (Hepburn con macrón:
+がっこう → *gakkō*, コーヒー → *kōhī*, pero せんせい → *sensei* y
+おにいさん → *oniisan*), con っ, ん + apóstrofo y las partículas は・へ・を
+separadas y leídas *wa*, *e*, *o*.
 
 Contenido actual (Genki L1–3): pestaña *Guía* (sonidos, partículas, tiempo y に, frecuencia,
 こそあど, interrogativos, negación de です, expresiones), *Verbos* (los tres grupos, el
