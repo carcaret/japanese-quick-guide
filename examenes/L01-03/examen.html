@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>げんき I ふくしゅうテスト 第1課〜第3課</title>
+<style>
+  :root { --ink:#1a1a1a; --mute:#666; --line:#999; --accent:#b0352b; --soft:#f3efe8; }
+  * { box-sizing: border-box; }
+  body { font-family: "Noto Sans CJK JP", sans-serif; color: var(--ink); font-size: 11pt; line-height: 2.1; margin: 0; }
+  ruby rt { font-size: 0.5em; color: #444; }
+  h1 { font-size: 17pt; margin: 0; letter-spacing: .05em; line-height: 1.4; }
+  .sub { color: var(--mute); font-size: 9.5pt; line-height: 1.4; }
+  .head { gap: 16px; display:flex; justify-content:space-between; align-items:flex-end; border-bottom: 2px solid var(--ink); padding-bottom: 6px; margin-bottom: 10px; }
+  .fields { display:flex; gap: 18px; white-space: nowrap; font-size: 10pt; line-height: 1.6; }
+  .fields span.f { display:inline-block; border-bottom:1px solid var(--ink); min-width: 9em; }
+  .score { font-size: 13pt; font-weight: 700; }
+  .gloss { background: var(--soft); border-radius: 4px; padding: 6px 10px; font-size: 8.8pt; line-height: 1.65; margin-bottom: 8px; }
+  .gloss b { font-weight: 700; }
+  .rules { font-size: 9.5pt; line-height: 1.6; margin: 0 0 4px; }
+  section { margin-top: 14px; }
+  h2 { font-size: 12.5pt; margin: 0 0 2px; padding: 2px 0; border-bottom: 1px solid var(--ink); display:flex; justify-content:space-between; line-height:1.6; break-after: avoid; }
+  h2 .pts { font-size: 9.5pt; font-weight: 400; color: var(--mute); }
+  h3 { font-size: 10.5pt; margin: 8px 0 0; line-height: 1.6; break-after: avoid; }
+  .inst { font-size: 10pt; color: #333; margin: 0 0 2px; line-height: 1.8; }
+  .cue { font-family: "Noto Serif CJK JP", serif; font-style: italic; color: var(--mute); font-size: 9pt; }
+  .b { display:inline-block; border-bottom: 1px solid var(--ink); height: 1.5em; vertical-align: bottom; margin: 0 2px; }
+  ol { margin: 0; padding-left: 1.8em; }
+  ol li { padding-left: .2em; }
+  .grid2 { display:grid; grid-template-columns: 1fr 1fr; column-gap: 24px; }
+  .grid3 { display:grid; grid-template-columns: 1fr 1fr 1fr; column-gap: 18px; }
+  .opts { color: #333; }
+  table.conj { border-collapse: collapse; width: 100%; font-size: 10.5pt; }
+  table.conj th, table.conj td { border: 1px solid var(--line); padding: 2px 8px; height: 2.4em; line-height: 1.5; }
+  table.conj th { background: var(--soft); font-weight: 500; font-size: 9.5pt; }
+  table.conj td:first-child { width: 22%; }
+  table.conj td:nth-child(2) { width: 14%; }
+  .bank { display:inline-block; border: 1px solid var(--ink); padding: 0 10px; letter-spacing: .35em; font-size: 11pt; line-height: 1.8; }
+  .passage { border-left: 3px solid var(--line); padding: 2px 0 2px 12px; line-height: 2.5; margin: 4px 0; }
+  .passage .p { width: 2.6em; display:inline-block; border-bottom: 1px solid var(--ink); text-align:center; font-size: 8pt; color: var(--mute); line-height: 1.4; vertical-align: bottom; margin: 0 2px; }
+  .dlg { break-inside: avoid; display:grid; grid-template-columns: 6.5em 1fr; line-height: 2.4; }
+  .dlg .who { color: var(--mute); }
+  .star { color: var(--accent); }
+  .slots span { display:inline-block; width: 4.6em; border-bottom: 1px solid var(--ink); text-align:center; margin: 0 3px; color: var(--accent); }
+  .lines .ln { border-bottom: 1px solid var(--line); height: 2.3em; }
+  .q { break-inside: avoid; }
+  .page { break-before: page; }
+  .keep { break-inside: avoid; }
+  .dlgblock { break-inside: avoid; }
+  .ox { display:inline-block; width:1.8em; height:1.8em; border:1px solid var(--ink); border-radius: 50%; vertical-align: middle; margin-right: 8px; }
+
+  /* solucionario */
+  .key { font-size: 10pt; line-height: 1.75; }
+  .key h1 { color: var(--accent); }
+  .key h2 { font-size: 11pt; margin-top: 10px; }
+  .key ol { columns: 2; column-gap: 28px; }
+  .key ol.one { columns: 1; }
+  .key table { border-collapse: collapse; font-size: 9.5pt; width: 100%; }
+  .key td, .key th { border: 1px solid var(--line); padding: 1px 6px; line-height: 1.5; }
+  .key th { background: var(--soft); font-weight: 500; }
+  .key .n { color: var(--mute); font-size: 8.5pt; }
+  .cut { text-align:center; color: var(--accent); font-size: 9pt; border-top: 1px dashed var(--accent); padding-top: 4px; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<!-- ================= PORTADA ================= -->
+<div class="head">
+  <div>
+    <h1>{日本語|にほんご} ふくしゅうテスト</h1>
+    <div class="sub">Examen de repaso · Genki I, lecciones 1–3 · 45 min</div>
+  </div>
+  <div style="text-align:right">
+    <div class="fields"><span>なまえ <span class="f"></span></span><span>Fecha <span class="f" style="min-width:6em"></span></span></div>
+    <div class="score">　　　　／ 100</div>
+  </div>
+</div>
+
+<p class="rules">· Responde en hiragana y katakana; no hace falta escribir kanji.<br>· Lo que va <span class="cue">(en cursiva)</span> en español es una pista o el contexto.</p>
+
+<!-- ================= 一 もじ ================= -->
+<section>
+  <h2><span>一　もじ · Escritura</span><span class="pts">15</span></h2>
+
+  <h3>A.　Escribe en hiragana cómo se lee.</h3>
+  <ol class="grid2">
+    <li>4{時|じ}{半|はん}　[[10]]</li>
+    <li>9{時|じ}　[[10]]</li>
+    <li>300円　[[10]]</li>
+    <li>1,500円　[[10]]</li>
+    <li>8,600円　[[14]]</li>
+    <li><span style="white-space:nowrap">でんわ 090-4127-3385</span><br>[[19]]</li>
+  </ol>
+
+  <h3>B.　Escribe en hiragana la lectura de estos kanji.</h3>
+  <ol class="grid3">
+    <li>毎日　[[6]]</li>
+    <li>学校　[[6]]</li>
+    <li>音楽　[[6]]</li>
+    <li>日曜日　[[6]]</li>
+    <li>今晩　[[6]]</li>
+    <li>朝ご飯　[[6]]</li>
+  </ol>
+
+  <h3>C.　Escribe la palabra en katakana.</h3>
+  <ol class="grid3">
+    <li><span class="cue">café</span>　[[6]]</li>
+    <li><span class="cue">televisión</span>　[[6]]</li>
+    <li><span class="cue">menú</span>　[[6]]</li>
+  </ol>
+</section>
+
+<!-- ================= 二 ことば ================= -->
+<section>
+  <h2><span>二　ことば · Vocabulario</span><span class="pts">8</span></h2>
+  <p class="inst">Elige la opción correcta (a, b o c).</p>
+  <ol>
+    <li class="q">としょかんで ざっしを（　　）。　<span class="opts">a. 飲みます　b. 読みます　c. 寝ます</span></li>
+    <li class="q">朝 コーヒーを（　　）。　<span class="opts">a. 飲みます　b. 聞きます　c. します</span></li>
+    <li class="q">うちで 音楽を（　　）。　<span class="opts">a. 見ます　b. 聞きます　c. 食べます</span></li>
+    <li class="q">A「この とけいは いくらですか。」B「（　　）です。」　<span class="opts">a. さんじ　b. さんぜんえん　c. さんねんせい</span></li>
+    <li class="q">メアリーさんは（　　）です。2{年生|ねんせい}です。　<span class="opts">a. せんせい　b. だいがくせい　c. こうこう</span></li>
+    <li class="q">週末は テニスを（　　）。　<span class="opts">a. します　b. 見ます　c. 帰ります</span></li>
+    <li class="q">毎晩 11{時|じ}ごろ（　　）。　<span class="opts">a. 起きます　b. 寝ます　c. 行きます</span></li>
+    <li class="q">たなかさんの（　　）は けいざいです。　<span class="opts">a. せんこう　b. なまえ　c. でんわ</span></li>
+  </ol>
+</section>
+
+<!-- ================= 三 どうし ================= -->
+<section class="page">
+  <h2><span>三　どうし · Verbos</span><span class="pts">10</span></h2>
+  <p class="inst">Completa la tabla. En «Tipo» escribe る, う o ふきそく (irregular).</p>
+  <table class="conj">
+    <tr><th></th><th>Tipo</th><th>〜ます</th><th>〜ません</th></tr>
+    <tr><td>1. 行く</td><td></td><td></td><td></td></tr>
+    <tr><td>2. 帰る</td><td></td><td></td><td></td></tr>
+    <tr><td>3. 起きる</td><td></td><td></td><td></td></tr>
+    <tr><td>4. 飲む</td><td></td><td></td><td></td></tr>
+    <tr><td>5. 見る</td><td></td><td></td><td></td></tr>
+    <tr><td>6. 話す</td><td></td><td></td><td></td></tr>
+    <tr><td>7. 来る</td><td></td><td></td><td></td></tr>
+    <tr><td>8. する</td><td></td><td></td><td></td></tr>
+    <tr><td>9. 聞く</td><td></td><td></td><td></td></tr>
+    <tr><td>10. 寝る</td><td></td><td></td><td></td></tr>
+  </table>
+</section>
+
+<!-- ================= 四 じょし ================= -->
+<section>
+  <h2><span>四　じょし · Partículas</span><span class="pts">12</span></h2>
+  <p class="inst">Rellena cada hueco con una partícula. Se pueden repetir y alguna sobra.　<span class="bank">は の も か を で に へ ね よ</span></p>
+  <div class="passage">
+    わたし<span class="p">①</span>キム・ミンジュです。かんこく<span class="p">②</span>だいがくせいです。せんこう<span class="p">③</span>えいごです。<br>
+    わたしは 毎日 7{時|じ}<span class="p">④</span>起きます。朝ご飯は 食べません。コーヒー<span class="p">⑤</span>飲みます。<br>
+    8{時|じ}に 学校<span class="p">⑥</span>行きます。学校の としょかん<span class="p">⑦</span>ざっしを 読みます。<br>
+    ともだちの ゆいさん<span class="p">⑧</span>{日本語|にほんご}<span class="p">⑨</span>がくせいです。週末は うち<span class="p">⑩</span>テレビを 見ます。<br>
+    わたし「ゆいさん、あした いっしょに <span class="cue">(juntos)</span> 映画を 見ません<span class="p">⑪</span>。」<br>
+    ゆい「ええ、いいです<span class="p">⑫</span>。」
+  </div>
+</section>
+
+<!-- ================= 五 ぶんぽう③ ================= -->
+<section>
+  <h2><span>五　ぶんぽう · Gramática</span><span class="pts">15</span></h2>
+
+  <h3>A.　Rodea la opción correcta.</h3>
+  <ol>
+    <li class="q"><span class="cue">(Tienes el libro en la mano)</span> A「（これ・それ・あれ）は だれの ほんですか。」</li>
+    <li class="q"><span class="cue">(El reloj está junto a la otra persona)</span> A「（この・その・あの）とけいは いくらですか。」</li>
+    <li class="q"><span class="cue">(Señalas un edificio lejano)</span> A「（ここ・そこ・あそこ）は ぎんこうですか。」B「いいえ、ゆうびんきょくです。」</li>
+    <li class="q">A「すみません。トイレは（どれ・どこ・だれ）ですか。」</li>
+    <li class="q">A「これは（だれ・だれの・どの）かさですか。」B「わたしのです。」</li>
+    <li class="q">A「メアリーさんは {日本人|にほんじん}ですか。」B「いいえ、{日本人|にほんじん}（です・じゃないです）。」</li>
+    <li class="q">わたしは あまり テレビを（見ます・見ません）。</li>
+  </ol>
+
+  <h3>B.　Ordena las piezas para formar la frase y escribe el número de la que va en la casilla <span class="star">★</span>.</h3>
+  <ol>
+    <li class="q">わたしは 毎晩 <span class="slots"><span></span><span></span><span>★</span><span></span></span>。<br>
+      <span class="opts">1. うちで　2. 見ます　3. テレビを　4. 10{時|じ}ごろ</span>　　<span class="star">★</span> = [[3]]</li>
+    <li class="q">A「たけしさん、<span class="slots"><span></span><span></span><span>★</span><span></span></span>か。」<br>
+      <span class="opts">1. いっしょに <span class="cue">(juntos)</span>　2. 見ません　3. 映画を　4. 土曜日に</span>　　<span class="star">★</span> = [[3]]</li>
+    <li class="q">それは <span class="slots"><span></span><span></span><span>★</span><span></span></span>。<br>
+      <span class="opts">1. たけしさんの　2. じゃないです　3. ほん　4. {日本語|にほんご}の</span>　　<span class="star">★</span> = [[3]]</li>
+    <li class="q">A「メアリーさんは <span class="slots"><span></span><span></span><span>★</span><span></span></span>か。」<br>
+      <span class="opts">1. {何|なに}を　2. 週末　3. します　4. たいてい</span>　　<span class="star">★</span> = [[3]]</li>
+  </ol>
+</section>
+
+<!-- ================= 六 かいわ ================= -->
+<section>
+  <h2><span>六　かいわ · Conversación</span><span class="pts">13</span></h2>
+  <h3>A.　Completa los diálogos.</h3>
+
+  <p class="inst" style="margin-top:4px;break-after:avoid">【En la tienda】 <span class="cue">(みせ = tienda)</span></p>
+  <div class="dlg">
+    <span class="who">みせの{人|ひと}</span><span>いらっしゃいませ。</span>
+    <span class="who">きゃく</span><span>すみません。その とけいは ① [[9]] ですか。</span>
+    <span class="who">みせの{人|ひと}</span><span>4,500円です。</span>
+    <span class="who">きゃく</span><span>じゃあ、それを ② [[9]]。</span>
+  </div>
+
+  <p class="inst" style="margin-top:6px;break-after:avoid">【Presentación】</p>
+  <div class="dlg">
+    <span class="who">キム</span><span>はじめまして。キムです。どうぞ よろしく。</span>
+    <span class="who">たなか</span><span>たなかです。キムさんは ③ [[7]] ですか。</span>
+    <span class="who">キム</span><span>かんこくじんです。</span>
+    <span class="who">たなか</span><span>せんこうは ④ [[5]] ですか。</span>
+    <span class="who">キム</span><span>えいごです。</span>
+    <span class="who">たなか</span><span>⑤ [[5]] ねんせいですか。</span>
+    <span class="who">キム</span><span>3{年生|ねんせい}です。たなかさんも だいがくせいですか。</span>
+    <span class="who">たなか</span><span>いいえ、⑥ [[13]]。せんせいです。</span>
+  </div>
+
+  <p class="inst" style="margin-top:6px;break-after:avoid">【Invitación】</p>
+  <div class="dlg">
+    <span class="who">A</span><span>たなかさん、今晩 いっしょに <span class="cue">(juntos)</span> 晩ご飯を ⑦ [[8]] か。</span>
+    <span class="who">B</span><span>⑧ [[14]] <span class="cue">(rechaza con educación)</span></span>
+    <span class="who">A</span><span>そうですか。じゃあ、あしたは ⑨ [[7]] か。</span>
+    <span class="who">B</span><span>⑩ [[14]] <span class="cue">(acepta)</span></span>
+  </div>
+
+  <h3>B.　¿Qué dices en japonés?</h3>
+  <ol>
+    <li class="q"><span class="cue">Por la mañana saludas a tu profesor.</span>　[[14]]</li>
+    <li class="q"><span class="cue">Vas a empezar a comer.</span>　[[14]]</li>
+    <li class="q"><span class="cue">No lo has entendido y quieres que lo repitan.</span>　[[16]]</li>
+  </ol>
+</section>
+
+<!-- ================= 七 よみもの ================= -->
+<section class="keep">
+  <h2><span>七　よみもの · Lectura</span><span class="pts">11</span></h2>
+  <p class="inst">Lee el texto y responde.</p>
+  <div class="passage" style="line-height:2.3">
+    マリア・ロペスさんは スペイン{人|じん}です。みどり{大学|だいがく}の りゅうがくせいです。せんこうは ビジネスです。2{年生|ねんせい}です。
+    マリアさんは 毎日 7{時|じ}ごろ 起きます。朝ご飯は 食べません。コーヒーを 飲みます。8{時|じ}{半|はん}に {大学|だいがく}へ 行きます。{大学|だいがく}で {日本語|にほんご}を 勉強します。昼ご飯は たいてい {大学|だいがく}で 食べます。
+    マリアさんは よく としょかんで ざっしを 読みます。でも、テレビは 全然 見ません。
+    土曜日は 時々 ともだちの ゆいさんの うちへ 行きます。うちで いっしょに <span class="cue">(juntos)</span> 音楽を 聞きます。日曜日は たいてい うちで ほんを 読みます。毎晩 11{時|じ}ごろ 寝ます。
+  </div>
+
+  <h3>A.　Escribe ○ si es verdadero y × si es falso.</h3>
+  <ol class="grid2" style="line-height:2.5">
+    <li><span class="ox"></span>マリアさんは {日本人|にほんじん}です。</li>
+    <li><span class="ox"></span>朝 コーヒーを 飲みます。</li>
+    <li><span class="ox"></span>よく テレビを 見ます。</li>
+    <li><span class="ox"></span>土曜日は 時々 ゆいさんの うちへ 行きます。</li>
+    <li><span class="ox"></span>毎晩 10{時|じ}ごろ 寝ます。</li>
+  </ol>
+
+  <h3>B.　Responde en japonés con una frase completa.</h3>
+  <ol>
+    <li class="q">マリアさんの せんこうは {何|なん}ですか。<br>[[30]]</li>
+    <li class="q">マリアさんは どこで 昼ご飯を 食べますか。<br>[[30]]</li>
+    <li class="q">マリアさんは 日曜日 {何|なに}を しますか。<br>[[30]]</li>
+  </ol>
+</section>
+
+<!-- ================= 八 ほんやく ================= -->
+<section class="keep">
+  <h2><span>八　ほんやく · Traducción</span><span class="pts">16</span></h2>
+
+  <h3>A.　Traduce al japonés.</h3>
+  <ol>
+    <li class="q"><span class="cue">Ese paraguas no es mío. Es de Takeshi.</span><div class="lines"><div class="ln"></div><div class="ln"></div></div></li>
+    <li class="q"><span class="cue">Normalmente me levanto hacia las siete y media.</span><div class="lines"><div class="ln"></div><div class="ln"></div></div></li>
+    <li class="q"><span class="cue">No bebo nada de alcohol.</span><div class="lines"><div class="ln"></div><div class="ln"></div></div></li>
+    <li class="q"><span class="cue">¿Vemos una película esta noche? (invitación)</span><div class="lines"><div class="ln"></div><div class="ln"></div></div></li>
+  </ol>
+
+  <h3>B.　Traduce al español.</h3>
+  <ol start="5">
+    <li class="q">あそこは としょかんじゃないです。ゆうびんきょくです。<div class="lines"><div class="ln"></div></div></li>
+    <li class="q">メアリーさんの おかあさんも せんせいです。<div class="lines"><div class="ln"></div></div></li>
+    <li class="q">わたしは 時々 うちで {日本|にほん}の 映画を 見ます。<div class="lines"><div class="ln"></div></div></li>
+    <li class="q">A「この ほんは いくらですか。」B「2,800円です。」<div class="lines"><div class="ln"></div></div></li>
+  </ol>
+</section>
+
+<!-- ================= 九 さくぶん ================= -->
+<section>
+  <h2><span>九　さくぶん · Redacción (extra)</span><span class="pts">—</span></h2>
+  <p class="inst">Describe tu día a día en japonés, en 4–5 frases: qué haces, a qué hora y con qué frecuencia.</p>
+  <div class="lines"><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div>
+</section>
+
+<!-- ================= SOLUCIONARIO ================= -->
+<div class="page key">
+  <div class="cut">✂　かいとう — Solucionario. No mirar antes de terminar.</div>
+  <h1>かいとう</h1>
+
+  <h2>一　もじ <span class="pts">1 punto cada una</span></h2>
+  <p>A. 1. よじはん　2. くじ　3. さんびゃくえん　4. せんごひゃくえん　5. はっせんろっぴゃくえん<br>
+  6. ゼロきゅうゼロの よんいちにいななの さんさんはちご <span class="n">(vale れい por ゼロ, しち por なな, に por にい)</span><br>
+  B. まいにち · がっこう · おんがく · にちようび · こんばん · あさごはん<br>
+  C. コーヒー · テレビ · メニュー</p>
+
+  <h2>二　ことば</h2>
+  <p>1. b　2. a　3. b　4. b　5. b　6. a　7. b　8. a</p>
+
+  <h2>三　どうし <span class="pts">1 punto por fila completa</span></h2>
+  <table>
+    <tr><th></th><th>Tipo</th><th>〜ます</th><th>〜ません</th><th></th><th>Tipo</th><th>〜ます</th><th>〜ません</th></tr>
+    <tr><td>1. いく</td><td>う</td><td>いきます</td><td>いきません</td><td>6. はなす</td><td>う</td><td>はなします</td><td>はなしません</td></tr>
+    <tr><td>2. かえる</td><td>う <span class="n">(¡trampa!)</span></td><td>かえります</td><td>かえりません</td><td>7. くる</td><td>ふきそく</td><td>きます</td><td>きません</td></tr>
+    <tr><td>3. おきる</td><td>る</td><td>おきます</td><td>おきません</td><td>8. する</td><td>ふきそく</td><td>します</td><td>しません</td></tr>
+    <tr><td>4. のむ</td><td>う</td><td>のみます</td><td>のみません</td><td>9. きく</td><td>う</td><td>ききます</td><td>ききません</td></tr>
+    <tr><td>5. みる</td><td>る</td><td>みます</td><td>みません</td><td>10. ねる</td><td>る</td><td>ねます</td><td>ねません</td></tr>
+  </table>
+
+  <h2>四　じょし</h2>
+  <p>① は　② の　③ は　④ に　⑤ を　⑥ へ / に <span class="n">(las dos valen)</span>　⑦ で　⑧ も　⑨ の　⑩ で　⑪ か　⑫ ね<br>
+  <span class="n">よ sobra. En ⑫, ね = «¡qué bien!» (buscas acuerdo); よ no encaja al aceptar una invitación.</span></p>
+
+  <h2>五　ぶんぽう <span class="pts">A: 1 punto · B: 2 puntos</span></h2>
+  <p>A. 1. これ　2. その　3. あそこ　4. どこ　5. だれの　6. じゃないです　7. 見ません <span class="n">(あまり va con negativo)</span><br>
+  B. 1. <b>3</b> — 毎晩 10時ごろ うちで <b>テレビを</b> 見ます。<br>
+  　 2. <b>3</b> — 土曜日に いっしょに <b>映画を</b> 見ませんか。<br>
+  　 3. <b>3</b> — たけしさんの {日本語|にほんご}の <b>ほん</b> じゃないです。<br>
+  　 4. <b>1</b> — 週末 たいてい <b>{何|なに}を</b> しますか。 <span class="n">(たいてい 週末 también vale; ★ no cambia)</span></p>
+
+  <h2>六　かいわ <span class="pts">1 punto cada hueco</span></h2>
+  <p>① いくら　② ください / おねがいします　③ なにじん　④ なん　⑤ なん　⑥ だいがくせいじゃないです<br>
+  ⑦ 食べません　⑧ 今晩は ちょっと… <span class="n">(vale すみません、今晩は ちょっと…)</span>　⑨ どうです　⑩ ええ、いいですね。<br>
+  B. 1. おはようございます　2. いただきます　3. もういちど いってください <span class="n">(o すみません、もういちど…)</span></p>
+
+  <h2>七　よみもの <span class="pts">A: 1 punto · B: 2 puntos</span></h2>
+  <p>A. 1. ×　2. ○　3. ×　4. ○　5. × <span class="n">(11時ごろ)</span><br>
+  B. 1. ビジネスです。　2. （たいてい）{大学|だいがく}で 食べます。　3. （たいてい）うちで ほんを 読みます。<br>
+  <span class="n">B: 2 puntos si la frase es completa y correcta; 1 si la información está pero falla la gramática.</span></p>
+
+  <h2>八　ほんやく <span class="pts">2 puntos cada una</span></h2>
+  <p>1. その かさは わたしのじゃないです。たけしさんのです。<br>
+  2. （わたしは）たいてい しちじはんごろ おきます。<br>
+  3. （わたしは）ぜんぜん おさけを のみません。<br>
+  4. こんばん えいがを みませんか。 <span class="n">(いっしょに opcional)</span><br>
+  5. Aquello no es la biblioteca. Es la oficina de correos.<br>
+  6. La madre de Mary también es profesora.<br>
+  7. A veces veo películas japonesas en casa.<br>
+  8. —¿Cuánto cuesta este libro? —Son 2.800 yenes.<br>
+  <span class="n">Criterio: 2 = correcta (otro orden natural también vale) · 1 = se entiende pero hay un fallo de partícula o conjugación · 0 = no se entiende.</span></p>
+
+  <h2>九　さくぶん</h2>
+  <p class="n">Sin solución fija. Haz una foto y pásamela para corregirla.</p>
+
+  <h2>Baremo</h2>
+  <p>90–100 muy bien · 75–89 bien, repasa los fallos · 60–74 repasa los puntos que fallaron · &lt;60 vuelve a esos puntos antes de seguir avanzando</p>
+</div>
+
+</body>
+</html>

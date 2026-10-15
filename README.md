@@ -28,6 +28,8 @@ presente ます／ません, invitar con 〜ませんか y proponer con 〜は�
   casos conocidos (ver *Cómo comprobar antes de subir*).
 - `.github/workflows/pages.yml` — publica el repo tal cual en GitHub Pages en
   cada `push` a `master`.
+- `examenes/` — aparte de la guía: exámenes de repaso en PDF para imprimir, la
+  skill que los genera y sus scripts (ver `examenes/README.md`).
 
 La única dependencia externa es la tipografía Zen Kaku Gothic New de Google
 Fonts; sin conexión, el navegador cae en la fuente japonesa del sistema
