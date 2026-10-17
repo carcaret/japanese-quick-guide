@@ -75,13 +75,18 @@ palabras que el libro sí tiene (p. ej. いっしょに, きっさてん, みせ
 **Formato de los ejercicios**
 - Escribir, no tipo test. Solo son de elegir el vocabulario (二) y la gramática A (五A).
 - Sin comprensión oral.
+- Huecos limpios para escribir: nada impreso dentro ni debajo de la raya. En los huecos
+  numerados (partículas), el número va pequeño y delante: `わたし<sup>①</sup>＿＿`.
+- Ordenar frases: 4 rayas para los números en orden, sin casilla ★ ni «★ = ＿» (la ★ del
+  JLPT existe para corregir tipo test; aquí se escribe el orden entero). El solucionario da
+  el orden completo y las variantes válidas.
 - Frases y textos inventados. Nunca copiar del libro ni del cuaderno de Genki.
 - No repetir frases de exámenes anteriores: leer los `examenes/*/examen.html` previos.
 
 ## 4. Estructura (≈45 min, 100 puntos, 5 págs. + solucionario)
 
 Base: estructura del JLPT N5 (kanji reading, orthography, contextually-defined
-expressions, sentential grammar 1 y 2 con ★, text grammar, comprehension), con respuesta
+expressions, sentential grammar 1 y 2, text grammar, comprehension), con respuesta
 escrita y más ejercicios de producción.
 
 | # | Sección | Contenido | Pts |
@@ -89,8 +94,8 @@ escrita y más ejercicios de producción.
 | 一 | もじ · Escritura | A) números, horas, precios, teléfono en hiragana. B) lectura de 6 palabras en kanji vistas. C) 3 palabras al katakana | 15 |
 | 二 | ことば · Vocabulario | 8 frases, elegir a/b/c por contexto | 8 |
 | 三 | どうし · Verbos | Tabla de conjugación con las formas vistas (crece: forma-te, pasado…). Incluir alguna trampa (帰る) | 10 |
-| 四 | じょし · Partículas | Texto continuo con huecos y banco de partículas, con alguna que sobre | 12 |
-| 五 | ぶんぽう · Gramática | A) elegir forma con contexto en español. B) ordenar 4 piezas y marcar ★ | 15 |
+| 四 | じょし · Partículas | Texto continuo con huecos y banco de partículas, con alguna que sobre. Número pequeño **delante** del hueco, nunca debajo de la raya | 12 |
+| 五 | ぶんぽう · Gramática | A) elegir forma con contexto en español. B) ordenar 4 piezas escribiendo los 4 números en orden, **sin ★** | 15 |
 | 六 | かいわ · Conversación | 2–3 diálogos con huecos según lo visto, más «¿qué dices si…?» | 13 |
 | 七 | よみもの · Lectura | Texto de ~8–10 frases. A) ○×. B) respuestas en japonés | 11 |
 | 八 | ほんやく · Traducción | 4 ES→JA y 4 JA→ES; cada frase mezcla 2–3 puntos | 16 |
@@ -107,7 +112,8 @@ baremo. Variantes válidas indicadas.
 
 1. Carpeta nueva `examenes/LXX-YY/` (lecciones que cubre). Copiar el `examen.html` del último
    examen como plantilla de diseño (CSS, cabecera, clases `.q`, `.keep`, `.page`, `.dlg`,
-   `.passage`, `.slots`, `.key`) y reescribir el contenido.
+   `.passage`, `.slots`, `.key`) y reescribir el contenido. Ojo: `L01-03` aún lleva el número
+   de las partículas debajo del hueco y la ★; en los siguientes, aplicar el formato de arriba.
 2. `python3 examenes/build.py examenes/LXX-YY/examen.html examenes/LXX-YY/examen.pdf`.
    Requiere Playwright con Chromium y la fuente Noto Sans CJK JP.
 3. Comprobar a la vista: rasterizar las páginas (`pypdfium2`) y mirarlas. Sin secciones ni
