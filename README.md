@@ -12,7 +12,7 @@ largas (がっこう → *gakkō*, コーヒー → *kōhī*, pero せんせい 
 おにいさん → *oniisan*), っ, ん + apóstrofo y las partículas は・へ・を leídas
 *wa*, *e*, *o*.
 
-Contenido actual (Genki L1–3): pestaña *Guía* (sonidos, partículas, tiempo y に, frecuencia,
+Contenido actual (Genki L1–3): pestaña *Guía* (orden de las palabras, sonidos, partículas, tiempo y に, frecuencia,
 こそあど, interrogativos, negación de です, expresiones), *Verbos* (los tres grupos, el
 presente ます／ません, invitar con 〜ませんか y proponer con 〜はどうですか), *Números* y *Contadores*.
 
