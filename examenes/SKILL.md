@@ -14,7 +14,7 @@ Todo lo necesario vive en el repo **carcaret/japanese-quick-guide** (rama `maste
 
 | Fichero | Para qué |
 |---|---|
-| `build.py` | HTML → PDF A4 con Playwright/Chromium. Marcado: `{漢字\|かんじ}` = furigana, `[[N]]` = hueco de N em |
+| `build.py` | HTML → PDF A4 con Playwright/Chromium. Marcado: `{漢字\|かんじ}` = furigana (flotante, 8 pt), `[[N]]` = hueco de N em |
 | `anki_vistas.py` | Lee una copia de la colección de Anki y saca qué palabras y kanji del mazo `Genki` han salido ya |
 | `L01-03/examen.html` (y siguientes) | Exámenes anteriores. El último es la plantilla de diseño y la lista de frases que no se repiten |
 
@@ -82,6 +82,18 @@ palabras que el libro sí tiene (p. ej. いっしょに, きっさてん, みせ
   solo está よろしく おねがいします). Si hacen falta, una línea de ayuda en la cabecera:
   「」 = comillas · ・ separa nombre y apellido · ○ verdadero, × falso.
 
+**Tamaño de letra (Carlos ve mal la letra pequeña, sobre todo el furigana)**
+- Texto base 12 pt con `line-height` ≈ 2.25 (en `body` de la plantilla).
+- Furigana 8 pt. Lo pone `build.py` sin `<ruby>`: la lectura flota encima del kanji y puede
+  sobresalir por los lados, así que no separa los kanji (con `<ruby>` grande salía «3年　生»).
+  No volver a `<ruby>` ni bajar de 8 pt.
+- Pistas en cursiva (`.cue`) a 10 pt y en gris oscuro (#444), no gris claro.
+- Nada por debajo de 9 pt salvo el número de página.
+- Al revisar el PDF, mirar que ningún furigana choque con la línea de arriba (pasa en listas
+  de una línea bajo un título); si choca, subir el `line-height` de ese bloque.
+- Con este tamaño el examen ocupa unas 7 páginas más el solucionario. Mejor más páginas que
+  letra más pequeña.
+
 **Formato de los ejercicios**
 - Escribir, no tipo test. Solo son de elegir el vocabulario (二) y la gramática A (五A).
 - Sin comprensión oral.
@@ -93,7 +105,7 @@ palabras que el libro sí tiene (p. ej. いっしょに, きっさてん, みせ
 - Frases y textos inventados. Nunca copiar del libro ni del cuaderno de Genki.
 - No repetir frases de exámenes anteriores: leer los `examenes/*/examen.html` previos.
 
-## 4. Estructura (≈45 min, 100 puntos, 5 págs. + solucionario)
+## 4. Estructura (≈45 min, 100 puntos, ~7 págs. + solucionario)
 
 Base: estructura del JLPT N5 (kanji reading, orthography, contextually-defined
 expressions, sentential grammar 1 y 2, text grammar, comprehension), con respuesta
@@ -123,7 +135,8 @@ baremo. Variantes válidas indicadas.
 1. Carpeta nueva `examenes/LXX-YY/` (lecciones que cubre). Copiar el `examen.html` del último
    examen como plantilla de diseño (CSS, cabecera, clases `.q`, `.keep`, `.page`, `.dlg`,
    `.passage`, `.slots`, `.key`) y reescribir el contenido. Ojo: `L01-03` aún lleva el número
-   de las partículas debajo del hueco y la ★; en los siguientes, aplicar el formato de arriba.
+   de las partículas debajo del hueco, la ★ y la letra a 11 pt; en los siguientes, aplicar el
+   formato y los tamaños de arriba.
 2. `python3 examenes/build.py examenes/LXX-YY/examen.html examenes/LXX-YY/examen.pdf`.
    Requiere Playwright con Chromium y la fuente Noto Sans CJK JP.
 3. Comprobar a la vista: rasterizar las páginas (`pypdfium2`) y mirarlas. Sin secciones ni
