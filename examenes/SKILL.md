@@ -18,8 +18,9 @@ Todo lo necesario vive en el repo **carcaret/japanese-quick-guide** (rama `maste
 | `anki_vistas.py` | Lee una copia de la colección de Anki y saca qué palabras y kanji del mazo `Genki` han salido ya |
 | `L01-03/examen.html` (y siguientes) | Exámenes anteriores. El último es la plantilla de diseño y la lista de frases que no se repiten |
 
-El token para hacer push está en las instrucciones del proyecto «Aprender Japonés». No
-copiarlo a ningún fichero.
+Para hacer push: dar a la sesión acceso de escritura al repo (`add_repo` con `access: "push"`)
+y hacer `git push` normal; el proxy de la sesión pone la credencial. No usar ni escribir
+ningún token.
 
 ## 1. Alcance
 
@@ -29,6 +30,10 @@ copiarlo a ningún fichero.
    todo lo visto hasta ese punto incluido; nada posterior.
 3. Reparto orientativo: ~50 % de la última lección y ~50 % de repaso de las anteriores. Cada
    ejercicio mezcla varios puntos.
+4. Leer los `examenes/*/resultados.md` anteriores e insistir en los fallos que se repiten
+   (más preguntas de ese tipo, sin convertir el examen en un monográfico).
+5. Ojo con la gramática que parece básica y no lo es todavía. Ejemplo: `わたしの` solo
+   («el mío», omitiendo el sustantivo) es L10 punto 3; antes solo existe `A の B`.
 
 ## 2. Qué ha salido en Anki
 
@@ -54,6 +59,8 @@ palabras que el libro sí tiene (p. ej. いっしょに, きっさてん, みせ
 - Si una palabra no vista es imprescindible (p. ej. いっしょに en una invitación), se deja con
   una pista en español en cursiva: `いっしょに <span class="cue">(juntos)</span>`.
 - Préstamos en katakana transparentes (テレビ, コーヒー): se pueden usar aunque no hayan salido.
+- En los ejercicios español → japonés, pedir la palabra con el significado de su tarjeta
+  (campo `es` de `vistas.json`). Ej.: お酒 es «sake; bebida alcohólica»: pedir «sake», no «alcohol».
 
 **Kanji y furigana**
 - Una palabra va en kanji **sin furigana** solo si en `vistas.json` existe en kanji
@@ -71,6 +78,9 @@ palabras que el libro sí tiene (p. ej. いっしょに, きっさてん, みせ
   sencillo y solo con lo visto. Nada de 〜てください antes de tiempo.
 - Títulos de sección en japonés con el español al lado: `一　もじ · Escritura`.
 - Etiquetas de diálogo en español si la palabra japonesa no se ha visto (no 【さそう】).
+- Nada de convenciones o formas cortas que no se hayan explicado (どうぞ よろしく si en Anki
+  solo está よろしく おねがいします). Si hacen falta, una línea de ayuda en la cabecera:
+  「」 = comillas · ・ separa nombre y apellido · ○ verdadero, × falso.
 
 **Formato de los ejercicios**
 - Escribir, no tipo test. Solo son de elegir el vocabulario (二) y la gramática A (五A).
@@ -120,6 +130,10 @@ baremo. Variantes válidas indicadas.
    diálogos partidos, huecos con sitio para escribir a mano, cabecera bien.
 4. Comprobar el contenido: cada respuesta del solucionario contra su pregunta, puntos que
    suman 100, nada de vocabulario, kanji ni gramática fuera de lo permitido.
+5. **Resolver el examen sin mirar el solucionario**, como si fuera Carlos, y comparar. Buscar
+   preguntas con más de una respuesta válida (テニスを します／見ます) y respuestas del
+   solucionario que no tengan sentido en el texto (la も de 四⑧ en L01-03). Corregirlas o
+   añadir las variantes antes de entregar.
 
 ## 6. Entregar
 
@@ -133,3 +147,17 @@ baremo. Variantes válidas indicadas.
 
 Si Carlos manda foto del examen hecho: corregir con el solucionario, dar la nota por sección
 y, en cada fallo, el punto de gramática y la página de Genki (de `mapa-genki-libro.md`).
+
+Criterios:
+- Falta solo una vocal larga (がっこ, おはよ): medio punto.
+- Respuesta distinta a la del solucionario pero correcta: punto entero.
+- Si la pregunta está mal hecha, el punto es para Carlos solo si su respuesta también es
+  correcta.
+- Antes de dar algo por malo, comprobarlo. Su guía rápida (`index.html`) sirve de pista
+  (ahí estaba que ごろ va con o sin に), pero puede no estar al día: si contradice al
+  solucionario, mirar Genki antes de decidir.
+- Resolver sus dudas escritas en los márgenes (??) en la misma corrección.
+
+Al terminar, guardar `examenes/LXX-YY/resultados.md`: fecha, nota por sección y total, y
+los fallos agrupados por tema (no pregunta a pregunta). Commit y push solo si Carlos lo
+confirma.
