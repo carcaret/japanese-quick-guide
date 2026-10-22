@@ -241,7 +241,7 @@ contenedor: `mcr.microsoft.com/playwright:v1.48.0-jammy`, `npm i
 playwright@1.48.0` dentro y un script que abra `file:///t/index.html` a 393 px
 con `webkit` y con `chromium`. Así salió que Chrome corta por `<wbr>` pese al
 `nowrap` y Safari no. Así se comprobaron las 253 lecturas de los 23 contadores
-contra la tabla del libro, el presente de los 13 verbos, y el romaji de todas
+contra la tabla del libro, el presente de los verbos, y el romaji de todas
 las palabras tocables — incluido el de las que llevan furigana, que no puede
 dejar ningún kanji sin leer.
 

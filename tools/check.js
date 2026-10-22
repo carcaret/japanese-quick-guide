@@ -68,12 +68,14 @@ console.log('\n=== leer() con <ruby> ===');
  ['<ruby>食<rt>た</rt><rp>(</rp></ruby>べる', 'たべる'],
  ['ねる', 'ねる']].forEach(([h, k]) => comprobar(h, sinCortes(leerHTML(h)), k));
 
-// ── 2. Conjugación de los 13 verbos ────────────────────────────────────────
+// ── 2. Conjugación de los 21 verbos ────────────────────────────────────────
 console.log('\n=== Presente de cada verbo ===');
 const ESPERADO = {
   'たべる':'たべます', 'みる':'みます', 'ねる':'ねます', 'おきる':'おきます',
   'のむ':'のみます', 'よむ':'よみます', 'きく':'ききます', 'いく':'いきます',
   'はなす':'はなします', 'かえる':'かえります',
+  'いる':'います', 'あう':'あいます', 'ある':'あります', 'かう':'かいます', 'かく':'かきます',
+  'とる':'とります', 'まつ':'まちます', 'わかる':'わかります',
   'する':'します', 'べんきょうする':'べんきょうします', 'くる':'きます'
 };
 VERBOS.forEach(v => {
@@ -86,7 +88,7 @@ VERBOS.forEach(v => {
   comprobar(dic + ' (ruby)', sinCortes(leerHTML(conRuby(r + 'ます'))), afi);
 });
 comprobar('来る con kanji', raiz('来[く]る', 'irr'), '来[き]');
-comprobar('13 verbos', VERBOS.length, 13);
+comprobar('21 verbos', VERBOS.length, 21);
 
 // ── 3. Romaji de todo lo japonés de la página ──────────────────────────────
 console.log('\n=== Romaji de cada palabra tocable ===');
@@ -131,6 +133,7 @@ console.log('\n=== Romaji: palabras y vocales largas ===');
  ['<ruby>東<rt>とう</rt>京<rt>きょう</rt></ruby>','tōkyō'], ['<ruby>原因<rt>げんいん</rt></ruby>',"gen'in"],
  ['<ruby>金<rt>きん</rt></ruby><ruby>曜<rt>よう</rt></ruby>','kin\'yō'],
  ['<ruby>行<rt>い</rt></ruby>こう','ikō'],
+ ['<ruby>会<rt>あ</rt></ruby>う','au'], ['<ruby>買<rt>か</rt></ruby>う','kau'], ['<ruby>待<rt>ま</rt></ruby>ちます','machimasu'],
  // nombres propios con mayúscula y sufijos de trato con guion
  ['<span class="propio">たなか</span><wbr class="sufijo">さん<wbr>は <ruby>学生<rt>がくせい</rt></ruby><wbr>です<wbr>か','Tanaka-san wa gakusei desu ka'],
  ['<span class="propio">やまだ</span><wbr class="sufijo"><ruby>先生<rt>せんせい</rt></ruby>','Yamada-sensei'],
