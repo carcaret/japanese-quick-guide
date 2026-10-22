@@ -165,13 +165,15 @@ baje el `sw.js` nuevo, que antes era la razón de tocarlo al mover los iconos.
   `いっぷん・さんぷん・…・なんぷん` se vuelve indivisible y desborda la pantalla.
   Comprobar los cambios de corte con `documentElement.scrollWidth` a 393 px, no
   solo a ojo, y recordar que el móvil del usuario es Safari.
-- **Lo nuevo se marca con `data-nuevo="N"`** en su `.item`, con N el número
-  de la versión en que entra (`data-nuevo="21"` para v21). El script resalta el
-  N más alto de la página: el ítem sale con fondo morado, y su chip y su
-  pestaña con un punto. No se quita nunca a mano: la siguiente entrega con
-  contenido trae un N mayor y releva a la anterior; una que solo arregla algo
-  no lleva marca y deja el resaltado como estaba. Un ítem que solo cambia un
-  poco también se marca entero.
+- **Lo nuevo se marca con `data-nuevo="AAAA-MM-DD"`** en su `.item`, con la
+  fecha en que entra. El script resalta la fecha más reciente de la página: el
+  ítem sale con fondo morado, y su chip y su pestaña con un punto. Va por fecha
+  y no por versión para que una tanda subida en varias versiones el mismo día
+  salga junta. No se quita nunca a mano: la siguiente tanda trae una fecha más
+  reciente y releva a la anterior; un arreglo suelto no lleva marca. Un ítem que
+  solo cambia un poco se marca entero. Los verbos del conjugador llevan
+  `nuevo:'AAAA-MM-DD'` en `VERBOS` (salen con «· nuevo» en el desplegable) y
+  la tarjeta del conjugador, su `data-nuevo`.
 - Colores siempre por variable CSS (`--ai`, `--ok`, `--ng`, …): así el modo
   oscuro sale solo.
 - Nada de `id` repetidos entre pestañas: el `#hash` los usa para saber qué

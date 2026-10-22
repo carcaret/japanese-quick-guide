@@ -192,11 +192,9 @@ html.split(/<div class="panel" /).slice(1).forEach(trozo => {
   if(/[A-ZÁÉÍÓÚÑ]{2,}/.test(m[1])){ fallos++; console.log('  ✗ título en mayúsculas: ' + m[1]); }
 });
 
-// lo nuevo: cada data-nuevo es un número de versión, y ninguno pasa del actual
-const numVer = +VER_HTML.replace(/\D/g, '');
-[...html.matchAll(/data-nuevo="([^"]*)"/g)].forEach(m => {
-  if(!/^\d+$/.test(m[1]) || +m[1] > numVer){ fallos++; console.log('  ✗ data-nuevo raro: ' + m[1]); }
-});
+// lo nuevo: cada data-nuevo (y el nuevo de VERBOS) es una fecha AAAA-MM-DD
+[...html.matchAll(/data-nuevo="([^"]*)"/g)].map(m => m[1]).concat(VERBOS.filter(v => v.nuevo).map(v => v.nuevo))
+  .forEach(f => { if(!/^\d{4}-\d\d-\d\d$/.test(f)){ fallos++; console.log('  ✗ data-nuevo raro: ' + f); } });
 
 // ── 4. La versión: un solo sitio donde subirla ────────────────────────────
 console.log('\n=== Versión ===');
