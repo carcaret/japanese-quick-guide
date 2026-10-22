@@ -12,8 +12,8 @@ largas (がっこう → *gakkō*, コーヒー → *kōhī*, pero せんせい 
 おにいさん → *oniisan*), っ, ん + apóstrofo y las partículas は・へ・を leídas
 *wa*, *e*, *o*.
 
-Contenido actual (Genki L1–3): pestaña *Guía* (orden de las palabras, sonidos, partículas, tiempo y に, frecuencia,
-こそあど, interrogativos, negación de です, expresiones), *Verbos* (los tres grupos, el
+Contenido actual (Genki L1–3 y L4 hasta el punto 2): pestaña *Guía* (orden de las palabras, sonidos, partículas, tiempo y に, frecuencia,
+こそあど, interrogativos, negación de です, hay: ある・いる y posición, expresiones), *Verbos* (los tres grupos, el
 presente ます／ません, invitar con 〜ませんか y proponer con 〜はどうですか), *Números* y *Contadores*.
 
 ## Cómo está montado
@@ -159,6 +159,13 @@ baje el `sw.js` nuevo, que antes era la razón de tocarlo al mover los iconos.
   `いっぷん・さんぷん・…・なんぷん` se vuelve indivisible y desborda la pantalla.
   Comprobar los cambios de corte con `documentElement.scrollWidth` a 393 px, no
   solo a ojo, y recordar que el móvil del usuario es Safari.
+- **Lo nuevo se marca con `data-nuevo="N"`** en su `.item`, con N el número
+  de la versión en que entra (`data-nuevo="21"` para v21). El script resalta el
+  N más alto de la página: el ítem sale con fondo morado, y su chip y su
+  pestaña con un punto. No se quita nunca a mano: la siguiente entrega con
+  contenido trae un N mayor y releva a la anterior; una que solo arregla algo
+  no lleva marca y deja el resaltado como estaba. Un ítem que solo cambia un
+  poco también se marca entero.
 - Colores siempre por variable CSS (`--ai`, `--ok`, `--ng`, …): así el modo
   oscuro sale solo.
 - Nada de `id` repetidos entre pestañas: el `#hash` los usa para saber qué
@@ -234,6 +241,10 @@ El truco: el propio `index.html` es la entrada. Se extrae el `<script>` y se
 ejecuta con un `document` de pega, así que lo que se prueba es el código de la
 página y no una copia. **Cada regla nueva, con sus casos en `check.js`**,
 también los que no deben cambiar (*oniisan*, *omou*).
+
+**Las capturas, siempre en modo oscuro** (`colorScheme: 'dark'` en Playwright):
+el móvil del usuario está en oscuro y así es como la ve. Con la barra superior
+en `position:static` para que no tape el contenido en las capturas de sección.
 
 Lo que depende del navegador (cortes de línea, `<wbr>`, lo que se ve al
 tocar) se prueba con Safari y Chrome de verdad, con Playwright en otro

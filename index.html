@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Guía rápida de japonés</title>
-<meta name="description" content="Chuleta de japonés: sonidos, partículas, こそあど, interrogativos, verbos y expresiones.">
+<meta name="description" content="Chuleta de japonés: sonidos, partículas, こそあど, interrogativos, ある・いる, verbos y expresiones.">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F4F6F9">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#11151E">
 <link rel="manifest" href="manifest.webmanifest">
@@ -22,18 +22,21 @@
 :root{
   --bg:#F4F6F9; --surface:#FFFFFF; --ink:#1C2230; --muted:#5A6376;
   --rule:#D9DEE7; --ai:#2A4A8A; --ai-tint:#E3E9F5; --ok:#2E7550; --ng:#B23A34;
+  --nuevo:#6B4FC4; --nuevo-tint:#EEEAFB;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#11151E; --surface:#181E2B; --ink:#E6E9F0; --muted:#9AA3B5;
     --rule:#2B3345; --ai:#93ACE3; --ai-tint:#222C44; --ok:#6CC495; --ng:#E8857E;
+    --nuevo:#B6A0F2; --nuevo-tint:#262040;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#11151E; --surface:#181E2B; --ink:#E6E9F0; --muted:#9AA3B5;
   --rule:#2B3345; --ai:#93ACE3; --ai-tint:#222C44; --ok:#6CC495; --ng:#E8857E;
+  --nuevo:#B6A0F2; --nuevo-tint:#262040;
   color-scheme: dark;
 }
 *{box-sizing:border-box}
@@ -77,7 +80,7 @@ h2::before, h2::after{content:""; height:3px; background:var(--ai); border-radiu
 h2::before{width:34px; flex:none}
 h2::after{flex:1}
 h3{font-size:.95rem; margin:22px 0 4px; font-weight:700; letter-spacing:.03em}
-.card{background:var(--surface); border:1px solid var(--rule); border-radius:10px; padding:4px 16px}
+.card{background:var(--surface); border:1px solid var(--rule); border-radius:10px; padding:4px 16px; overflow:hidden}
 .item{padding:11px 0; border-bottom:1px solid var(--rule)}
 .item:last-child{border-bottom:0}
 /* Las líneas secundarias se marcan con un filete, no solo con la sangría: así no
@@ -138,6 +141,13 @@ rt{font-size:.52em; font-weight:400; color:var(--muted); line-height:1; letter-s
 .kso .lab{grid-column:1 / -1; color:var(--muted); font-size:.85rem; margin-top:10px}
 .kso .lab:first-child{margin-top:0}
 .kso > span{justify-self:start}
+/* Lo nuevo de la última entrega (data-nuevo, ver el script): el ítem con fondo
+   y filete morado, de borde a borde de la tarjeta; su chip y su pestaña, con un punto */
+.item.nuevo{margin:0 -16px; padding:11px 16px 11px 13px; background:var(--nuevo-tint); border-left:3px solid var(--nuevo)}
+nav a.nuevo::after, .tabs button.nuevo::after{
+  content:""; display:inline-block; width:6px; height:6px; border-radius:50%;
+  background:var(--nuevo); margin-left:5px; vertical-align:.15em;
+}
 /* Desplegables */
 details.more{margin-top:6px}
 details.more summary{
@@ -163,7 +173,7 @@ details.more .body p + p{margin-top:6px}
 
 <header>
   <h1>Guía rápida de japonés</h1>
-  <span class="ver" id="version">v21</span>
+  <span class="ver" id="version">v22</span>
 </header>
 
 <div class="topbar">
@@ -266,6 +276,10 @@ details.more .body p + p{margin-top:6px}
         <p>Pidiendo en un restaurante: <span class="jp"><ruby>私<rt>わたし</rt></ruby><wbr>は すし<wbr>です</span> → "yo, sushi" (no "soy sushi").</p>
       </div></details>
     </div>
+    <div class="item" data-nuevo="22">
+      <p><span class="head">が</span> — lo que hay o se tiene, con ある・いる (ver <a href="#hay">Hay</a>)</p>
+      <p class="sub"><span class="jp">うち<wbr>に ねこ<wbr>が います</span> → hay un gato en casa</p>
+    </div>
     <div class="item">
       <p><span class="head">の</span> — B の A = el A relacionado con B. No solo posesión (B es el dueño de A): también materia, pertenencia, origen…</p>
       <p class="sub"><span class="jp"><span class="propio">たなか</span><wbr class="sufijo">さん<wbr>の <ruby>本<rt>ほん</rt></ruby></span> → el libro de Tanaka</p>
@@ -291,13 +305,16 @@ details.more .body p + p{margin-top:6px}
       <p><span class="head">で</span> — dónde ocurre la acción</p>
       <p class="sub"><span class="jp">うち<wbr>で <ruby>勉強<rt>べんきょう</rt></ruby><wbr>します</span> → estudio en casa</p>
     </div>
-    <div class="item">
+    <div class="item" data-nuevo="22">
       <p><span class="head">に</span> — 1) destino: punto de llegada ("a"), con <span class="jp"><ruby>行<rt>い</rt></ruby>く</span>・<span class="jp"><ruby>来<rt>く</rt></ruby>る</span>・<span class="jp"><ruby>帰<rt>かえ</rt></ruby>る</span></p>
       <p class="sub"><span class="jp"><ruby>学校<rt>がっこう</rt></ruby><wbr>に <ruby>行<rt>い</rt></ruby>きます</span></p>
       <p>2) momento concreto (ver <a href="#tiempo">Tiempo</a>)</p>
       <p class="sub"><span class="jp"><ruby>七時<rt>しちじ</rt></ruby><wbr>に <ruby>起<rt>お</rt></ruby>きます</span></p>
+      <p>3) dónde está algo, con ある・いる (ver <a href="#hay">Hay</a>)</p>
+      <p class="sub"><span class="jp"><ruby>図書館<rt>としょかん</rt></ruby><wbr>に います</span> → está en la biblioteca</p>
       <details class="more"><summary></summary><div class="body">
-        <p>No confundir con で: に es adónde vas; で, dónde haces algo.</p>
+        <p>No confundir con で: に es dónde está algo o adónde vas; で, dónde haces algo.</p>
+        <p>Excepción: un evento con あります también lleva で (ver <a href="#hay">Hay</a>).</p>
       </div></details>
     </div>
     <div class="item">
@@ -447,6 +464,57 @@ details.more .body p + p{margin-top:6px}
         <span class="k"><span class="jp">で<wbr>は<wbr>ない<wbr>です</span></span><span class="v">poco frecuente</span>
         <span class="k"><span class="jp">で<wbr>は<wbr>ありません</span></span><span class="v">la más formal (escrito, discursos, negocios)</span>
       </div></div>
+    </div>
+    <div class="item" data-nuevo="22">
+      <p>Ojo: <span class="jp">が ありません</span> no es la negación de です: es «no hay / no tengo» (ver <a href="#hay">Hay</a>)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ HAY ━━━ -->
+<section id="hay">
+  <h2>Hay: ある・いる</h2>
+  <div class="card">
+    <div class="item" data-nuevo="22">
+      <p><span class="jp head">いる</span> — personas y animales</p>
+      <p><span class="jp head">ある</span> — todo lo demás: cosas, eventos y también plantas</p>
+    </div>
+    <div class="item" data-nuevo="22">
+      <p>1) hay: lugar に + X が ある／いる. Lo normal es decir primero el lugar.</p>
+      <p class="sub"><span class="jp">あそこ<wbr>に <ruby>銀行<rt>ぎんこう</rt></ruby><wbr>が あります</span> → allí hay un banco</p>
+      <p>2) tener: cosas con ある; personas (amigos, hijos…) con いる</p>
+      <p class="sub"><span class="jp">くるま<wbr>が あります</span> → tengo coche</p>
+      <p class="sub"><span class="jp"><ruby>子<rt>こ</rt></ruby>ども<wbr>が います</span> → tengo hijos</p>
+      <p>3) un evento tiene lugar: con ある, pero el sitio lleva で, no に</p>
+      <p class="sub"><span class="jp">うち<wbr>で パーティー<wbr>が あります</span> → hay una fiesta en casa</p>
+    </div>
+    <div class="item" data-nuevo="22">
+      <p><span class="jp head">が ありません</span> — no hay / no tengo. <span class="jp head">じゃ ありません</span> — no es.</p>
+      <p class="sub"><span class="jp">くるま<wbr>が ありません</span> → no tengo coche</p>
+      <p class="sub"><span class="jp">くるま<wbr>じゃ ありません</span> → no es un coche</p>
+    </div>
+  </div>
+
+  <h3>Dónde está: Y の <ruby>前<rt>まえ</rt></ruby></h3>
+  <div class="card">
+    <div class="item" data-nuevo="22">
+      <p><span class="head">X は Y の <ruby>前<rt>まえ</rt></ruby> です</span> — X está delante de Y. Al revés que en español: primero Y.</p>
+      <p class="sub"><span class="jp">コンビニ<wbr>は <ruby>銀行<rt>ぎんこう</rt></ruby><wbr>の <ruby>前<rt>まえ</rt></ruby><wbr>です</span> → la tienda está delante del banco</p>
+    </div>
+    <div class="item" data-nuevo="22">
+      <p><span class="head">Y と Z の <ruby>間<rt>あいだ</rt></ruby></span> — entre Y y Z</p>
+      <p class="sub"><span class="jp"><ruby>銀行<rt>ぎんこう</rt></ruby><wbr>は コンビニ<wbr>と スーパー<wbr>の <ruby>間<rt>あいだ</rt></ruby><wbr>です</span></p>
+    </div>
+    <div class="item" data-nuevo="22">
+      <p><span class="head">¿に o で?</span> Como siempre, depende del verbo:</p>
+      <p>1) dónde está algo (ある・いる): に</p>
+      <p class="sub"><span class="jp">ホテル<wbr>の <ruby>前<rt>まえ</rt></ruby><wbr>に くるま<wbr>が あります</span> → hay un coche delante del hotel</p>
+      <p>2) dónde haces algo (esperar, comer…): で</p>
+      <p class="sub"><span class="jp">ホテル<wbr>の <ruby>前<rt>まえ</rt></ruby><wbr>で <ruby>待<rt>ま</rt></ruby>ちます</span> → espero delante del hotel</p>
+    </div>
+    <div class="item" data-nuevo="22">
+      <p><span class="jp head">となり</span> — al lado, entre dos del mismo tipo (personas, edificios)</p>
+      <p><span class="jp head">よこ</span> — al lado de cualquier cosa</p>
     </div>
   </div>
 </section>
@@ -931,6 +999,18 @@ details.more .body p + p{margin-top:6px}
   }
   preparar(document);
 
+  /* ── Lo nuevo ─────────────────────────────────────────────────
+     Cada ítem añadido o cambiado lleva data-nuevo con la versión en que entró
+     (data-nuevo="21" para v21).
+     Se resalta el número más alto de la página, la última entrega con contenido:
+     una entrega que solo arregla algo no lo apaga, y la siguiente con
+     contenido nuevo lo releva sola. No hay que quitar nada a mano. */
+  var conMarca = Array.prototype.slice.call(document.querySelectorAll('[data-nuevo]'));
+  var ultima = conMarca.reduce(function(m, el){ return Math.max(m, +el.getAttribute('data-nuevo') || 0); }, 0);
+  conMarca.forEach(function(el){
+    if(+el.getAttribute('data-nuevo') === ultima) el.classList.add('nuevo');
+  });
+
   // Por delegación, así vale también para lo que pinta el selector de contadores.
   document.addEventListener('click', function(e){
     var el = e.target.closest ? e.target.closest('.jp') : null;
@@ -948,6 +1028,11 @@ details.more .body p + p{margin-top:6px}
   var paneles = Array.prototype.slice.call(document.querySelectorAll('.panel'));
   var indice = document.querySelector('.topbar nav');
   var chips = indice.querySelector('.in');
+  // Punto en la pestaña que tiene algo nuevo
+  botones.forEach(function(b){
+    var p = document.getElementById(b.dataset.panel);
+    if(p && p.querySelector('.nuevo')) b.classList.add('nuevo');
+  });
 
   // El chip de una sección es su título hasta los dos puntos:
   // "Tiempo: ¿lleva に?" → "Tiempo".
@@ -963,6 +1048,7 @@ details.more .body p + p{margin-top:6px}
       var a = document.createElement('a');
       a.href = '#' + sec.id;
       a.textContent = etiqueta(sec.querySelector('h2').textContent);
+      if(sec.querySelector('.nuevo')) a.classList.add('nuevo');
       chips.appendChild(a);
     });
     chips.scrollLeft = 0;

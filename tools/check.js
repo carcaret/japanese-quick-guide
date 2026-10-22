@@ -172,7 +172,7 @@ comprobar('etiqueta sin dos puntos', etiqueta('Negación de です'), 'Negación
 const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]);
 ids.filter((id, i) => ids.indexOf(id) !== i).forEach(id => { fallos++; console.log('  ✗ id repetido: ' + id); });
 const CHIPS = {
-  guia: ['Orden', 'Sonidos', 'Partículas', 'Tiempo', 'Frecuencia', 'Serie こそあど', 'Interrogativos', 'Negación de です', 'Expresiones'],
+  guia: ['Orden', 'Sonidos', 'Partículas', 'Tiempo', 'Frecuencia', 'Serie こそあど', 'Interrogativos', 'Negación de です', 'Hay', 'Expresiones'],
   verbos: ['Los tres grupos', 'Presente', 'Invitar'],
   numeros: ['Lecturas dobles'],      // una sola sección: sin índice
   contadores: ['Cómo se cuenta']
@@ -189,6 +189,12 @@ html.split(/<div class="panel" /).slice(1).forEach(trozo => {
 // los títulos van escritos normales: las mayúsculas las pone el CSS
 [...html.matchAll(/<h[23]>([^<]*)<\/h[23]>/g)].forEach(m => {
   if(/[A-ZÁÉÍÓÚÑ]{2,}/.test(m[1])){ fallos++; console.log('  ✗ título en mayúsculas: ' + m[1]); }
+});
+
+// lo nuevo: cada data-nuevo es un número de versión, y ninguno pasa del actual
+const numVer = +VER_HTML.replace(/\D/g, '');
+[...html.matchAll(/data-nuevo="([^"]*)"/g)].forEach(m => {
+  if(!/^\d+$/.test(m[1]) || +m[1] > numVer){ fallos++; console.log('  ✗ data-nuevo raro: ' + m[1]); }
 });
 
 // ── 4. La versión: un solo sitio donde subirla ────────────────────────────
