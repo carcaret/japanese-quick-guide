@@ -54,7 +54,7 @@ h1{font-size:1.45rem; line-height:1.25; margin:0; font-weight:700; letter-spacin
 .topbar{position:sticky; top:0; z-index:5; background:var(--bg); border-bottom:1px solid var(--rule)}
 .tabs{max-width:680px; margin:0 auto; padding:6px 18px 0; display:flex; gap:4px}
 .tabs button{
-  flex:1; font:inherit; font-size:.9rem; font-weight:500; cursor:pointer; color:var(--muted);
+  flex:1; font:inherit; font-size:.88rem; font-weight:500; cursor:pointer; color:var(--muted);
   background:none; border:0; border-bottom:2px solid transparent; padding:6px 4px 7px; border-radius:6px 6px 0 0;
 }
 .tabs button[aria-selected="true"]{color:var(--ai); border-bottom-color:var(--ai); font-weight:700}
@@ -148,6 +148,10 @@ nav a.nuevo::after, .tabs button.nuevo::after{
   content:""; display:inline-block; width:6px; height:6px; border-radius:50%;
   background:var(--nuevo); margin-left:5px; vertical-align:.15em;
 }
+/* En la pestaña el punto, más pequeño y en alto, no ocupa sitio (margen negativo = ancho + hueco):
+   con cinco pestañas a 375 px no queda hueco que gastar, y partía la línea */
+.tabs button{white-space:nowrap}
+.tabs button.nuevo::after{width:5px; height:5px; margin-left:2px; margin-right:-7px; vertical-align:.55em}
 /* Desplegables */
 details.more{margin-top:6px}
 details.more summary{
@@ -173,13 +177,14 @@ details.more .body p + p{margin-top:6px}
 
 <header>
   <h1>Guía rápida de japonés</h1>
-  <span class="ver" id="version">v22</span>
+  <span class="ver" id="version">v23</span>
 </header>
 
 <div class="topbar">
   <div class="tabs" role="tablist" aria-label="Apartados">
     <button type="button" role="tab" data-panel="guia" aria-selected="true" aria-controls="guia">Guía</button>
     <button type="button" role="tab" data-panel="verbos" aria-selected="false" aria-controls="verbos">Verbos</button>
+    <button type="button" role="tab" data-panel="palabras" aria-selected="false" aria-controls="palabras">Palabras</button>
     <button type="button" role="tab" data-panel="numeros" aria-selected="false" aria-controls="numeros">Números</button>
     <button type="button" role="tab" data-panel="contadores" aria-selected="false" aria-controls="contadores">Contadores</button>
   </div>
@@ -358,24 +363,6 @@ details.more .body p + p{margin-top:6px}
     <div class="item">
       <p><span class="head">ごろ</span> = hora aproximada, "sobre las…"; puede ir con o sin に</p>
       <p class="sub"><span class="jp"><ruby>三時<rt>さんじ</rt></ruby>ごろ</span> = <span class="jp"><ruby>三時<rt>さんじ</rt></ruby>ごろ<wbr>に</span></p>
-    </div>
-  </div>
-</section>
-
-<!-- ━━━ FRECUENCIA ━━━ -->
-<section id="frecuencia">
-  <h2>Frecuencia</h2>
-  <div class="card">
-    <div class="item">
-      <p>De más a menos:</p>
-      <div class="table"><div class="rows">
-        <span class="k"><span class="jp">いつも</span></span><span class="v">siempre</span>
-        <span class="k"><span class="jp">たいてい</span></span><span class="v">casi siempre, normalmente</span>
-        <span class="k"><span class="jp">よく</span></span><span class="v">a menudo</span>
-        <span class="k"><span class="jp"><ruby>時々<rt>ときどき</rt></ruby></span></span><span class="v">a veces</span>
-        <span class="k"><span class="jp">あまり</span></span><span class="v">no mucho <span class="ng nb">+ negativo</span></span>
-        <span class="k"><span class="jp"><ruby>全<rt>ぜん</rt></ruby><ruby>然<rt>ぜん</rt></ruby></span></span><span class="v">nunca, nada <span class="ng nb">+ negativo</span></span>
-      </div></div>
     </div>
   </div>
 </section>
@@ -672,6 +659,48 @@ details.more .body p + p{margin-top:6px}
 </section>
 
 </div><!-- /verbos -->
+
+<!-- ━━━━━━━━━━━━ PALABRAS ━━━━━━━━━━━━ -->
+<div class="panel" id="palabras" role="tabpanel" hidden>
+
+<!-- ━━━ FRECUENCIA ━━━ -->
+<section id="frecuencia">
+  <h2>Frecuencia</h2>
+  <div class="card">
+    <div class="item">
+      <p>De más a menos:</p>
+      <div class="table"><div class="rows">
+        <span class="k"><span class="jp">いつも</span></span><span class="v">siempre</span>
+        <span class="k"><span class="jp">たいてい</span></span><span class="v">casi siempre, normalmente</span>
+        <span class="k"><span class="jp">よく</span></span><span class="v">a menudo</span>
+        <span class="k"><span class="jp"><ruby>時々<rt>ときどき</rt></ruby></span></span><span class="v">a veces</span>
+        <span class="k"><span class="jp">あまり</span></span><span class="v">no mucho <span class="ng nb">+ negativo</span></span>
+        <span class="k"><span class="jp"><ruby>全<rt>ぜん</rt></ruby><ruby>然<rt>ぜん</rt></ruby></span></span><span class="v">nunca, nada <span class="ng nb">+ negativo</span></span>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ UBICACIÓN ━━━ -->
+<section id="ubicacion">
+  <h2>Ubicación</h2>
+  <div class="card">
+    <div class="item" data-nuevo="22">
+      <p>Van detrás de Y の: <span class="jp">Y<wbr>の <ruby>上<rt>うえ</rt></ruby></span> = encima de Y (ver <a href="#hay">Hay</a>)</p>
+      <div class="table"><div class="rows">
+        <span class="k"><span class="jp"><ruby>右<rt>みぎ</rt></ruby></span>・<span class="jp"><ruby>左<rt>ひだり</rt></ruby></span></span><span class="v">derecha · izquierda</span>
+        <span class="k"><span class="jp"><ruby>前<rt>まえ</rt></ruby></span>・<span class="jp"><ruby>後<rt>うし</rt></ruby>ろ</span></span><span class="v">delante · detrás</span>
+        <span class="k"><span class="jp"><ruby>上<rt>うえ</rt></ruby></span>・<span class="jp"><ruby>下<rt>した</rt></ruby></span></span><span class="v">encima · debajo</span>
+        <span class="k"><span class="jp"><ruby>中<rt>なか</rt></ruby></span></span><span class="v">dentro</span>
+        <span class="k"><span class="jp"><ruby>近<rt>ちか</rt></ruby>く</span>・<span class="jp">そば</span></span><span class="v">cerca</span>
+        <span class="k"><span class="jp"><ruby>隣<rt>となり</rt></ruby></span>・<span class="jp">よこ</span></span><span class="v">al lado (cuál usar: ver <a href="#hay">Hay</a>)</span>
+        <span class="k"><span class="jp"><ruby>間<rt>あいだ</rt></ruby></span></span><span class="v">entre: Y と Z の <ruby>間<rt>あいだ</rt></ruby></span>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /palabras -->
 
 <!-- ━━━━━━━━━━━━ NÚMEROS ━━━━━━━━━━━━ -->
 <div class="panel" id="numeros" role="tabpanel" hidden>

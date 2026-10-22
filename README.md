@@ -12,9 +12,9 @@ largas (がっこう → *gakkō*, コーヒー → *kōhī*, pero せんせい 
 おにいさん → *oniisan*), っ, ん + apóstrofo y las partículas は・へ・を leídas
 *wa*, *e*, *o*.
 
-Contenido actual (Genki L1–3 y L4 hasta el punto 2): pestaña *Guía* (orden de las palabras, sonidos, partículas, tiempo y に, frecuencia,
+Contenido actual (Genki L1–3 y L4 hasta el punto 2): pestaña *Guía* (orden de las palabras, sonidos, partículas, tiempo y に,
 こそあど, interrogativos, negación de です, hay: ある・いる y posición, expresiones), *Verbos* (los tres grupos, el
-presente ます／ません, invitar con 〜ませんか y proponer con 〜はどうですか), *Números* y *Contadores*.
+presente ます／ません, invitar con 〜ませんか y proponer con 〜はどうですか), *Palabras* (frecuencia y ubicación), *Números* y *Contadores*.
 
 ## Cómo está montado
 
@@ -54,7 +54,11 @@ descartó a propósito; si alguna vez se escapa, entonces se añade. は sigue e
 **Vocabulario, no.** El vocabulario va en Anki, no aquí. Por eso los ejemplos
 son los justos: uno por regla, y solo donde la regla no se entiende sin él. La
 lista de verbos del conjugador es la excepción aparente, y está por las
-conjugaciones, no por lo que significan.
+conjugaciones, no por lo que significan. La otra excepción son las **familias
+cerradas** que se aprenden en bloque, donde lo útil es verlas juntas: la escala
+de frecuencia (el orden y qué pide negativo) y las palabras de ubicación (por
+parejas de opuestos). Van en la pestaña *Palabras*, como listas de consulta;
+no es un cajón para vocabulario suelto.
 
 **Cómo se ordena.** Por temas, no por lecciones: Genki ya va por lecciones, y
 la gracia de esta página es ver todas las partículas juntas aunque vengan de
@@ -64,11 +68,13 @@ cuatro sitios. Sí conviene poder rastrear de dónde sale cada cosa.
 consulta, un `<select>` y la respuesta en vertical (así está *Contadores*).
 Todo lo largo, dentro de `<details class="more">`.
 
-**Pestañas: leer frente a consultar.** *Guía* se lee de corrido; *Números* y
-*Contadores* se consultan. Por eso están separadas. *Verbos* va la segunda, justo
+**Pestañas: leer frente a consultar.** *Guía* se lee de corrido; *Palabras*,
+*Números* y *Contadores* se consultan. Si una lista tiene una regla detrás (el
+patrón Y の 前, に o で), la regla se queda en *Guía* y enlaza a la lista. Por eso están separadas. *Verbos* va la segunda, justo
 detrás de *Guía*: primero lo que se lee, luego lo que se consulta. Tiene pestaña
 propia y no sección dentro de *Guía* porque es lo que más va a crecer (forma-te en
-L6, pasado en L9…). La siguiente natural es *Adjetivos* (L5).
+L6, pasado en L9…). La siguiente natural es *Adjetivos* (L5), pero con cinco
+pestañas ya no cabe una sexta a 375 px: habrá que decidir dónde va.
 
 **Un solo fichero.** Aunque llegue a las 23 lecciones son ~150 KB: sigue
 funcionando sin conexión, se despliega de una pieza y buscar dentro de una

@@ -172,8 +172,9 @@ comprobar('etiqueta sin dos puntos', etiqueta('Negación de です'), 'Negación
 const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]);
 ids.filter((id, i) => ids.indexOf(id) !== i).forEach(id => { fallos++; console.log('  ✗ id repetido: ' + id); });
 const CHIPS = {
-  guia: ['Orden', 'Sonidos', 'Partículas', 'Tiempo', 'Frecuencia', 'Serie こそあど', 'Interrogativos', 'Negación de です', 'Hay', 'Expresiones'],
+  guia: ['Orden', 'Sonidos', 'Partículas', 'Tiempo', 'Serie こそあど', 'Interrogativos', 'Negación de です', 'Hay', 'Expresiones'],
   verbos: ['Los tres grupos', 'Presente', 'Invitar'],
+  palabras: ['Frecuencia', 'Ubicación'],
   numeros: ['Lecturas dobles'],      // una sola sección: sin índice
   contadores: ['Cómo se cuenta']
 };
